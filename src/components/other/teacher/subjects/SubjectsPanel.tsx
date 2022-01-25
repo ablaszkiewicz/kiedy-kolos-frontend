@@ -1,7 +1,7 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react';
-import { Subject } from '../components/subjects/Subject';
-import { SubjectAdder } from '../components/subjects/SubjectAdder';
-import { SubjectYouTeach } from '../components/subjects/SubjectYouTeach';
+import { Subject } from './Subject';
+import { SubjectAdder } from './SubjectAdder';
+import { SubjectYouTeach } from './SubjectYouTeach';
 
 export const SubjectsPanel = () => (
   <>

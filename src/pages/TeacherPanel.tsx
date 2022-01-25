@@ -1,5 +1,5 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, Flex, Spacer, Text, Button, Center } from '@chakra-ui/react';
-import { SubjectsPanel } from './panels/SubjectsPanel';
+import { SubjectsPanel } from '../components/other/teacher/subjects/SubjectsPanel';
 
 export const TeacherPanel = () => (
   <Tabs isLazy>
