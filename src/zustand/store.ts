@@ -1,5 +1,5 @@
 import create from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 import { createAuthSlice } from './authSlice';
 import { checkTokenExpiration } from './jwtExpiration';
 
@@ -8,7 +8,11 @@ const store = (set: any) => ({
   test: () => set(),
 });
 
-const useStore = create(devtools(store));
+const useStore = create(
+  persist(devtools(store), {
+    name: 'auth-storage',
+  })
+);
 
 useStore.subscribe((state) => checkTokenExpiration(state.user.token));
 
