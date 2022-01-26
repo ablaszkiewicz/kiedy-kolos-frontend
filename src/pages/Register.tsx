@@ -1,33 +1,37 @@
 import {
   Box,
   Button,
+  Center,
+  Checkbox,
   Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
+  Link,
   Stack,
   useColorModeValue,
   Text,
-  Link,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import useStore from '../zustand/store';
 
-export const Login = () => {
-  const login = useStore((state) => state.loginUser);
+export const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const signInClicked = async (e: any) => {
-    e.preventDefault();
-    const { data } = await axios.post('auth/login', { email: email, password: password });
-    if (data.token != null && data.email != null) {
-      login(data.email, data.token);
-      navigate('/dashboard');
+  const signUp = async () => {
+    try {
+      await axios.post('users/create', { email: email, password: password });
+      navigate('/login');
+    } catch (error: any) {
+      if (error.response.data) {
+        setError(error.response.data.message);
+      }
     }
   };
 
@@ -35,13 +39,9 @@ export const Login = () => {
     <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Heading fontSize={'4xl'}>Create your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            or create an account{' '}
-            <Link color={'blue.400'}>
-              <RouterLink to='/register'>here</RouterLink>
-            </Link>{' '}
-            ✌️
+            join us ✌️
           </Text>
         </Stack>
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
@@ -60,7 +60,7 @@ export const Login = () => {
                 <Link color={'blue.400'}>Forgot password?</Link>
               </Stack> */}
               <Button
-                onClick={(e) => signInClicked(e)}
+                onClick={() => signUp()}
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{
@@ -70,6 +70,7 @@ export const Login = () => {
                 Sign in
               </Button>
             </Stack>
+            <Text color={'red'}>{error}</Text>
           </Stack>
         </Box>
       </Stack>
