@@ -14,6 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import useStore from '../zustand/store';
 
@@ -21,11 +22,15 @@ export const Login = () => {
   const login = useStore((state) => state.loginUser);
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const signInClicked = async () => {
-    const { data } = await axios.post('auth/login', { email: 'anna@pg.edu.pl', password: '123' });
-    login(data.email, data.token);
-    navigate('/dashboard');
+    const { data } = await axios.post('auth/login', { email: email, password: password });
+    if (data.token != null && data.email != null) {
+      login(data.email, data.token);
+      navigate('/dashboard');
+    }
   };
 
   return (
@@ -41,11 +46,11 @@ export const Login = () => {
           <Stack spacing={4}>
             <FormControl id='email'>
               <FormLabel>Email address</FormLabel>
-              <Input type='email' />
+              <Input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
             </FormControl>
             <FormControl id='password'>
               <FormLabel>Password</FormLabel>
-              <Input type='password' />
+              <Input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
               {/* <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
