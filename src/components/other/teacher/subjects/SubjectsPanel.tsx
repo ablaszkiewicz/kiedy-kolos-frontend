@@ -1,23 +1,23 @@
-import { Box, HStack, Text, VStack } from '@chakra-ui/react';
+import { Box, HStack, Text } from '@chakra-ui/react';
+import useSubjects, { SubjectType } from '../../../../hooks/useSubjects';
 import { Subject } from './Subject';
 import { SubjectAdder } from './SubjectAdder';
-import { SubjectYouTeach } from './SubjectYouTeach';
 
-export const SubjectsPanel = () => (
-  <>
-    <HStack spacing={'5em'} align={'start'}>
-      <Box>
-        <Text>Lista przedmiotów:</Text>
-        <Subject name={'Przedmiot 1 '} teacher='Anna Bobkowska' />
-        <Subject name={'Przedmiot 2'} teacher='Andrzej Sobecki' />
-      </Box>
-      <Box>
-        <Text>Lista przedmiotów, których uczysz:</Text>
-        <SubjectYouTeach name={'Przedmiot 1'} />
-        <SubjectYouTeach name={'Przedmiot 2'} />
-        <Text>Dodaj przedmiot:</Text>
-        <SubjectAdder />
-      </Box>
-    </HStack>
-  </>
-);
+export const SubjectsPanel = () => {
+  const { query } = useSubjects();
+
+  return (
+    <>
+      <HStack spacing={'5em'} align={'start'}>
+        <Box>
+          <Text>Lista przedmiotów, których uczysz:</Text>
+          {query.data && query.data.map((subject: SubjectType) => <Subject name={subject.name} key={subject.id} />)}
+        </Box>
+        <Box>
+          <Text>Dodaj przedmiot:</Text>
+          <SubjectAdder />
+        </Box>
+      </HStack>
+    </>
+  );
+};

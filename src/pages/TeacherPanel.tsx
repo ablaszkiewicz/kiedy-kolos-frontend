@@ -1,10 +1,9 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, Flex, Spacer, Box, Heading } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { SubjectsPanel } from '../components/other/teacher/subjects/SubjectsPanel';
-import axios from 'axios';
 import useStore from '../zustand/store';
 import { ColorModeSwitcher } from '../components/other/other/ColorModeSwitcher';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const TeacherPanel = () => {
   const email = useStore((state) => state.user.email);

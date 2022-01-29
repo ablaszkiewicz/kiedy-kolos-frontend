@@ -1,39 +1,24 @@
 import {
   Box,
   Button,
-  Center,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
-  Link,
   Stack,
   useColorModeValue,
   Text,
 } from '@chakra-ui/react';
-import axios from 'axios';
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import useStore from '../zustand/store';
+import { useNavigate } from 'react-router-dom';
+import useRegisterQuery from '../hooks/useRegisterQuery';
 
 export const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const signUp = async () => {
-    try {
-      await axios.post('users/create', { email: email, password: password });
-      navigate('/login');
-    } catch (error: any) {
-      if (error.response.data) {
-        setError(error.response.data.message);
-      }
-    }
-  };
+  const { registerQuery, isLoading, error } = useRegisterQuery(() => navigate('/login'));
 
   return (
     <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -55,12 +40,9 @@ export const Register = () => {
               <Input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
-              {/* <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.400'}>Forgot password?</Link>
-              </Stack> */}
               <Button
-                onClick={() => signUp()}
+                isLoading={isLoading}
+                onClick={() => registerQuery(email, password)}
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{

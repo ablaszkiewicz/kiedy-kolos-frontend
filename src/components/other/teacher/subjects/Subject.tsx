@@ -1,19 +1,27 @@
-import { Flex, Spacer, Text, Button, VStack } from '@chakra-ui/react';
+import { LinkIcon } from '@chakra-ui/icons';
+import { Flex, Spacer, Button, Center, IconButton, useToast } from '@chakra-ui/react';
 
 interface Props {
   name: string;
-  teacher: string;
 }
 
-export const Subject = ({ name, teacher }: Props) => {
+export const Subject = ({ name }: Props) => {
+  const toast = useToast();
+  const onLinkButtonClick = () => {
+    toast({
+      title: 'Link do dołączenia',
+      description: 'Skopiowano link do dołączenia do schowka',
+      status: 'success',
+      duration: 2000,
+    });
+  };
+
   return (
     <Flex borderWidth={'1px'} width={'24em'} m={2} p={2} borderRadius={5}>
-      <VStack align={'baseline'} spacing={0}>
-        <Text>{name}</Text>
-        <Text fontSize={'xs'}>{teacher}</Text>
-      </VStack>
+      <Center>{name}</Center>
       <Spacer />
-      <Button mx={1}>Zacznij uczyć</Button>
+      <IconButton onClick={() => onLinkButtonClick()} aria-label='Skopiuj link' icon={<LinkIcon />} />
+      <Button mx={1}>Pokaż</Button>
     </Flex>
   );
 };

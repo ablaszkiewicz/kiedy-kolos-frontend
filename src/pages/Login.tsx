@@ -11,25 +11,15 @@ import {
   Text,
   Link,
 } from '@chakra-ui/react';
-import axios from 'axios';
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import useStore from '../zustand/store';
+import useLoginQuery from '../hooks/useLoginQuery';
 
 export const Login = () => {
-  const login = useStore((state) => state.loginUser);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const signInClicked = async (e: any) => {
-    e.preventDefault();
-    const { data } = await axios.post('auth/login', { email: email, password: password });
-    if (data.token != null && data.email != null) {
-      login(data.email, data.token);
-      navigate('/dashboard');
-    }
-  };
+  const { loginQuery, isLoading, error } = useLoginQuery(() => navigate('/dashboard'));
 
   return (
     <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -60,7 +50,11 @@ export const Login = () => {
                 <Link color={'blue.400'}>Forgot password?</Link>
               </Stack> */}
               <Button
-                onClick={(e) => signInClicked(e)}
+                isLoading={isLoading}
+                onClick={(e) => {
+                  e.preventDefault();
+                  loginQuery(email, password);
+                }}
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{
@@ -70,6 +64,7 @@ export const Login = () => {
                 Sign in
               </Button>
             </Stack>
+            <Text>{error}</Text>
           </Stack>
         </Box>
       </Stack>
