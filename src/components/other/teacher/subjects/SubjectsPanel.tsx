@@ -11,7 +11,7 @@ export const SubjectsPanel = () => {
       <HStack spacing={'5em'} align={'start'}>
         <Box>
           <Text>Lista przedmiotów, których uczysz:</Text>
-          {query.data && query.data.map((subject: SubjectType) => <Subject name={subject.name} key={subject.id} />)}
+          {query.data && query.data.map((subject: SubjectType) => <Subject subject={subject} key={subject.id} />)}
         </Box>
         <Box>
           <Text>Dodaj przedmiot:</Text>

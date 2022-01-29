@@ -18,8 +18,12 @@ export default function useSubjects() {
     const response = await axios.get('users/me/subjects', { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   };
-  const postSubject = async (name: string) => {
-    const response = await axios.post('/subjects', { name: name }, { headers: { Authorization: `Bearer ${token}` } });
+  const postSubject = async (subject: SubjectType) => {
+    const response = await axios.post('users/me/subjects', subject, { headers: { Authorization: `Bearer ${token}` } });
+    return response.data;
+  };
+  const deleteSubject = async (id: number) => {
+    const response = await axios.delete(`users/me/subjects/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   };
 
@@ -27,20 +31,9 @@ export default function useSubjects() {
   const query = useQuery('subjects', getSubjects);
 
   // mutations
-  const mutation = useMutation(postSubject, {
-    onMutate: async (name) => {
-      const newSubject = { id: 123, name: name };
-      await queryClient.cancelQueries('subjects');
-      const previousSubjects = queryClient.getQueryData('subjects');
-      queryClient.setQueryData('subjects', (old: any) => [...old, newSubject]);
-      return previousSubjects;
-    },
-    onError: (err, name, context: any) => {
-      queryClient.setQueryData('todos', context.previousTodos);
-    },
-
-    onSuccess: () => {
-      queryClient.invalidateQueries('subjects');
+  const postMutation = useMutation(postSubject, {
+    onSuccess: (subject: SubjectType) => {
+      queryClient.setQueryData('subjects', (old: any) => [...old, subject]);
       toast({
         title: 'Dodano przedmiot',
         status: 'success',
@@ -49,5 +42,27 @@ export default function useSubjects() {
     },
   });
 
-  return { query, mutation };
+  const deleteMutation = useMutation(deleteSubject, {
+    onMutate: async (id: number) => {
+      await queryClient.cancelQueries('subjects');
+      const previousSubjects = queryClient.getQueryData<SubjectType[]>('subjects');
+      queryClient.setQueryData('subjects', (old: any) => [...old].filter((subject) => subject.id != id));
+      return { previousSubjects };
+    },
+
+    onError: (err, name, context: any) => {
+      queryClient.setQueryData('subjects', context.previousSubjects);
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries('subjects');
+      toast({
+        title: 'Usunięto przedmiot',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
+  return { query, postMutation, deleteMutation };
 }
