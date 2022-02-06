@@ -43,19 +43,21 @@ export default function useSubjects() {
   });
 
   const deleteMutation = useMutation(deleteSubject, {
-    onMutate: async (id: number) => {
-      await queryClient.cancelQueries('subjects');
-      const previousSubjects = queryClient.getQueryData<SubjectType[]>('subjects');
-      queryClient.setQueryData('subjects', (old: any) => [...old].filter((subject) => subject.id != id));
-      return { previousSubjects };
-    },
+    // onMutate: async (id: number) => {
+    //   await queryClient.cancelQueries('subjects');
+    //   const previousSubjects = queryClient.getQueryData<SubjectType[]>('subjects');
+    //   queryClient.setQueryData('subjects', (old: any) => [...old].filter((subject) => subject.id != id));
+    //   return { previousSubjects };
+    // },
 
-    onError: (err, name, context: any) => {
-      queryClient.setQueryData('subjects', context.previousSubjects);
-    },
+    // onError: (err, name, context: any) => {
+    //   queryClient.setQueryData('subjects', context.previousSubjects);
+    // },
 
-    onSuccess: () => {
-      queryClient.invalidateQueries('subjects');
+    onSuccess: (subject: SubjectType) => {
+      queryClient.setQueryData('subjects', (old: any) =>
+        old.filter((subjectTmp: SubjectType) => subjectTmp.name != subject.name)
+      );
       toast({
         title: 'Usunięto przedmiot',
         status: 'success',

@@ -1,6 +1,6 @@
 import { Box, HStack, Text } from '@chakra-ui/react';
 import useSubjects, { SubjectType } from '../../../../hooks/useSubjects';
-import { Subject } from './Subject';
+import { SubjectListItem } from './SubjectListItem';
 import { SubjectAdder } from './SubjectAdder';
 
 export const SubjectsPanel = () => {
@@ -10,8 +10,9 @@ export const SubjectsPanel = () => {
     <>
       <HStack spacing={'5em'} align={'start'}>
         <Box>
-          <Text>Lista przedmiotów, których uczysz:</Text>
-          {query.data && query.data.map((subject: SubjectType) => <Subject subject={subject} key={subject.id} />)}
+          <Text>Lista przedmiotów:</Text>
+          {query.data &&
+            query.data.map((subject: SubjectType) => <SubjectListItem subject={subject} key={subject.id} />)}
         </Box>
         <Box>
           <Text>Dodaj przedmiot:</Text>
