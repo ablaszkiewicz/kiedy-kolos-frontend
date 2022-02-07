@@ -6,6 +6,7 @@ import useStore from '../zustand/store';
 export type SubjectType = {
   id: number;
   name: string;
+  shortName: string;
 };
 
 export default function useSubjects() {
@@ -43,20 +44,9 @@ export default function useSubjects() {
   });
 
   const deleteMutation = useMutation(deleteSubject, {
-    // onMutate: async (id: number) => {
-    //   await queryClient.cancelQueries('subjects');
-    //   const previousSubjects = queryClient.getQueryData<SubjectType[]>('subjects');
-    //   queryClient.setQueryData('subjects', (old: any) => [...old].filter((subject) => subject.id != id));
-    //   return { previousSubjects };
-    // },
-
-    // onError: (err, name, context: any) => {
-    //   queryClient.setQueryData('subjects', context.previousSubjects);
-    // },
-
     onSuccess: (subject: SubjectType) => {
       queryClient.setQueryData('subjects', (old: any) =>
-        old.filter((subjectTmp: SubjectType) => subjectTmp.name != subject.name)
+        old.filter((subjectTmp: SubjectType) => subjectTmp.id != subject.id)
       );
       toast({
         title: 'Usunięto przedmiot',
