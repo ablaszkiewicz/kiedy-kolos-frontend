@@ -23,6 +23,12 @@ export default function useSubjects() {
     const response = await axios.post('users/me/subjects', subject, { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   };
+  const updateSubject = async (subject: SubjectType) => {
+    const response = await axios.put(`users/me/subjects/${subject.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  };
   const deleteSubject = async (id: number) => {
     const response = await axios.delete(`users/me/subjects/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
@@ -50,6 +56,17 @@ export default function useSubjects() {
       );
       toast({
         title: 'Usunięto przedmiot',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
+  const updateMutation = useMutation(updateSubject, {
+    onSuccess: (subject: SubjectType) => {
+      //todo
+      toast({
+        title: 'Zaktualizowano przedmiot',
         status: 'success',
         duration: 2000,
       });
