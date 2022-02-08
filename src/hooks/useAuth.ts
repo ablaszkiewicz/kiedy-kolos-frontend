@@ -15,6 +15,7 @@ interface LoginResponse {
 
 export default function useAuth() {
   const loginToStore = useStore((state) => state.loginUser);
+  const user = useStore((state) => state.user);
   const navigate = useNavigate();
 
   const login = async (credentials: Credentials) => {
@@ -40,5 +41,9 @@ export default function useAuth() {
     },
   });
 
-  return { loginMutation, registerMutation };
+  const isLoggedIn = () => {
+    return !(user === null || user.token === null || user.email === null);
+  };
+
+  return { loginMutation, registerMutation, isLoggedIn };
 }
