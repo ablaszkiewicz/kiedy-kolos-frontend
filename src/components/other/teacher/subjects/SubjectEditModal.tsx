@@ -12,7 +12,8 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import { SubjectType } from '../../../../hooks/useSubjects';
+import { useEffect, useState } from 'react';
+import useSubjects, { SubjectType } from '../../../../hooks/useSubjects';
 
 interface Props {
   isOpen: any;
@@ -21,6 +22,21 @@ interface Props {
 }
 
 export const SubjectEditModal = ({ isOpen, onClose, subject }: Props) => {
+  const [name, setName] = useState<string>(subject.name);
+  const [shortName, setShortName] = useState<string>(subject.shortName);
+  const { updateMutation } = useSubjects();
+
+  useEffect(() => {
+    if (updateMutation.isSuccess) {
+      onClose();
+      updateMutation.reset();
+    }
+  }, [updateMutation.isSuccess]);
+
+  const onEditClicked = () => {
+    updateMutation.mutate({ id: subject.id, name: name, shortName: shortName });
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
@@ -30,17 +46,17 @@ export const SubjectEditModal = ({ isOpen, onClose, subject }: Props) => {
         <ModalBody>
           <FormControl>
             <FormLabel>Nazwa</FormLabel>
-            <Input value={subject.name} />
+            <Input value={name} onChange={(e) => setName(e.target.value)} />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>Skrócona nazwa</FormLabel>
-            <Input />
+            <Input value={shortName} onChange={(e) => setShortName(e.target.value)} />
           </FormControl>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme='blue' mr={'3'}>
+          <Button colorScheme='blue' mr={'3'} onClick={() => onEditClicked()} isLoading={updateMutation.isLoading}>
             Edytuj
           </Button>
           <Button onClick={onClose}>Anuluj</Button>
