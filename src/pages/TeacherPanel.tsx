@@ -13,7 +13,7 @@ export const TeacherPanel = () => {
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    if (!isLoggedIn()) {
+    if (!isLoggedIn) {
       navigate('/login');
     }
   }, [user]);

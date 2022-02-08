@@ -41,9 +41,7 @@ export default function useAuth() {
     },
   });
 
-  const isLoggedIn = () => {
-    return !(user === null || user.token === null || user.email === null);
-  };
+  const isLoggedIn: boolean = !(user === null || user.token === null || user.email === null);
 
   return { loginMutation, registerMutation, isLoggedIn };
 }
