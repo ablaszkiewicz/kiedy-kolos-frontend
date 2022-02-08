@@ -10,14 +10,22 @@ import {
   useColorModeValue,
   Text,
 } from '@chakra-ui/react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useRegisterQuery from '../hooks/useRegisterQuery';
+import {useSetState} from "../hooks/useSetState";
+
+interface State {
+  email: string;
+  password: string;
+}
 
 export const Register = () => {
+  const [state, setState] = useSetState({
+    email: '',
+    password: '',
+  } as State);
+
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const { registerQuery, isLoading, error } = useRegisterQuery(() => navigate('/login'));
 
   return (
@@ -33,16 +41,24 @@ export const Register = () => {
           <Stack spacing={4}>
             <FormControl id='email'>
               <FormLabel>Email address</FormLabel>
-              <Input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Input
+                type='email'
+                value={state.email}
+                onChange={(e) => setState({email: e.target.value})}
+              />
             </FormControl>
             <FormControl id='password'>
               <FormLabel>Password</FormLabel>
-              <Input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Input
+                type='password'
+                value={state.password}
+                onChange={(e) => setState({password: e.target.value})}
+              />
             </FormControl>
             <Stack spacing={10}>
               <Button
                 isLoading={isLoading}
-                onClick={() => registerQuery(email, password)}
+                onClick={() => registerQuery(state.email, state.password)}
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{
