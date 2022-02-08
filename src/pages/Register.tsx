@@ -11,8 +11,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import useRegisterQuery from '../hooks/useRegisterQuery';
-import {useSetState} from "../hooks/useSetState";
+import useAuth from '../hooks/useAuth';
+import { useSetState } from '../hooks/useSetState';
 
 interface State {
   email: string;
@@ -26,7 +26,7 @@ export const Register = () => {
   } as State);
 
   const navigate = useNavigate();
-  const { registerQuery, isLoading, error } = useRegisterQuery(() => navigate('/login'));
+  const { registerMutation } = useAuth();
 
   return (
     <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -41,24 +41,16 @@ export const Register = () => {
           <Stack spacing={4}>
             <FormControl id='email'>
               <FormLabel>Email address</FormLabel>
-              <Input
-                type='email'
-                value={state.email}
-                onChange={(e) => setState({email: e.target.value})}
-              />
+              <Input type='email' value={state.email} onChange={(e) => setState({ email: e.target.value })} />
             </FormControl>
             <FormControl id='password'>
               <FormLabel>Password</FormLabel>
-              <Input
-                type='password'
-                value={state.password}
-                onChange={(e) => setState({password: e.target.value})}
-              />
+              <Input type='password' value={state.password} onChange={(e) => setState({ password: e.target.value })} />
             </FormControl>
             <Stack spacing={10}>
               <Button
-                isLoading={isLoading}
-                onClick={() => registerQuery(state.email, state.password)}
+                isLoading={registerMutation.isLoading}
+                onClick={() => registerMutation.mutate({ email: state.email, password: state.password })}
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{
@@ -68,7 +60,7 @@ export const Register = () => {
                 Sign in
               </Button>
             </Stack>
-            <Text color={'red'}>{error}</Text>
+            <Text color={'red'}>{registerMutation.isError ? (registerMutation as any).error.message : ''}</Text>
           </Stack>
         </Box>
       </Stack>

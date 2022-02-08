@@ -8,11 +8,11 @@ import {
   Input,
   Stack,
   useColorModeValue,
-  Text
+  Text,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import useLoginQuery from '../hooks/useLoginQuery';
-import {useSetState} from "../hooks/useSetState";
+import useAuth from '../hooks/useAuth';
+import { useSetState } from '../hooks/useSetState';
 
 interface State {
   email: string;
@@ -26,7 +26,7 @@ export const Login = () => {
   } as State);
 
   const navigate = useNavigate();
-  const { loginQuery, isLoading, error } = useLoginQuery(() => navigate('/dashboard'));
+  const { loginMutation } = useAuth();
 
   return (
     <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -41,30 +41,18 @@ export const Login = () => {
           <Stack spacing={4}>
             <FormControl id='email'>
               <FormLabel>Adres email</FormLabel>
-              <Input
-                type='email'
-                value={state.email}
-                onChange={(e) => setState({email: e.target.value})}
-              />
+              <Input type='email' value={state.email} onChange={(e) => setState({ email: e.target.value })} />
             </FormControl>
             <FormControl id='password'>
               <FormLabel>Hasło</FormLabel>
-              <Input
-                type='password'
-                value={state.password}
-                onChange={(e) => setState({password: e.target.value})}
-              />
+              <Input type='password' value={state.password} onChange={(e) => setState({ password: e.target.value })} />
             </FormControl>
             <Stack spacing={10}>
-              {/* <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.400'}>Forgot password?</Link>
-              </Stack> */}
               <Button
-                isLoading={isLoading}
+                isLoading={loginMutation.isLoading}
                 onClick={(e) => {
                   e.preventDefault();
-                  loginQuery(state.email, state.password);
+                  loginMutation.mutate({ email: state.email, password: state.password });
                 }}
                 bg={'blue.400'}
                 color={'white'}
@@ -75,7 +63,7 @@ export const Login = () => {
                 Sign in
               </Button>
             </Stack>
-            <Text>{error}</Text>
+            <Text>{loginMutation.isError ? (loginMutation as any).error.message : ''}</Text>
           </Stack>
         </Box>
       </Stack>
