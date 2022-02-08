@@ -23,6 +23,12 @@ export default function useSubjects() {
     const response = await axios.post('users/me/subjects', subject, { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   };
+  const updateSubject = async (subject: SubjectType) => {
+    const response = await axios.put(`users/me/subjects`, subject, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  };
   const deleteSubject = async (id: number) => {
     const response = await axios.delete(`users/me/subjects/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
@@ -43,6 +49,20 @@ export default function useSubjects() {
     },
   });
 
+  const updateMutation = useMutation(updateSubject, {
+    onSuccess: (subject: SubjectType) => {
+      const subjects: SubjectType[] = queryClient.getQueryData('subjects')!;
+      const index = subjects.findIndex((subjectTmp) => subjectTmp.id === subject.id);
+      subjects[index] = subject;
+      queryClient.setQueryData('subjects', (old: any) => subjects);
+      toast({
+        title: 'Zaktualizowano przedmiot',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
   const deleteMutation = useMutation(deleteSubject, {
     onSuccess: (subject: SubjectType) => {
       queryClient.setQueryData('subjects', (old: any) =>
@@ -56,5 +76,5 @@ export default function useSubjects() {
     },
   });
 
-  return { query, postMutation, deleteMutation };
+  return { query, postMutation, updateMutation, deleteMutation };
 }
