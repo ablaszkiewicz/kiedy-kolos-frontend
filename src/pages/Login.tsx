@@ -8,17 +8,24 @@ import {
   Input,
   Stack,
   useColorModeValue,
-  Text,
-  Link,
+  Text
 } from '@chakra-ui/react';
-import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import useLoginQuery from '../hooks/useLoginQuery';
+import {useSetState} from "../hooks/useSetState";
+
+interface State {
+  email: string;
+  password: string;
+}
 
 export const Login = () => {
+  const [state, setState] = useSetState({
+    email: '',
+    password: '',
+  } as State);
+
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const { loginQuery, isLoading, error } = useLoginQuery(() => navigate('/dashboard'));
 
   return (
@@ -34,11 +41,19 @@ export const Login = () => {
           <Stack spacing={4}>
             <FormControl id='email'>
               <FormLabel>Adres email</FormLabel>
-              <Input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Input
+                type='email'
+                value={state.email}
+                onChange={(e) => setState({email: e.target.value})}
+              />
             </FormControl>
             <FormControl id='password'>
               <FormLabel>Hasło</FormLabel>
-              <Input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Input
+                type='password'
+                value={state.password}
+                onChange={(e) => setState({password: e.target.value})}
+              />
             </FormControl>
             <Stack spacing={10}>
               {/* <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
@@ -49,7 +64,7 @@ export const Login = () => {
                 isLoading={isLoading}
                 onClick={(e) => {
                   e.preventDefault();
-                  loginQuery(email, password);
+                  loginQuery(state.email, state.password);
                 }}
                 bg={'blue.400'}
                 color={'white'}
