@@ -1,6 +1,6 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, Flex, Spacer, Box, Heading, Button } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { SubjectsPanel } from '../components/other/teacher/subjects/SubjectsPanel';
+import { SubjectsPanel } from '../components/other/admin/subjects/SubjectsPanel';
 import useStore from '../zustand/store';
 import { ColorModeSwitcher } from '../components/other/other/ColorModeSwitcher';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ export const TeacherPanel = () => {
   return (
     <Box p={5}>
       <Flex mb={5}>
-        <Heading>Panel nauczyciela {user.email}</Heading>
+        <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
         <ColorModeSwitcher />
         <Button ml={3} onClick={() => logoutUser()}>

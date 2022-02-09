@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import { TeacherPanel } from './pages/TeacherPanel';
+import { TeacherPanel } from './pages/AdminPanel';
 
 const queryClient = new QueryClient();
 
