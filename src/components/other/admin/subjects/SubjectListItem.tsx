@@ -24,7 +24,7 @@ export const SubjectListItem = (props: Props) => {
     <>
       <SubjectEditModal isOpen={isEditModalOpen} onClose={onEditModalClose} subject={props.subject} />
       <SubjectDeleteModal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} subject={props.subject} />
-      <Flex borderWidth={'1px'} width={'24em'} m={2} p={2} borderRadius={5}>
+      <Flex borderWidth={'1px'} m={2} p={2} borderRadius={5}>
         <VStack spacing={0} alignItems={'baseline'}>
           <Text>{props.subject.shortName}</Text>
           <Text fontSize={'xs'}>{props.subject.name}</Text>

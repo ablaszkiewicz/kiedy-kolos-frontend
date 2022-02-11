@@ -1,6 +1,6 @@
-import { Flex, Button, Input} from '@chakra-ui/react';
+import { Flex, Button, Input } from '@chakra-ui/react';
 import useSubjects from '../../../../hooks/useSubjects';
-import {useSetState} from "../../../../hooks/useSetState";
+import { useSetState } from '../../../../hooks/useSetState';
 
 interface State {
   name: string;
@@ -15,25 +15,16 @@ export const SubjectAdder = () => {
   const { postMutation } = useSubjects();
 
   return (
-    <Flex borderWidth={'1px'} width={'30em'} m={2} p={2} borderRadius={5}>
-      <Flex>
-        <Input
-          placeholder='Pełna nazwa...'
-          value={state.name}
-          onChange={(e) => setState({name: e.target.value})}
-          mr={2}
-        />
-        <Input
-          placeholder='Krótka nazwa...'
-          value={state.shortName}
-          onChange={(e) => setState({shortName: e.target.value})}
-        />
-      </Flex>
+    <Flex borderWidth={'1px'} m={2} p={2} borderRadius={5}>
+      <Input placeholder='Short...' value={state.name} onChange={(e) => setState({ name: e.target.value })} mr={2} />
+      <Input placeholder='Long...' value={state.shortName} onChange={(e) => setState({ shortName: e.target.value })} />
 
       <Button
         ml={2}
         onClick={() => postMutation.mutate({ id: 0, name: state.name, shortName: state.shortName })}
         isLoading={postMutation.isLoading}
+        flexShrink={0}
+        flexg
       >
         Dodaj
       </Button>

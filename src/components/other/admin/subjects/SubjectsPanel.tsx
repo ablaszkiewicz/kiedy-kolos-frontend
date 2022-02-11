@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from '@chakra-ui/react';
+import { Box, Grid, GridItem, HStack, SimpleGrid, Text } from '@chakra-ui/react';
 import useSubjects, { SubjectType } from '../../../../hooks/useSubjects';
 import { SubjectListItem } from './SubjectListItem';
 import { SubjectAdder } from './SubjectAdder';
@@ -8,7 +8,7 @@ export const SubjectsPanel = () => {
 
   return (
     <>
-      <HStack spacing={'5em'} align={'start'}>
+      <SimpleGrid columns={[2, 2, 2, 3]} gap={6}>
         <Box>
           <Text>Lista przedmiotów:</Text>
           {query.data &&
@@ -18,7 +18,8 @@ export const SubjectsPanel = () => {
           <Text>Dodaj przedmiot:</Text>
           <SubjectAdder />
         </Box>
-      </HStack>
+      </SimpleGrid>
+      <HStack spacing={'5em'} align={'start'}></HStack>
     </>
   );
 };
