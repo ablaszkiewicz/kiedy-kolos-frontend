@@ -18,16 +18,16 @@ export const SubjectAdder = () => {
     <Flex borderWidth={'1px'} m={2} p={2} borderRadius={5}>
       <Input
         placeholder='Skrót'
-        value={state.name}
-        onChange={(e) => setState({ name: e.target.value })}
+        value={state.shortName}
+        onChange={(e) => setState({ shortName: e.target.value })}
         mr={2}
         flexBasis={0}
         flexGrow={1}
       />
       <Input
         placeholder='Pełna nazwa'
-        value={state.shortName}
-        onChange={(e) => setState({ shortName: e.target.value })}
+        value={state.name}
+        onChange={(e) => setState({ name: e.target.value })}
         flexBasis={0}
         flexGrow={3}
       />

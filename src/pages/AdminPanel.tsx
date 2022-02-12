@@ -5,12 +5,14 @@ import useStore from '../zustand/store';
 import { ColorModeSwitcher } from '../components/other/other/ColorModeSwitcher';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 
 export const TeacherPanel = () => {
   const user = useStore((state) => state.user);
   const logoutUser = useStore((state) => state.logoutUser);
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
+  const { query } = useYearCourses();
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -24,8 +26,12 @@ export const TeacherPanel = () => {
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
         <Select flexBasis={0} flexGrow={0.5} flexShrink={2}>
-          <option>Kierunek 1</option>
-          <option>Kierunek 2</option>
+          {query.data &&
+            query.data.map((yearCourse: YearCourseType) => (
+              <option value={yearCourse.id} key={yearCourse.id}>
+                {yearCourse.name}
+              </option>
+            ))}
         </Select>
         <ColorModeSwitcher />
         <Button ml={3} onClick={() => logoutUser()}>

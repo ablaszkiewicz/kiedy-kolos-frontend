@@ -15,17 +15,17 @@ export default function useYearCourses() {
 
   // api fetch methods
   const getYearCourses = async () => {
-    const response = await axios.get('users/me/yearCourses', { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.get('yearCourses', { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   };
   const postYearCourse = async (yearCourse: YearCourseType) => {
-    const response = await axios.post('users/me/yearCourses', yearCourse, {
+    const response = await axios.post('yearCourses', yearCourse, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
   const updateYearCourse = async (yearCourse: YearCourseType) => {
-    const response = await axios.put(`users/me/yearCourses`, yearCourse, {
+    const response = await axios.put(`yearCourses`, yearCourse, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
