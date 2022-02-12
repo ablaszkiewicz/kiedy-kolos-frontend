@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { SubjectsPanel } from '../components/other/admin/subjects/SubjectsPanel';
 import useStore from '../zustand/store';
 import { ColorModeSwitcher } from '../components/other/other/ColorModeSwitcher';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 
@@ -12,7 +12,8 @@ export const TeacherPanel = () => {
   const logoutUser = useStore((state) => state.logoutUser);
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
-  const { query } = useYearCourses();
+  const { query: yearCourseQuery } = useYearCourses();
+  const { yearCourseId } = useParams();
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -20,14 +21,23 @@ export const TeacherPanel = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (!yearCourseQuery.data) return;
+
+    console.log('Passed null data check');
+    if (yearCourseId === undefined) {
+      navigate(`/dashboard/${yearCourseQuery.data[0].id}`);
+    }
+  }, [yearCourseQuery.data]);
+
   return (
     <Box p={5}>
       <Flex mb={5}>
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
         <Select flexBasis={0} flexGrow={0.5} flexShrink={2}>
-          {query.data &&
-            query.data.map((yearCourse: YearCourseType) => (
+          {yearCourseQuery.data &&
+            yearCourseQuery.data.map((yearCourse: YearCourseType) => (
               <option value={yearCourse.id} key={yearCourse.id}>
                 {yearCourse.name}
               </option>

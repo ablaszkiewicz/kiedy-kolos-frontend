@@ -13,7 +13,10 @@ export const App = () => {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Routes>
-            <Route path='/dashboard' element={<TeacherPanel />} />
+            <Route path='/dashboard'>
+              <Route path='' element={<TeacherPanel />} />
+              <Route path=':yearCourseId' element={<TeacherPanel />} />
+            </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='*' element={<Navigate to='/dashboard' />} />
