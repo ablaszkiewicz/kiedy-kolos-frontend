@@ -1,6 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import useStore from '../zustand/store';
 
 export type SubjectType = {
@@ -13,26 +14,29 @@ export default function useSubjects() {
   const toast = useToast();
   const queryClient = useQueryClient();
   const token = useStore((state) => state.user.token);
+  const { yearCourseId } = useParams();
 
   // api fetch methods
   const getSubjects = async () => {
-    const response = await axios.get('yearCourses/1/subjects', { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.get(`yearCourses/${yearCourseId}/subjects`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   };
   const postSubject = async (subject: SubjectType) => {
-    const response = await axios.post('yearCourses/1/subjects', subject, {
+    const response = await axios.post(`yearCourses/${yearCourseId}/subjects`, subject, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
   const updateSubject = async (subject: SubjectType) => {
-    const response = await axios.put(`yearCourses/1/subjects`, subject, {
+    const response = await axios.put(`yearCourses/${yearCourseId}/subjects`, subject, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
   const deleteSubject = async (id: number) => {
-    const response = await axios.delete(`yearCourses/1/subjects/${id}`, {
+    const response = await axios.delete(`yearCourses/${yearCourseId}/subjects/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;

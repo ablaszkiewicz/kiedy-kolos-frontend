@@ -31,7 +31,7 @@ export default function useYearCourses() {
     return response.data;
   };
   const deleteYearCourse = async (id: number) => {
-    const response = await axios.delete(`users/me/yearCourses/${id}`, {
+    const response = await axios.delete(`yearCourses/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;

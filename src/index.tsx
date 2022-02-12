@@ -6,8 +6,8 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 
-//axios.defaults.baseURL = 'http://localhost:3001/';
-axios.defaults.baseURL = 'http://testnginx.bieda.it/';
+axios.defaults.baseURL = 'http://localhost:3001/';
+//axios.defaults.baseURL = 'http://testnginx.bieda.it/';
 
 ReactDOM.render(
   <React.StrictMode>
