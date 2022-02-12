@@ -16,21 +16,25 @@ export default function useSubjects() {
 
   // api fetch methods
   const getSubjects = async () => {
-    const response = await axios.get('users/me/subjects', { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.get('yearCourses/1/subjects', { headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   };
   const postSubject = async (subject: SubjectType) => {
-    const response = await axios.post('users/me/subjects', subject, { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.post('yearCourses/1/subjects', subject, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   };
   const updateSubject = async (subject: SubjectType) => {
-    const response = await axios.put(`users/me/subjects`, subject, {
+    const response = await axios.put(`yearCourses/1/subjects`, subject, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
   const deleteSubject = async (id: number) => {
-    const response = await axios.delete(`users/me/subjects/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.delete(`yearCourses/1/subjects/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   };
 
