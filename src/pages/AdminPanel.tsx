@@ -1,4 +1,4 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs, Flex, Spacer, Box, Heading, Button } from '@chakra-ui/react';
+import { Tab, TabList, TabPanel, TabPanels, Tabs, Flex, Spacer, Box, Heading, Button, Select } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { SubjectsPanel } from '../components/other/admin/subjects/SubjectsPanel';
 import useStore from '../zustand/store';
@@ -23,6 +23,10 @@ export const TeacherPanel = () => {
       <Flex mb={5}>
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
+        <Select flexBasis={0} flexGrow={0.5} flexShrink={2}>
+          <option>Kierunek 1</option>
+          <option>Kierunek 2</option>
+        </Select>
         <ColorModeSwitcher />
         <Button ml={3} onClick={() => logoutUser()}>
           Wyloguj

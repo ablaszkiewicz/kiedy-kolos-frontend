@@ -16,15 +16,27 @@ export const SubjectAdder = () => {
 
   return (
     <Flex borderWidth={'1px'} m={2} p={2} borderRadius={5}>
-      <Input placeholder='Short...' value={state.name} onChange={(e) => setState({ name: e.target.value })} mr={2} />
-      <Input placeholder='Long...' value={state.shortName} onChange={(e) => setState({ shortName: e.target.value })} />
+      <Input
+        placeholder='Skrót'
+        value={state.name}
+        onChange={(e) => setState({ name: e.target.value })}
+        mr={2}
+        flexBasis={0}
+        flexGrow={1}
+      />
+      <Input
+        placeholder='Pełna nazwa'
+        value={state.shortName}
+        onChange={(e) => setState({ shortName: e.target.value })}
+        flexBasis={0}
+        flexGrow={3}
+      />
 
       <Button
         ml={2}
         onClick={() => postMutation.mutate({ id: 0, name: state.name, shortName: state.shortName })}
         isLoading={postMutation.isLoading}
         flexShrink={0}
-        flexg
       >
         Dodaj
       </Button>
