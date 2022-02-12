@@ -14,7 +14,9 @@ interface LoginResponse {
 }
 
 export default function useAuth() {
+  const queryClient = useQueryClient();
   const loginToStore = useStore((state) => state.loginUser);
+  const logoutUserFromStore = useStore((state) => state.logoutUser);
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
 
@@ -26,6 +28,11 @@ export default function useAuth() {
   const register = async (credentials: Credentials) => {
     const response = await axios.post('users', { email: credentials.email, password: credentials.password });
     return response.data;
+  };
+
+  const logout = () => {
+    logoutUserFromStore();
+    queryClient.clear();
   };
 
   const loginMutation = useMutation(login, {
@@ -43,5 +50,5 @@ export default function useAuth() {
 
   const isLoggedIn: boolean = !(user === null || user.token === null || user.email === null);
 
-  return { loginMutation, registerMutation, isLoggedIn };
+  return { loginMutation, registerMutation, isLoggedIn, logout };
 }

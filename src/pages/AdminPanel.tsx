@@ -9,9 +9,8 @@ import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 
 export const TeacherPanel = () => {
   const user = useStore((state) => state.user);
-  const logoutUser = useStore((state) => state.logoutUser);
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
   const { query: yearCourseQuery } = useYearCourses();
   const { yearCourseId } = useParams();
 
@@ -44,7 +43,7 @@ export const TeacherPanel = () => {
             ))}
         </Select>
         <ColorModeSwitcher />
-        <Button ml={3} onClick={() => logoutUser()}>
+        <Button ml={3} onClick={() => logout()}>
           Wyloguj
         </Button>
       </Flex>
