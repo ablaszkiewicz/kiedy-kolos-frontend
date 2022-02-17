@@ -1,7 +1,10 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {QueryClient, useMutation, useQuery, useQueryClient} from 'react-query';
 import useStore from '../zustand/store';
+import {AlertStatus} from "./Constants";
+
+const YEAR_COURSES_QUERY_KEY: string = 'yearCourses';
 
 export type YearCourseType = {
   id: number;
@@ -10,26 +13,29 @@ export type YearCourseType = {
 
 export default function useYearCourses() {
   const toast = useToast();
-  const queryClient = useQueryClient();
-  const token = useStore((state) => state.user.token);
+  const queryClient: QueryClient = useQueryClient();
+  const token: string | null = useStore((state) => state.user.token);
 
-  // api fetch methods
   const getYearCourses = async () => {
-    const response = await axios.get('users/me/yearCourses', { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.get('users/me/yearCourses', {
+      headers: { Authorization: `Bearer ${token}` } });
     return response.data;
   };
+
   const postYearCourse = async (yearCourse: YearCourseType) => {
-    const response = await axios.post('yearCourses', yearCourse, {
+    const response = await axios.post(YEAR_COURSES_QUERY_KEY, yearCourse, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
+
   const updateYearCourse = async (yearCourse: YearCourseType) => {
     const response = await axios.put(`yearCourses`, yearCourse, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
+
   const deleteYearCourse = async (id: number) => {
     const response = await axios.delete(`yearCourses/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -37,16 +43,14 @@ export default function useYearCourses() {
     return response.data;
   };
 
-  // queries
-  const query = useQuery('yearCourses', getYearCourses);
+  const query = useQuery(YEAR_COURSES_QUERY_KEY, getYearCourses);
 
-  // mutations
   const postMutation = useMutation(postYearCourse, {
     onSuccess: (yearCourse: YearCourseType) => {
-      queryClient.setQueryData('yearCourses', (old: any) => [...old, yearCourse]);
+      queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (old: any) => [...old, yearCourse]);
       toast({
         title: 'Dodano kierunek',
-        status: 'success',
+        status: AlertStatus.Success,
         duration: 2000,
       });
     },
@@ -54,13 +58,13 @@ export default function useYearCourses() {
 
   const updateMutation = useMutation(updateYearCourse, {
     onSuccess: (yearCourse: YearCourseType) => {
-      const yearCourses: YearCourseType[] = queryClient.getQueryData('yearCourses')!;
+      const yearCourses: YearCourseType[] = queryClient.getQueryData(YEAR_COURSES_QUERY_KEY)!;
       const index = yearCourses.findIndex((yearCourseTmp) => yearCourseTmp.id === yearCourse.id);
       yearCourses[index] = yearCourse;
-      queryClient.setQueryData('yearCourses', (old: any) => yearCourses);
+      queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (_) => yearCourses);
       toast({
         title: 'Zaktualizowano kierunek',
-        status: 'success',
+        status: AlertStatus.Success,
         duration: 2000,
       });
     },
@@ -68,12 +72,12 @@ export default function useYearCourses() {
 
   const deleteMutation = useMutation(deleteYearCourse, {
     onSuccess: (yearCourse: YearCourseType) => {
-      queryClient.setQueryData('yearCourses', (old: any) =>
+      queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (old: any) =>
         old.filter((yearCourseTmp: YearCourseType) => yearCourseTmp.id != yearCourse.id)
       );
       toast({
         title: 'Usunięto kierunek',
-        status: 'success',
+        status: AlertStatus.Success,
         duration: 2000,
       });
     },

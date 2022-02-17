@@ -3,6 +3,7 @@ import axios from 'axios';
 import {QueryClient, useMutation, useQuery, useQueryClient} from 'react-query';
 import { useParams } from 'react-router-dom';
 import useStore from '../zustand/store';
+import {AlertStatus} from "./Constants";
 
 export type SubjectType = {
   id: number;
@@ -53,7 +54,7 @@ export default function useSubjects() {
       queryClient.setQueryData(SUBJECTS_QUERY_KEY, (old: any) => [...old, subject]);
       toast({
         title: 'Dodano przedmiot',
-        status: 'success',
+        status: AlertStatus.Success,
         duration: 2000,
       });
     },
@@ -67,7 +68,7 @@ export default function useSubjects() {
       queryClient.setQueryData(SUBJECTS_QUERY_KEY, (_) => subjects);
       toast({
         title: 'Zaktualizowano przedmiot',
-        status: 'success',
+        status: AlertStatus.Success,
         duration: 2000,
       });
     },
@@ -80,7 +81,7 @@ export default function useSubjects() {
       );
       toast({
         title: 'Usunięto przedmiot',
-        status: 'success',
+        status: AlertStatus.Success,
         duration: 2000,
       });
     },
