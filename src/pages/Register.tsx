@@ -10,7 +10,6 @@ import {
   useColorModeValue,
   Text,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { useSetState } from '../hooks/useSetState';
 
@@ -25,7 +24,6 @@ export const Register = () => {
     password: '',
   } as State);
 
-  const navigate = useNavigate();
   const { registerMutation } = useAuth();
 
   return (
