@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {QueryClient, useMutation, useQuery, useQueryClient} from 'react-query';
 import { useParams } from 'react-router-dom';
 import useStore from '../zustand/store';
 
@@ -10,31 +10,35 @@ export type SubjectType = {
   shortName: string;
 };
 
+const SUBJECTS_QUERY_KEY: string = 'subjects';
+
 export default function useSubjects() {
   const toast = useToast();
-  const queryClient = useQueryClient();
-  const token = useStore((state) => state.user.token);
-  const { yearCourseId } = useParams();
+  const queryClient: QueryClient = useQueryClient();
+  const token: string | null = useStore((state) => state.user.token);
+  const { yearCourseId } = useParams<{yearCourseId: string}>();
 
-  // api fetch methods
   const getSubjects = async () => {
     const response = await axios.get(`yearCourses/${yearCourseId}/subjects`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
+
   const postSubject = async (subject: SubjectType) => {
     const response = await axios.post(`yearCourses/${yearCourseId}/subjects`, subject, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
+
   const updateSubject = async (subject: SubjectType) => {
     const response = await axios.put(`yearCourses/${yearCourseId}/subjects`, subject, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
+
   const deleteSubject = async (id: number) => {
     const response = await axios.delete(`yearCourses/${yearCourseId}/subjects/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -42,13 +46,11 @@ export default function useSubjects() {
     return response.data;
   };
 
-  // queries
-  const query = useQuery('subjects', getSubjects);
+  const query = useQuery(SUBJECTS_QUERY_KEY, getSubjects);
 
-  // mutations
   const postMutation = useMutation(postSubject, {
     onSuccess: (subject: SubjectType) => {
-      queryClient.setQueryData('subjects', (old: any) => [...old, subject]);
+      queryClient.setQueryData(SUBJECTS_QUERY_KEY, (old: any) => [...old, subject]);
       toast({
         title: 'Dodano przedmiot',
         status: 'success',
@@ -59,10 +61,10 @@ export default function useSubjects() {
 
   const updateMutation = useMutation(updateSubject, {
     onSuccess: (subject: SubjectType) => {
-      const subjects: SubjectType[] = queryClient.getQueryData('subjects')!;
-      const index = subjects.findIndex((subjectTmp) => subjectTmp.id === subject.id);
+      const subjects: SubjectType[] = queryClient.getQueryData(SUBJECTS_QUERY_KEY)!;
+      const index: number = subjects.findIndex((subjectTmp) => subjectTmp.id === subject.id);
       subjects[index] = subject;
-      queryClient.setQueryData('subjects', (old: any) => subjects);
+      queryClient.setQueryData(SUBJECTS_QUERY_KEY, (_) => subjects);
       toast({
         title: 'Zaktualizowano przedmiot',
         status: 'success',
@@ -73,7 +75,7 @@ export default function useSubjects() {
 
   const deleteMutation = useMutation(deleteSubject, {
     onSuccess: (subject: SubjectType) => {
-      queryClient.setQueryData('subjects', (old: any) =>
+      queryClient.setQueryData(SUBJECTS_QUERY_KEY, (old: any) =>
         old.filter((subjectTmp: SubjectType) => subjectTmp.id != subject.id)
       );
       toast({
