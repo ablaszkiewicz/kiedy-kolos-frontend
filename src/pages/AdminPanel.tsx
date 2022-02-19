@@ -12,7 +12,7 @@ export const TeacherPanel = () => {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const { query: yearCourseQuery } = useYearCourses();
-  const { yearCourseId } = useParams();
+  const { yearCourseId } = useParams<{yearCourseId: string}>();
 
   useEffect(() => {
     if (!isLoggedIn) {
