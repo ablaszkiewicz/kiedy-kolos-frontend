@@ -33,7 +33,7 @@ export default function useSubjects() {
   };
 
   const updateSubject = async (subject: SubjectType) => {
-    const response = await axios.put(`yearCourses/${yearCourseId}/subjects`, subject, {
+    const response = await axios.put(`yearCourses/${yearCourseId}/subjects/${subject.id}`, subject, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
