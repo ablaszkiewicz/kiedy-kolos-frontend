@@ -1,8 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
-import {QueryClient, useMutation, useQuery, useQueryClient} from 'react-query';
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import useStore from '../zustand/store';
-import {AlertStatus} from "./Constants";
 
 const YEAR_COURSES_QUERY_KEY: string = 'yearCourses';
 
@@ -18,7 +17,8 @@ export default function useYearCourses() {
 
   const getYearCourses = async () => {
     const response = await axios.get('users/me/yearCourses', {
-      headers: { Authorization: `Bearer ${token}` } });
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   };
 
@@ -50,7 +50,7 @@ export default function useYearCourses() {
       queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (old: any) => [...old, yearCourse]);
       toast({
         title: 'Dodano kierunek',
-        status: AlertStatus.Success,
+        status: 'success',
         duration: 2000,
       });
     },
@@ -64,7 +64,7 @@ export default function useYearCourses() {
       queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (_) => yearCourses);
       toast({
         title: 'Zaktualizowano kierunek',
-        status: AlertStatus.Success,
+        status: 'success',
         duration: 2000,
       });
     },
@@ -77,7 +77,7 @@ export default function useYearCourses() {
       );
       toast({
         title: 'Usunięto kierunek',
-        status: AlertStatus.Success,
+        status: 'success',
         duration: 2000,
       });
     },
