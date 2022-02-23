@@ -19,30 +19,22 @@ export default function useSubjects() {
   const { yearCourseId } = useParams<{ yearCourseId: string }>();
 
   const getSubjects = async () => {
-    const response = await axios.get(`yearCourses/${yearCourseId}/subjects`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.get(`yearCourses/${yearCourseId}/subjects`);
     return response.data;
   };
 
   const postSubject = async (subject: SubjectType) => {
-    const response = await axios.post(`yearCourses/${yearCourseId}/subjects`, subject, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.post(`yearCourses/${yearCourseId}/subjects`, subject);
     return response.data;
   };
 
   const updateSubject = async (subject: SubjectType) => {
-    const response = await axios.put(`yearCourses/${yearCourseId}/subjects/${subject.id}`, subject, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.put(`yearCourses/${yearCourseId}/subjects/${subject.id}`, subject);
     return response.data;
   };
 
   const deleteSubject = async (id: number) => {
-    const response = await axios.delete(`yearCourses/${yearCourseId}/subjects/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.delete(`yearCourses/${yearCourseId}/subjects/${id}`);
     return response.data;
   };
 

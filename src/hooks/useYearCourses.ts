@@ -16,30 +16,22 @@ export default function useYearCourses() {
   const token: string | null = useStore((state) => state.user.token);
 
   const getYearCourses = async () => {
-    const response = await axios.get('users/me/yearCourses', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.get('users/me/yearCourses');
     return response.data;
   };
 
   const postYearCourse = async (yearCourse: YearCourseType) => {
-    const response = await axios.post(YEAR_COURSES_QUERY_KEY, yearCourse, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.post(YEAR_COURSES_QUERY_KEY, yearCourse);
     return response.data;
   };
 
   const updateYearCourse = async (yearCourse: YearCourseType) => {
-    const response = await axios.put(`yearCourses`, yearCourse, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.put(`yearCourses`, yearCourse);
     return response.data;
   };
 
   const deleteYearCourse = async (id: number) => {
-    const response = await axios.delete(`yearCourses/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.delete(`yearCourses/${id}`);
     return response.data;
   };
 
