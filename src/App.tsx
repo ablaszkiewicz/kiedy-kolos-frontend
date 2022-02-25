@@ -5,6 +5,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { TeacherPanel } from './pages/AdminPanel';
 import theme from './theme';
+import { RequireAuthRoute } from './components/other/other/RequireAuthRoute';
 
 const queryClient = new QueryClient();
 
@@ -15,8 +16,22 @@ export const App = () => {
         <Router basename='/'>
           <Routes>
             <Route path='/dashboard'>
-              <Route path='' element={<TeacherPanel />} />
-              <Route path=':yearCourseId' element={<TeacherPanel />} />
+              <Route
+                path=''
+                element={
+                  <RequireAuthRoute>
+                    <TeacherPanel />
+                  </RequireAuthRoute>
+                }
+              />
+              <Route
+                path=':yearCourseId'
+                element={
+                  <RequireAuthRoute>
+                    <TeacherPanel />
+                  </RequireAuthRoute>
+                }
+              />
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />

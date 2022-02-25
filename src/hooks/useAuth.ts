@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { tokenExpired } from '../zustand/jwtExpiration';
 import useStore from '../zustand/store';
 
 interface Credentials {
@@ -48,7 +49,12 @@ export default function useAuth() {
     },
   });
 
-  const isLoggedIn: boolean = !(user === null || user.token === null || user.email === null);
+  const isLoggedIn: boolean = !(
+    user === null ||
+    user.token === null ||
+    user.email === null ||
+    tokenExpired(user.token)
+  );
 
   return { loginMutation, registerMutation, isLoggedIn, logout };
 }
