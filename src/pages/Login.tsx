@@ -70,7 +70,7 @@ export const Login = () => {
         </Box>
         {(routerState as any).customMessage && (
           <Box rounded={'lg'} bg={bgColor} boxShadow={'lg'} p={8}>
-            <Text>{(routerState as any).customMessage ? (routerState as any).customMessage : ''}</Text>
+            <Text>{(routerState as any).customMessage}</Text>
           </Box>
         )}
       </Stack>
