@@ -6,7 +6,7 @@ import { Register } from './pages/Register';
 import { TeacherPanel } from './pages/AdminPanel';
 import theme from './theme';
 import { RequireAuthRoute } from './components/other/other/RequireAuthRoute';
-import { UnauthorizedChecker } from './components/other/other/UnauthorizedChecker';
+import { UnauthorizedHandler } from './components/other/other/UnauthorizedHandler';
 
 const queryClient = new QueryClient();
 
@@ -15,7 +15,7 @@ export const App = () => {
     <ChakraProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Router basename='/'>
-          <UnauthorizedChecker />
+          <UnauthorizedHandler />
           <Routes>
             <Route path='/dashboard'>
               <Route
