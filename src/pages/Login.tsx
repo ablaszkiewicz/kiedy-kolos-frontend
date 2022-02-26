@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { useSetState } from '../hooks/useSetState';
+import { Path } from '../other/Paths';
 
 interface State {
   email: string;
@@ -36,7 +37,7 @@ export const Login = () => {
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Zaloguj się</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            lub załóż konto <RouterLink to='/register'>tutaj</RouterLink> ✌️
+            lub załóż konto <RouterLink to={Path.REGISTER}>tutaj</RouterLink> ✌️
           </Text>
         </Stack>
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>

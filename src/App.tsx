@@ -7,6 +7,7 @@ import { TeacherPanel } from './pages/AdminPanel';
 import theme from './theme';
 import { RequireAuthRoute } from './components/other/other/RequireAuthRoute';
 import { UnauthorizedHandler } from './components/other/other/UnauthorizedHandler';
+import { Path } from './other/Paths';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,7 @@ export const App = () => {
         <Router basename='/'>
           <UnauthorizedHandler />
           <Routes>
-            <Route path='/dashboard'>
+            <Route path={Path.DASHBOARD}>
               <Route
                 path=''
                 element={
@@ -35,9 +36,9 @@ export const App = () => {
                 }
               />
             </Route>
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='*' element={<Navigate to='/dashboard' />} />
+            <Route path={Path.LOGIN} element={<Login />} />
+            <Route path={Path.REGISTER} element={<Register />} />
+            <Route path='*' element={<Navigate to={Path.DASHBOARD} />} />
           </Routes>
         </Router>
       </QueryClientProvider>

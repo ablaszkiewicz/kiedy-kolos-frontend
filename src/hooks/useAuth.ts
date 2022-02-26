@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { Path } from '../other/Paths';
 import { tokenExpired } from '../zustand/jwtExpiration';
 import useStore from '../zustand/store';
 
@@ -45,7 +46,7 @@ export default function useAuth() {
 
   const registerMutation = useMutation(register, {
     onSuccess: () => {
-      navigate('/login');
+      navigate(Path.LOGIN);
     },
   });
 
