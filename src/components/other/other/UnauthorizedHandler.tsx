@@ -12,7 +12,7 @@ export const UnauthorizedHandler = () => {
     axios.interceptors.response.use(
       (response) => response,
       (error) => {
-        const statusCode = error.response ? error.response.status : null;
+        const statusCode: HttpCode = error.response ? error.response.status : null;
         if (statusCode === HttpCode.UNAUTHORIZED) {
           navigate(Path.LOGIN, { state: { customMessage: 'Widzisz ten ekran, ponieważ zostałeś wylogowany' } });
         }
