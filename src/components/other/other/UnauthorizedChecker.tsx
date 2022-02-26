@@ -11,7 +11,7 @@ export const UnauthorizedChecker = () => {
       (error) => {
         const statusCode = error.response ? error.response.status : null;
         if (statusCode === 401) {
-          navigate('/login', { state: { customMessage: 'Zostałeś wylogowany' } });
+          navigate('/login', { state: { customMessage: 'Widzisz ten ekran, ponieważ zostałeś wylogowany' } });
         }
       }
     );

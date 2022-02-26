@@ -28,6 +28,7 @@ export const Login = () => {
 
   const { loginMutation } = useAuth();
   const { state: routerState } = useLocation();
+  const bgColor = useColorModeValue('white', 'gray.700');
 
   return (
     <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -64,10 +65,14 @@ export const Login = () => {
                 Sign in
               </Button>
             </Stack>
-            <Text color={'red'}>{(routerState as any).customMessage ? (routerState as any).customMessage : ''}</Text>
             <Text color={'red'}>{loginMutation.isError ? (loginMutation as any).error.message : ''}</Text>
           </Stack>
         </Box>
+        {(routerState as any).customMessage && (
+          <Box rounded={'lg'} bg={bgColor} boxShadow={'lg'} p={8}>
+            <Text>{(routerState as any).customMessage ? (routerState as any).customMessage : ''}</Text>
+          </Box>
+        )}
       </Stack>
     </Flex>
   );
