@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HttpCode } from '../../../other/HttpStatusCodes';
 import { Path } from '../../../other/Paths';
+import { StatusCodes } from 'http-status-codes';
 
 export const UnauthorizedHandler = () => {
   const navigate = useNavigate();
@@ -12,8 +12,8 @@ export const UnauthorizedHandler = () => {
     axios.interceptors.response.use(
       (response) => response,
       (error) => {
-        const statusCode: HttpCode = error.response ? error.response.status : null;
-        if (statusCode === HttpCode.UNAUTHORIZED) {
+        const statusCode: StatusCodes = error.response ? error.response.status : null;
+        if (statusCode === StatusCodes.UNAUTHORIZED) {
           navigate(Path.LOGIN, { state: { customMessage: 'Widzisz ten ekran, ponieważ zostałeś wylogowany' } });
         }
       }
