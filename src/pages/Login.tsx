@@ -10,7 +10,8 @@ import {
   useColorModeValue,
   Text,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { useSetState } from '../hooks/useSetState';
 
@@ -26,6 +27,7 @@ export const Login = () => {
   } as State);
 
   const { loginMutation } = useAuth();
+  const { state: routerState } = useLocation();
 
   return (
     <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -62,7 +64,8 @@ export const Login = () => {
                 Sign in
               </Button>
             </Stack>
-            <Text>{loginMutation.isError ? (loginMutation as any).error.message : ''}</Text>
+            <Text color={'red'}>{(routerState as any).customMessage ? (routerState as any).customMessage : ''}</Text>
+            <Text color={'red'}>{loginMutation.isError ? (loginMutation as any).error.message : ''}</Text>
           </Stack>
         </Box>
       </Stack>
