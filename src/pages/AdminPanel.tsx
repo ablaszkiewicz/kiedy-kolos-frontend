@@ -6,17 +6,18 @@ import { ColorModeSwitcher } from '../components/other/other/ColorModeSwitcher';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
+import { Path } from '../other/Paths';
 
 export const TeacherPanel = () => {
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const { query: yearCourseQuery } = useYearCourses();
-  const { yearCourseId } = useParams<{yearCourseId: string}>();
+  const { yearCourseId } = useParams<{ yearCourseId: string }>();
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate(Path.LOGIN);
     }
   }, [user]);
 
