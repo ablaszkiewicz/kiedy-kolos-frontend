@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, HStack, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
 import useSubjects, { SubjectType } from '../../../../hooks/useSubjects';
 import { SubjectListItem } from './SubjectListItem';
 import { SubjectAdder } from './SubjectAdder';

@@ -2,7 +2,6 @@ import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import useStore from '../zustand/store';
 
 export type SubjectType = {
   id: number;
@@ -15,34 +14,25 @@ const SUBJECTS_QUERY_KEY: string = 'subjects';
 export default function useSubjects() {
   const toast = useToast();
   const queryClient: QueryClient = useQueryClient();
-  const token: string | null = useStore((state) => state.user.token);
   const { yearCourseId } = useParams<{ yearCourseId: string }>();
 
   const getSubjects = async () => {
-    const response = await axios.get(`yearCourses/${yearCourseId}/subjects`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.get(`yearCourses/${yearCourseId}/subjects`);
     return response.data;
   };
 
   const postSubject = async (subject: SubjectType) => {
-    const response = await axios.post(`yearCourses/${yearCourseId}/subjects`, subject, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.post(`yearCourses/${yearCourseId}/subjects`, subject);
     return response.data;
   };
 
   const updateSubject = async (subject: SubjectType) => {
-    const response = await axios.put(`yearCourses/${yearCourseId}/subjects/${subject.id}`, subject, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.put(`yearCourses/${yearCourseId}/subjects/${subject.id}`, subject);
     return response.data;
   };
 
   const deleteSubject = async (id: number) => {
-    const response = await axios.delete(`yearCourses/${yearCourseId}/subjects/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.delete(`yearCourses/${yearCourseId}/subjects/${id}`);
     return response.data;
   };
 
@@ -76,7 +66,7 @@ export default function useSubjects() {
   const deleteMutation = useMutation(deleteSubject, {
     onSuccess: (subject: SubjectType) => {
       queryClient.setQueryData(SUBJECTS_QUERY_KEY, (old: any) =>
-        old.filter((subjectTmp: SubjectType) => subjectTmp.id != subject.id)
+        old.filter((subjectTmp: SubjectType) => subjectTmp.id !== subject.id)
       );
       toast({
         title: 'Usunięto przedmiot',

@@ -1,5 +1,4 @@
 import jwtDecode from 'jwt-decode';
-import useStore from './store';
 
 interface Token {
   exp: number;
