@@ -6,7 +6,6 @@ import { ColorModeSwitcher } from '../components/other/other/ColorModeSwitcher';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
-import axios from "axios";
 import { Path } from '../other/Paths';
 
 export const TeacherPanel = () => {
@@ -15,16 +14,6 @@ export const TeacherPanel = () => {
   const { isLoggedIn, logout } = useAuth();
   const { query: yearCourseQuery } = useYearCourses();
   const { yearCourseId } = useParams<{ yearCourseId: string }>();
-  const token: string | null = useStore((state) => state.user.token);
-
-  useEffect(() => {
-    if(token){
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-    }
-    else {
-      delete axios.defaults.headers.common['Authorization'];
-    }
-  }, [token]);
 
   useEffect(() => {
     if (!isLoggedIn) {

@@ -10,7 +10,6 @@ import {
   useColorModeValue,
   Text,
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { useSetState } from '../hooks/useSetState';

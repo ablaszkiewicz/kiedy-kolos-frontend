@@ -35,11 +35,13 @@ export default function useAuth() {
   const logout = () => {
     logoutUserFromStore();
     queryClient.clear();
+    delete axios.defaults.headers.common['Authorization'];
   };
 
   const loginMutation = useMutation(login, {
     onSuccess: (response: LoginResponse) => {
       loginToStore(response.email, response.token);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
       navigate('/dashboard');
     },
   });

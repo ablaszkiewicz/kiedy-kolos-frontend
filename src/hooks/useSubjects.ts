@@ -2,7 +2,6 @@ import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import useStore from '../zustand/store';
 
 export type SubjectType = {
   id: number;
@@ -15,7 +14,6 @@ const SUBJECTS_QUERY_KEY: string = 'subjects';
 export default function useSubjects() {
   const toast = useToast();
   const queryClient: QueryClient = useQueryClient();
-  const token: string | null = useStore((state) => state.user.token);
   const { yearCourseId } = useParams<{ yearCourseId: string }>();
 
   const getSubjects = async () => {
@@ -68,7 +66,7 @@ export default function useSubjects() {
   const deleteMutation = useMutation(deleteSubject, {
     onSuccess: (subject: SubjectType) => {
       queryClient.setQueryData(SUBJECTS_QUERY_KEY, (old: any) =>
-        old.filter((subjectTmp: SubjectType) => subjectTmp.id != subject.id)
+        old.filter((subjectTmp: SubjectType) => subjectTmp.id !== subject.id)
       );
       toast({
         title: 'Usunięto przedmiot',

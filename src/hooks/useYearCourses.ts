@@ -1,7 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
-import useStore from '../zustand/store';
 
 const YEAR_COURSES_QUERY_KEY: string = 'yearCourses';
 
@@ -13,7 +12,6 @@ export type YearCourseType = {
 export default function useYearCourses() {
   const toast = useToast();
   const queryClient: QueryClient = useQueryClient();
-  const token: string | null = useStore((state) => state.user.token);
 
   const getYearCourses = async () => {
     const response = await axios.get('users/me/yearCourses');
@@ -65,7 +63,7 @@ export default function useYearCourses() {
   const deleteMutation = useMutation(deleteYearCourse, {
     onSuccess: (yearCourse: YearCourseType) => {
       queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (old: any) =>
-        old.filter((yearCourseTmp: YearCourseType) => yearCourseTmp.id != yearCourse.id)
+        old.filter((yearCourseTmp: YearCourseType) => yearCourseTmp.id !== yearCourse.id)
       );
       toast({
         title: 'Usunięto kierunek',
