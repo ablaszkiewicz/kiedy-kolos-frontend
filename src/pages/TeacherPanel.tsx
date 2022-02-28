@@ -7,42 +7,22 @@ import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 import { Path } from '../other/Paths';
 import { SubjectsPanel } from '../components/admin/subjects/SubjectsPanel';
 import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 export const TeacherPanel = () => {
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useAuth();
-  const { query: yearCourseQuery } = useYearCourses();
-  const { yearCourseId } = useParams<{ yearCourseId: string }>();
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate(Path.LOGIN);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (!yearCourseQuery.data) return;
-
-    console.log('Passed null data check');
-    if (yearCourseId === undefined) {
-      navigate(`/dashboard/${yearCourseQuery.data[0].id}`);
-    }
-  }, [yearCourseQuery.data]);
+  const { logout } = useAuth();
 
   return (
     <Box p={5}>
       <Flex mb={5}>
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
-        <Select flexBasis={0} flexGrow={0.5} flexShrink={2}>
-          {yearCourseQuery.data &&
-            yearCourseQuery.data.map((yearCourse: YearCourseType) => (
-              <option value={yearCourse.id} key={yearCourse.id}>
-                {yearCourse.name}
-              </option>
-            ))}
-        </Select>
+        <Button onClick={() => navigate(Path.EXPLORER)}>
+          <ArrowBackIcon mr={3} />
+          Wybór kierunku
+        </Button>
         <ColorModeSwitcher />
         <Button ml={3} onClick={() => logout()}>
           Wyloguj
