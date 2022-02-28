@@ -24,7 +24,7 @@ export const App = () => {
                 path=''
                 element={
                   <RequireAuthRoute>
-                    <TeacherPanel />
+                    <Explorer />
                   </RequireAuthRoute>
                 }
               />

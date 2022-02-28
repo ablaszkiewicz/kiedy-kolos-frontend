@@ -12,17 +12,6 @@ export const TeacherPanel = () => {
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
   const { logout } = useAuth();
-  const { yearCourseId } = useParams<{ yearCourseId: string }>();
-  const { query: yearCourseQuery } = useYearCourses();
-
-  useEffect(() => {
-    if (!yearCourseQuery.data) return;
-
-    console.log('Passed null data check');
-    if (yearCourseId === undefined) {
-      navigate(`/dashboard/${yearCourseQuery.data[0].id}`);
-    }
-  }, [yearCourseQuery.data]);
 
   return (
     <Box p={5}>
