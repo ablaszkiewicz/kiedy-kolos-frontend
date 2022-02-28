@@ -6,6 +6,7 @@ import useAuth from '../hooks/useAuth';
 import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 import { Path } from '../other/Paths';
 import { SubjectsPanel } from '../components/admin/subjects/SubjectsPanel';
+import { SettingsPanel } from '../components/admin/settings/SettingsPanel';
 import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
 
 export const TeacherPanel = () => {
@@ -53,6 +54,7 @@ export const TeacherPanel = () => {
           <Tab>Kalendarz</Tab>
           <Tab>Grupy</Tab>
           <Tab>Przedmioty</Tab>
+          <Tab>Ustawienia</Tab>
         </TabList>
 
         <TabPanels>
@@ -64,6 +66,9 @@ export const TeacherPanel = () => {
           </TabPanel>
           <TabPanel>
             <SubjectsPanel />
+          </TabPanel>
+          <TabPanel>
+            <SettingsPanel />
           </TabPanel>
         </TabPanels>
       </Tabs>
