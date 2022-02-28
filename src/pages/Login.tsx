@@ -68,7 +68,7 @@ export const Login = () => {
             <Text color={'red'}>{loginMutation.isError ? (loginMutation as any).error.message : ''}</Text>
           </Stack>
         </Box>
-        {(routerState as any).customMessage && (
+        {routerState && (routerState as any).customMessage && (
           <Box rounded={'lg'} bg={bgColor} boxShadow={'lg'} p={8}>
             <Text>{(routerState as any).customMessage}</Text>
           </Box>
