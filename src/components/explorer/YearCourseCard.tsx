@@ -7,7 +7,7 @@ interface Props {
   yearCourse: YearCourseType;
 }
 
-export const SubjectCard = (props: Props) => {
+export const YearCourseCard = (props: Props) => {
   const navigate = useNavigate();
 
   const navigateToDashboard = (yearCourse: YearCourseType) => {

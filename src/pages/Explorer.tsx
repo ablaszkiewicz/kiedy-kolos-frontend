@@ -2,7 +2,9 @@ import { Flex, Spacer, Box, Heading, Button, SimpleGrid } from '@chakra-ui/react
 import useAuth from '../hooks/useAuth';
 import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
-import { SubjectCard } from '../components/explorer/SubjectCard';
+
+import { YearCourseCard } from '../components/explorer/YearCourseCard';
+import { YearCourseAdder } from '../components/explorer/YearCourseAdder';
 
 export const Explorer = () => {
   const { query: yearCourseQuery } = useYearCourses();
@@ -22,8 +24,9 @@ export const Explorer = () => {
         <SimpleGrid columns={[1, 2, 3, 4, 5]} gap={6}>
           {yearCourseQuery.data &&
             yearCourseQuery.data.map((yearCourse: YearCourseType) => (
-              <SubjectCard key={yearCourse.id} yearCourse={yearCourse} />
+              <YearCourseCard key={yearCourse.id} yearCourse={yearCourse} />
             ))}
+          <YearCourseAdder />
         </SimpleGrid>
       </Box>
     </Box>
