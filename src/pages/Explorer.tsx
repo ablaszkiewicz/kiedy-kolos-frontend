@@ -1,19 +1,25 @@
-import { Flex, Spacer, Box, Heading, Button, SimpleGrid } from '@chakra-ui/react';
+import { Flex, Spacer, Box, Heading, Button, SimpleGrid, useDisclosure, Grid } from '@chakra-ui/react';
 import useAuth from '../hooks/useAuth';
 import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
 
 import { YearCourseCard } from '../components/explorer/YearCourseCard';
-import { YearCourseAdder } from '../components/explorer/YearCourseAdder';
+import { YearCourseCreateModal } from '../components/explorer/YearCourseCreateModal';
+import { AddIcon, PlusSquareIcon } from '@chakra-ui/icons';
 
 export const Explorer = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { query: yearCourseQuery } = useYearCourses();
   const { logout } = useAuth();
 
   return (
     <Box p={5}>
+      <YearCourseCreateModal isOpen={isOpen} onClose={onClose} />
       <Flex mb={5}>
         <Heading>Eksplorator kierunków</Heading>
+        <Button ml={5} onClick={onOpen} rightIcon={<PlusSquareIcon />} variant={'outline'}>
+          Dodaj kierunek
+        </Button>
         <Spacer />
         <ColorModeSwitcher />
         <Button ml={3} onClick={() => logout()}>
@@ -26,7 +32,6 @@ export const Explorer = () => {
             yearCourseQuery.data.map((yearCourse: YearCourseType) => (
               <YearCourseCard key={yearCourse.id} yearCourse={yearCourse} />
             ))}
-          <YearCourseAdder />
         </SimpleGrid>
       </Box>
     </Box>

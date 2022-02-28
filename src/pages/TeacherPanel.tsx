@@ -19,8 +19,7 @@ export const TeacherPanel = () => {
       <Flex mb={5}>
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
-        <Button onClick={() => navigate(Path.EXPLORER)}>
-          <ArrowBackIcon mr={3} />
+        <Button onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
           Wybór kierunku
         </Button>
         <ColorModeSwitcher />
