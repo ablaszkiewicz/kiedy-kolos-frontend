@@ -42,7 +42,7 @@ export default function useAuth() {
     onSuccess: (response: LoginResponse) => {
       loginToStore(response.email, response.token);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
-      navigate('/dashboard');
+      navigate(Path.EXPLORER);
     },
   });
 

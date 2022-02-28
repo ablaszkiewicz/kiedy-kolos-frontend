@@ -37,10 +37,17 @@ export const App = () => {
                 }
               />
             </Route>
+            <Route
+              path={Path.EXPLORER}
+              element={
+                <RequireAuthRoute>
+                  <Explorer />
+                </RequireAuthRoute>
+              }
+            />
             <Route path={Path.LOGIN} element={<Login />} />
             <Route path={Path.REGISTER} element={<Register />} />
-            <Route path={Path.EXPLORER} element={<Explorer />} />
-            <Route path='*' element={<Navigate to={Path.DASHBOARD} />} />
+            <Route path='*' element={<Navigate to={Path.EXPLORER} />} />
           </Routes>
         </Router>
       </QueryClientProvider>
