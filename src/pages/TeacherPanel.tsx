@@ -7,6 +7,7 @@ import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 import { Path } from '../other/Paths';
 import { SubjectsPanel } from '../components/admin/subjects/SubjectsPanel';
 import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 export const TeacherPanel = () => {
   const user = useStore((state) => state.user);
@@ -18,7 +19,10 @@ export const TeacherPanel = () => {
       <Flex mb={5}>
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
-        <Button onClick={() => navigate(Path.EXPLORER)}>Wybór kierunku</Button>
+        <Button onClick={() => navigate(Path.EXPLORER)}>
+          <ArrowBackIcon mr={3} />
+          Wybór kierunku
+        </Button>
         <ColorModeSwitcher />
         <Button ml={3} onClick={() => logout()}>
           Wyloguj
