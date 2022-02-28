@@ -7,6 +7,7 @@ const YEAR_COURSES_QUERY_KEY: string = 'yearCourses';
 export type YearCourseType = {
   id: number;
   name: string;
+  startYear: number;
 };
 
 export default function useYearCourses() {

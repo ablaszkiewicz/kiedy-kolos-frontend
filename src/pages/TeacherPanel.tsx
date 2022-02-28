@@ -11,15 +11,9 @@ import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
 export const TeacherPanel = () => {
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useAuth();
-  const { query: yearCourseQuery } = useYearCourses();
+  const { logout } = useAuth();
   const { yearCourseId } = useParams<{ yearCourseId: string }>();
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate(Path.LOGIN);
-    }
-  }, [user]);
+  const { query: yearCourseQuery } = useYearCourses();
 
   useEffect(() => {
     if (!yearCourseQuery.data) return;
@@ -35,14 +29,7 @@ export const TeacherPanel = () => {
       <Flex mb={5}>
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
-        <Select flexBasis={0} flexGrow={0.5} flexShrink={2}>
-          {yearCourseQuery.data &&
-            yearCourseQuery.data.map((yearCourse: YearCourseType) => (
-              <option value={yearCourse.id} key={yearCourse.id}>
-                {yearCourse.name}
-              </option>
-            ))}
-        </Select>
+        <Button onClick={() => navigate(Path.EXPLORER)}>Wybór kierunku</Button>
         <ColorModeSwitcher />
         <Button ml={3} onClick={() => logout()}>
           Wyloguj
