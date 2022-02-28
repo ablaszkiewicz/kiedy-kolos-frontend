@@ -1,12 +1,12 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, Flex, Spacer, Box, Heading, Button, Select } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { SubjectsPanel } from '../components/other/admin/subjects/SubjectsPanel';
 import useStore from '../zustand/store';
-import { ColorModeSwitcher } from '../components/other/other/ColorModeSwitcher';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 import { Path } from '../other/Paths';
+import { SubjectsPanel } from '../components/admin/subjects/SubjectsPanel';
+import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
 
 export const TeacherPanel = () => {
   const user = useStore((state) => state.user);

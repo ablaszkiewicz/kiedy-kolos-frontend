@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Path } from '../../../other/Paths';
+import { Path } from '../../other/Paths';
 import { StatusCodes } from 'http-status-codes';
 
 export const UnauthorizedHandler = () => {

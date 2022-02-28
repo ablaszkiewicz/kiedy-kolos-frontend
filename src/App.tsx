@@ -5,9 +5,9 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { TeacherPanel } from './pages/TeacherPanel';
 import theme from './theme';
-import { RequireAuthRoute } from './components/other/other/RequireAuthRoute';
-import { UnauthorizedHandler } from './components/other/other/UnauthorizedHandler';
 import { Path } from './other/Paths';
+import { RequireAuthRoute } from './components/other/RequireAuthRoute';
+import { UnauthorizedHandler } from './components/other/UnauthorizedHandler';
 
 const queryClient = new QueryClient();
 

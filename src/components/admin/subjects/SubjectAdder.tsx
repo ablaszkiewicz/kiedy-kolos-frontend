@@ -1,6 +1,6 @@
 import { Flex, Button, Input } from '@chakra-ui/react';
-import useSubjects from '../../../../hooks/useSubjects';
-import { useSetState } from '../../../../hooks/useSetState';
+import { useSetState } from '../../../hooks/useSetState';
+import useSubjects from '../../../hooks/useSubjects';
 
 interface State {
   name: string;

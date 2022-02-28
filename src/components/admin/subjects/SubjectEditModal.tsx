@@ -11,8 +11,8 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import useSubjects, { SubjectType } from '../../../../hooks/useSubjects';
+import { useState, useEffect } from 'react';
+import useSubjects, { SubjectType } from '../../../hooks/useSubjects';
 
 interface Props {
   isOpen: boolean;
