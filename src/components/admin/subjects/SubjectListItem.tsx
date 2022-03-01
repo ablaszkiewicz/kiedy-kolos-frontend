@@ -12,14 +12,6 @@ export const SubjectListItem = (props: Props) => {
   const { isOpen: isEditModalOpen, onOpen: onEditModalOpen, onClose: onEditModalClose } = useDisclosure();
   const { isOpen: isDeleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
 
-  const onEditButtonClick = () => {
-    onEditModalOpen();
-  };
-
-  const onDeleteButtonClick = () => {
-    onDeleteModalOpen();
-  };
-
   return (
     <>
       <SubjectEditModal isOpen={isEditModalOpen} onClose={onEditModalClose} subject={props.subject} />
@@ -30,10 +22,10 @@ export const SubjectListItem = (props: Props) => {
           <Text fontSize={'xs'}>{props.subject.name}</Text>
         </VStack>
         <Spacer />
-        <Button mx={1} onClick={() => onEditButtonClick()}>
+        <Button mx={1} onClick={onEditModalOpen}>
           Edytuj
         </Button>
-        <IconButton onClick={() => onDeleteButtonClick()} aria-label='Skopiuj link' icon={<DeleteIcon />} />
+        <IconButton onClick={onDeleteModalOpen} aria-label='Skopiuj link' icon={<DeleteIcon />} />
       </Flex>
     </>
   );

@@ -12,20 +12,20 @@ import {
 import useYearCourses from '../../../hooks/useYearCourses';
 
 interface Props {
-  isOpen: any;
-  onClose: any;
+  isOpen: boolean;
+  onClose: () => void;
   yearCourseId: number;
 }
 
-export const YearCourseDeleteModal = ({ isOpen, onClose, yearCourseId }: Props) => {
+export const YearCourseDeleteModal = (props: Props) => {
   const { deleteMutation } = useYearCourses();
 
-  const onDeleteButtonClick = () => {
-    deleteMutation.mutate(yearCourseId);
+  const deleteYearCourse = () => {
+    deleteMutation.mutate(props.yearCourseId);
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Usuwanie kierunku</ModalHeader>
@@ -35,15 +35,10 @@ export const YearCourseDeleteModal = ({ isOpen, onClose, yearCourseId }: Props) 
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            colorScheme='blue'
-            mr={'3'}
-            onClick={() => onDeleteButtonClick()}
-            isLoading={deleteMutation.isLoading}
-          >
+          <Button colorScheme='blue' mr={'3'} onClick={() => deleteYearCourse()} isLoading={deleteMutation.isLoading}>
             Usuń
           </Button>
-          <Button onClick={onClose}>Anuluj</Button>
+          <Button onClick={props.onClose}>Anuluj</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
