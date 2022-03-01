@@ -8,7 +8,13 @@ import {
   ModalFooter,
   Button,
   Text,
+  Code,
+  FormControl,
+  FormLabel,
+  Input,
 } from '@chakra-ui/react';
+import { useSetState } from '../../../hooks/useSetState';
+import useSubjects from '../../../hooks/useSubjects';
 import useYearCourses from '../../../hooks/useYearCourses';
 
 interface Props {
@@ -17,10 +23,22 @@ interface Props {
   yearCourseId: number;
 }
 
+interface State {
+  text: string;
+}
+
 export const YearCourseDeleteModal = (props: Props) => {
   const { deleteMutation } = useYearCourses();
+  const { query } = useSubjects();
+  const [state, setState] = useSetState({
+    text: '',
+  } as State);
+  const safetyText = 'wściekły tygrys';
 
   const deleteYearCourse = () => {
+    if (state.text != safetyText) {
+      return;
+    }
     deleteMutation.mutate(props.yearCourseId);
   };
 
@@ -31,7 +49,20 @@ export const YearCourseDeleteModal = (props: Props) => {
         <ModalHeader>Usuwanie kierunku</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text>Czy na pewno chcesz usunąć ten kierunek?</Text>
+          <Text>
+            Usunięcie kierunku spowoduje także usunięcie {query.data ? query.data.length : ''} przedmiotów, group i
+            ustawień z nim związanych.
+          </Text>
+          <Text mt={5}>Aby potwierdzić usunięcie, przepisz ten tekst</Text>
+          <Code my={2}>{safetyText}</Code>
+          <FormControl>
+            <FormLabel>Tekst</FormLabel>
+            <Input
+              value={state.text}
+              onChange={(e) => setState({ text: e.target.value })}
+              onPaste={(e) => e.preventDefault()}
+            />
+          </FormControl>
         </ModalBody>
 
         <ModalFooter>
