@@ -21,7 +21,7 @@ interface Props {
 export const SubjectDeleteModal = ({ isOpen, onClose, subject }: Props) => {
   const { deleteMutation } = useSubjects();
 
-  const onDeleteButtonClick = () => {
+  const deleteSubject = () => {
     deleteMutation.mutate(subject.id);
   };
 
@@ -37,12 +37,7 @@ export const SubjectDeleteModal = ({ isOpen, onClose, subject }: Props) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            colorScheme='blue'
-            mr={'3'}
-            onClick={() => onDeleteButtonClick()}
-            isLoading={deleteMutation.isLoading}
-          >
+          <Button colorScheme='blue' mr={'3'} onClick={() => deleteSubject()} isLoading={deleteMutation.isLoading}>
             Usuń
           </Button>
           <Button onClick={onClose}>Anuluj</Button>

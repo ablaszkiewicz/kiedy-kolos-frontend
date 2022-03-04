@@ -32,7 +32,7 @@ export const SubjectEditModal = (props: Props) => {
     }
   }, [updateMutation.isSuccess]);
 
-  const onEditClicked = () => {
+  const editSubject = () => {
     updateMutation.mutate({ id: props.subject.id, name: name, shortName: shortName });
   };
 
@@ -55,7 +55,7 @@ export const SubjectEditModal = (props: Props) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme='blue' mr={'3'} onClick={() => onEditClicked()} isLoading={updateMutation.isLoading}>
+          <Button colorScheme='blue' mr={'3'} onClick={() => editSubject()} isLoading={updateMutation.isLoading}>
             Edytuj
           </Button>
           <Button onClick={props.onClose}>Anuluj</Button>
