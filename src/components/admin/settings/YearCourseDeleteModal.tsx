@@ -50,8 +50,9 @@ export const YearCourseDeleteModal = (props: Props) => {
         <ModalCloseButton />
         <ModalBody>
           <Text>
-            Usunięcie kierunku spowoduje także usunięcie {query.data ? query.data.length : ''} przedmiotów, group i
-            ustawień z nim związanych.
+            {query.data && query.data.length > 0
+              ? 'Usunięcie kierunku spowoduje także usunięcie  przedmiotów, group i ustawień z nim związanych'
+              : 'Czy na pewno chcesz usunąć kierunek?'}
           </Text>
           <Text mt={5}>Aby potwierdzić usunięcie, przepisz ten tekst</Text>
           <Code my={2}>{safetyText}</Code>
