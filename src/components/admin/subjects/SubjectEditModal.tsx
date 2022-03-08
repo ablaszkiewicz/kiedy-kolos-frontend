@@ -10,7 +10,9 @@ import {
   FormControl,
   FormLabel,
   Input,
+  FormErrorMessage,
 } from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
 import { useState, useEffect } from 'react';
 import useSubjects, { SubjectType } from '../../../hooks/useSubjects';
 
@@ -21,8 +23,6 @@ interface Props {
 }
 
 export const SubjectEditModal = (props: Props) => {
-  const [name, setName] = useState<string>(props.subject.name);
-  const [shortName, setShortName] = useState<string>(props.subject.shortName);
   const { updateMutation } = useSubjects();
 
   useEffect(() => {
@@ -32,8 +32,18 @@ export const SubjectEditModal = (props: Props) => {
     }
   }, [updateMutation.isSuccess]);
 
-  const editSubject = () => {
-    updateMutation.mutate({ id: props.subject.id, name: name, shortName: shortName });
+  const validateName = (value: string): string => {
+    if (value.length > 50) {
+      return 'Nazwa nie może być dłuższa niż 50 znaków';
+    } else return '';
+  };
+
+  const validateShortName = (value: string): string => {
+    if (value.length === 0) {
+      return 'Krótka nazwa nie może być pusta';
+    } else if (value.length > 4) {
+      return 'Krótka nazwa nie może być dłuższa niż 4 znaków';
+    } else return '';
   };
 
   return (
@@ -42,24 +52,44 @@ export const SubjectEditModal = (props: Props) => {
       <ModalContent>
         <ModalHeader>Edytowanie przedmiotu</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          <FormControl>
-            <FormLabel>Nazwa</FormLabel>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
-          </FormControl>
 
-          <FormControl mt={4}>
-            <FormLabel>Skrócona nazwa</FormLabel>
-            <Input value={shortName} onChange={(e) => setShortName(e.target.value)} />
-          </FormControl>
-        </ModalBody>
-
-        <ModalFooter>
-          <Button colorScheme='blue' mr={'3'} onClick={() => editSubject()} isLoading={updateMutation.isLoading}>
-            Edytuj
-          </Button>
-          <Button onClick={props.onClose}>Anuluj</Button>
-        </ModalFooter>
+        <Formik
+          initialValues={{ name: props.subject.name, shortName: props.subject.shortName }}
+          onSubmit={(values, actions) => {
+            updateMutation.mutate({ id: props.subject.id, name: values.name, shortName: values.shortName });
+          }}
+        >
+          {() => (
+            <Form>
+              <ModalBody>
+                <Field name='name' validate={validateName}>
+                  {({ field, form }: any) => (
+                    <FormControl isInvalid={form.errors.name && form.touched.name}>
+                      <FormLabel htmlFor='name'>Nazwa</FormLabel>
+                      <Input {...field} id='name' placeholder='name' />
+                      <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+                <Field name='shortName' validate={validateShortName}>
+                  {({ field, form }: any) => (
+                    <FormControl isInvalid={form.errors.shortName && form.touched.shortName}>
+                      <FormLabel htmlFor='shortName'>Nazwa</FormLabel>
+                      <Input {...field} id='shortName' placeholder='shortName' />
+                      <FormErrorMessage>{form.errors.shortName}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme='blue' mr={'3'} type='submit' isLoading={updateMutation.isLoading}>
+                  Edytuj
+                </Button>
+                <Button onClick={props.onClose}>Anuluj</Button>
+              </ModalFooter>
+            </Form>
+          )}
+        </Formik>
       </ModalContent>
     </Modal>
   );
