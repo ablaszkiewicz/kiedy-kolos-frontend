@@ -2,12 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-
-export type SubjectType = {
-  id: number;
-  name: string;
-  shortName: string;
-};
+import { SubjectType } from '../entities/Subject';
 
 const SUBJECTS_QUERY_KEY: string = 'subjects';
 

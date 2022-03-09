@@ -1,7 +1,8 @@
 import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
 import { SubjectListItem } from './SubjectListItem';
 import { SubjectAdder } from './SubjectAdder';
-import useSubjects, { SubjectType } from '../../../hooks/useSubjects';
+import useSubjects from '../../../hooks/useSubjects';
+import { SubjectType } from '../../../entities/Subject';
 
 export const SubjectsPanel = () => {
   const { query } = useSubjects();

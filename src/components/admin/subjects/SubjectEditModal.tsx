@@ -15,8 +15,9 @@ import {
 import { Field, Form, Formik } from 'formik';
 import { InputControl, SubmitButton } from 'formik-chakra-ui';
 import { useState, useEffect } from 'react';
-import useSubjects, { SubjectType } from '../../../hooks/useSubjects';
-import * as Yup from 'yup';
+import useSubjects from '../../../hooks/useSubjects';
+import { SubjectType, subjectValidationSchema } from '../../../entities/Subject';
+import { object } from 'yup';
 
 interface Props {
   isOpen: boolean;
@@ -39,11 +40,6 @@ export const SubjectEditModal = (props: Props) => {
     shortName: props.subject.shortName,
   };
 
-  const validationSchema = Yup.object({
-    name: Yup.string().required(),
-    shortName: Yup.string().required().max(4),
-  });
-
   const editSubject = (values: any) => {
     console.log('elo');
     updateMutation.mutate({ id: props.subject.id, name: values.name, shortName: values.shortName });
@@ -56,7 +52,7 @@ export const SubjectEditModal = (props: Props) => {
         <ModalHeader>Edytowanie przedmiotu</ModalHeader>
         <ModalCloseButton />
 
-        <Formik initialValues={initialValues} onSubmit={editSubject} validationSchema={validationSchema}>
+        <Formik initialValues={initialValues} onSubmit={editSubject} validationSchema={subjectValidationSchema}>
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>

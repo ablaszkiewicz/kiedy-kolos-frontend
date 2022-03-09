@@ -1,6 +1,6 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Flex, Spacer, Button, IconButton, VStack, Text, useDisclosure } from '@chakra-ui/react';
-import { SubjectType } from '../../../hooks/useSubjects';
+import { SubjectType } from '../../../entities/Subject';
 import { SubjectDeleteModal } from './SubjectDeleteModal';
 import { SubjectEditModal } from './SubjectEditModal';
 
