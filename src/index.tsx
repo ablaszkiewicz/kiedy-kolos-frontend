@@ -2,12 +2,33 @@ import { ColorModeScript } from '@chakra-ui/react';
 import axios from 'axios';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import { setLocale } from 'yup';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 
 //axios.defaults.baseURL = 'http://localhost:3001/';
 axios.defaults.baseURL = 'https://testnginx.bieda.it/';
+
+setLocale({
+  mixed: {
+    required: 'Pole nie może być puste',
+  },
+  string: {
+    max: ({ max }) => {
+      switch (max) {
+        case 1:
+          return `Pole może miec maksymalnie ${max} znak`;
+        case 2:
+        case 3:
+        case 4:
+          return `Pole może miec maksymalnie ${max} znaki`;
+        default:
+          return `Pole może miec maksymalnie ${max} znaków`;
+      }
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>

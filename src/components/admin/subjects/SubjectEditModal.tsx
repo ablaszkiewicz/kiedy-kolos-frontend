@@ -13,8 +13,10 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 import { Field, Form, Formik } from 'formik';
+import { InputControl, SubmitButton } from 'formik-chakra-ui';
 import { useState, useEffect } from 'react';
 import useSubjects, { SubjectType } from '../../../hooks/useSubjects';
+import * as Yup from 'yup';
 
 interface Props {
   isOpen: boolean;
@@ -32,18 +34,19 @@ export const SubjectEditModal = (props: Props) => {
     }
   }, [updateMutation.isSuccess]);
 
-  const validateName = (value: string): string => {
-    if (value.length > 50) {
-      return 'Nazwa nie może być dłuższa niż 50 znaków';
-    } else return '';
+  const initialValues = {
+    name: props.subject.name,
+    shortName: props.subject.shortName,
   };
 
-  const validateShortName = (value: string): string => {
-    if (value.length === 0) {
-      return 'Krótka nazwa nie może być pusta';
-    } else if (value.length > 4) {
-      return 'Krótka nazwa nie może być dłuższa niż 4 znaków';
-    } else return '';
+  const validationSchema = Yup.object({
+    name: Yup.string().required(),
+    shortName: Yup.string().required().max(4),
+  });
+
+  const editSubject = (values: any) => {
+    console.log('elo');
+    updateMutation.mutate({ id: props.subject.id, name: values.name, shortName: values.shortName });
   };
 
   return (
@@ -53,33 +56,12 @@ export const SubjectEditModal = (props: Props) => {
         <ModalHeader>Edytowanie przedmiotu</ModalHeader>
         <ModalCloseButton />
 
-        <Formik
-          initialValues={{ name: props.subject.name, shortName: props.subject.shortName }}
-          onSubmit={(values, actions) => {
-            updateMutation.mutate({ id: props.subject.id, name: values.name, shortName: values.shortName });
-          }}
-        >
-          {() => (
-            <Form>
+        <Formik initialValues={initialValues} onSubmit={editSubject} validationSchema={validationSchema}>
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit}>
               <ModalBody>
-                <Field name='name' validate={validateName}>
-                  {({ field, form }: any) => (
-                    <FormControl isInvalid={form.errors.name && form.touched.name}>
-                      <FormLabel htmlFor='name'>Nazwa</FormLabel>
-                      <Input {...field} id='name' placeholder='name' />
-                      <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name='shortName' validate={validateShortName}>
-                  {({ field, form }: any) => (
-                    <FormControl isInvalid={form.errors.shortName && form.touched.shortName}>
-                      <FormLabel htmlFor='shortName'>Nazwa</FormLabel>
-                      <Input {...field} id='shortName' placeholder='shortName' />
-                      <FormErrorMessage>{form.errors.shortName}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
+                <InputControl name='name' label='Nazwa' />
+                <InputControl name='shortName' label='Krótka nazwa' mt={5} />
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme='blue' mr={'3'} type='submit' isLoading={updateMutation.isLoading}>
