@@ -16,8 +16,8 @@ export const TeacherPanel = () => {
   const { logout } = useAuth();
 
   return (
-    <Box p={5}>
-      <Flex mb={5}>
+    <Box p={0}>
+      <Flex mb={5} p={5} pb={0}>
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
         <Button onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
@@ -29,7 +29,7 @@ export const TeacherPanel = () => {
         </Button>
       </Flex>
       <Tabs isLazy>
-        <TabList>
+        <TabList px={5}>
           <Tab>Kalendarz</Tab>
           <Tab>Grupy</Tab>
           <Tab>Przedmioty</Tab>

@@ -26,9 +26,9 @@ export const SubjectAdder = () => {
     <Formik initialValues={initialValues} onSubmit={addSubject} validationSchema={subjectValidationSchema}>
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
-          <Flex borderWidth={'1px'} m={2} p={2} borderRadius={5}>
-            <InputControl name='name' inputProps={{ placeholder: 'Krótka' }} mr={2} flexBasis={0} flexGrow={1} />
-            <InputControl name='shortName' inputProps={{ placeholder: 'Długa nazwa' }} flexBasis={0} flexGrow={3} />
+          <Flex borderWidth={'1px'} p={2} borderRadius={5}>
+            {/* <InputControl name='name' inputProps={{ placeholder: 'Krótka' }} mr={2} flexBasis={0} flexGrow={1} />
+            <InputControl name='shortName' inputProps={{ placeholder: 'Długa nazwa' }} flexBasis={0} flexGrow={3} /> */}
             <Button ml={2} isLoading={postMutation.isLoading} flexShrink={0} type='submit'>
               Dodaj
             </Button>
