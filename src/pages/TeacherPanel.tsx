@@ -29,7 +29,7 @@ export const TeacherPanel = () => {
   const { logout } = useAuth();
 
   return (
-    <Box p={0}>
+    <Flex p={0} h={'100vh'} direction={'column'}>
       <Flex mb={5} p={5} pb={0}>
         <Heading>Panel starosty {user.email}</Heading>
         <Spacer />
@@ -41,7 +41,8 @@ export const TeacherPanel = () => {
           Wyloguj
         </Button>
       </Flex>
-      <Tabs isLazy>
+
+      <Tabs isLazy display={'flex'} flexDir={'column'} flexGrow={1} overflowY={'hidden'}>
         <TabList px={5}>
           <Tab>Kalendarz</Tab>
           <Tab>Grupy</Tab>
@@ -49,15 +50,15 @@ export const TeacherPanel = () => {
           <Tab>Ustawienia</Tab>
         </TabList>
 
-        <TabPanels>
+        <TabPanels display={'flex'} flexGrow={1} overflowY={'hidden'}>
           <TabPanel>
             <p>Kalendarz</p>
           </TabPanel>
           <TabPanel>
             <p>Grupy</p>
           </TabPanel>
-          <TabPanel>
-            <SimpleGrid columns={[2, 2, 2, 3]} gap={6} p={2}>
+          <TabPanel display={'flex'} flexDir={'column'} flexGrow={1} overflowY={'hidden'}>
+            <SimpleGrid columns={[2, 2, 2, 3]} gap={6} p={5} m={-4} flexGrow={1} overflowY={'hidden'}>
               <SubjectsPanel />
             </SimpleGrid>
           </TabPanel>
@@ -66,6 +67,6 @@ export const TeacherPanel = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </Box>
+    </Flex>
   );
 };

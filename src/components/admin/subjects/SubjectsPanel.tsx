@@ -11,9 +11,16 @@ export const SubjectsPanel = () => {
   const { query } = useSubjects();
 
   return (
-    <>
+    <Flex direction={'column'} flexGrow={1} overflowY={'hidden'} p={10} m={-10}>
       <SubjectCreateModal isOpen={isCreateModalOpen} onClose={onCreateModalClose} />
-      <Box borderRadius={10} backgroundColor={'gray.700'} p={7} shadow={'dark-lg'}>
+      <Flex
+        direction={'column'}
+        borderRadius={10}
+        backgroundColor={'gray.700'}
+        p={7}
+        shadow={'dark-lg'}
+        overflowY={'hidden'}
+      >
         <Flex mb={4}>
           <Text fontWeight={'bold'} fontSize={'2xl'}>
             Przedmioty
@@ -24,14 +31,29 @@ export const SubjectsPanel = () => {
           </Button>
         </Flex>
 
-        {query.data &&
-          query.data.map((subject: SubjectType, i: number) => (
-            <div key={subject.id}>
-              <SubjectListItem subject={subject} />
-              {i < query.data.length - 1 && <Divider />}
-            </div>
-          ))}
-      </Box>
-    </>
+        <Box overflowY={'scroll'} css={scrollbarStyle}>
+          {query.data &&
+            query.data.map((subject: SubjectType, i: number) => (
+              <div key={subject.id}>
+                <SubjectListItem subject={subject} />
+                {i < query.data.length - 1 && <Divider />}
+              </div>
+            ))}
+        </Box>
+      </Flex>
+    </Flex>
   );
+};
+
+const scrollbarStyle = {
+  '&::-webkit-scrollbar': {
+    width: '4px',
+  },
+  '&::-webkit-scrollbar-track': {
+    width: '6px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: 'gray',
+    borderRadius: '24px',
+  },
 };
