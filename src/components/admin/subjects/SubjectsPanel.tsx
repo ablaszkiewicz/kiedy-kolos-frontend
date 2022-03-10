@@ -20,6 +20,7 @@ export const SubjectsPanel = () => {
         p={7}
         shadow={'dark-lg'}
         overflowY={'hidden'}
+        flexGrow={1}
       >
         <Flex mb={4}>
           <Text fontWeight={'bold'} fontSize={'2xl'}>
