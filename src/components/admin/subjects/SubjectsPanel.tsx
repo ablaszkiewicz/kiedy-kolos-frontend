@@ -11,7 +11,7 @@ export const SubjectsPanel = () => {
   const { query } = useSubjects();
 
   return (
-    <SimpleGrid columns={[2, 2, 2, 3]} gap={6} p={2}>
+    <>
       <SubjectCreateModal isOpen={isCreateModalOpen} onClose={onCreateModalClose} />
       <Box borderRadius={10} backgroundColor={'gray.700'} p={7} shadow={'dark-lg'}>
         <Flex mb={4}>
@@ -26,12 +26,12 @@ export const SubjectsPanel = () => {
 
         {query.data &&
           query.data.map((subject: SubjectType, i: number) => (
-            <>
-              <SubjectListItem subject={subject} key={subject.id} />
+            <div key={subject.id}>
+              <SubjectListItem subject={subject} />
               {i < query.data.length - 1 && <Divider />}
-            </>
+            </div>
           ))}
       </Box>
-    </SimpleGrid>
+    </>
   );
 };

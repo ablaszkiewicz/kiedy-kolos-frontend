@@ -24,10 +24,7 @@ export const SubjectListItem = (props: Props) => {
           </Text>
         </VStack>
         <Spacer />
-        {/* <Button mx={1} onClick={onEditModalOpen} variant={'ghost'}>
-          Edytuj
-        </Button> */}
-        <IconButton onClick={onDeleteModalOpen} variant={'ghost'} aria-label='Skopiuj link' icon={<EditIcon />} />
+        <IconButton onClick={onEditModalOpen} variant={'ghost'} aria-label='Skopiuj link' icon={<EditIcon />} />
         <IconButton onClick={onDeleteModalOpen} variant={'ghost'} aria-label='Skopiuj link' icon={<DeleteIcon />} />
       </Flex>
     </>

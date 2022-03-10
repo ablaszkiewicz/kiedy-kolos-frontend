@@ -1,4 +1,17 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs, Flex, Spacer, Box, Heading, Button, Select } from '@chakra-ui/react';
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Flex,
+  Spacer,
+  Box,
+  Heading,
+  Button,
+  Select,
+  SimpleGrid,
+} from '@chakra-ui/react';
 import { useEffect } from 'react';
 import useStore from '../zustand/store';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -44,7 +57,9 @@ export const TeacherPanel = () => {
             <p>Grupy</p>
           </TabPanel>
           <TabPanel>
-            <SubjectsPanel />
+            <SimpleGrid columns={[2, 2, 2, 3]} gap={6} p={2}>
+              <SubjectsPanel />
+            </SimpleGrid>
           </TabPanel>
           <TabPanel>
             <SettingsPanel />
