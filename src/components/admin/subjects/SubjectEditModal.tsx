@@ -25,6 +25,11 @@ interface Props {
   subject: SubjectType;
 }
 
+interface FormikValues {
+  name: string;
+  shortName: string;
+}
+
 export const SubjectEditModal = (props: Props) => {
   const { updateMutation } = useSubjects();
 
@@ -35,12 +40,12 @@ export const SubjectEditModal = (props: Props) => {
     }
   }, [updateMutation.isSuccess]);
 
-  const initialValues = {
+  const initialValues: FormikValues = {
     name: props.subject.name,
     shortName: props.subject.shortName,
   };
 
-  const editSubject = (values: any) => {
+  const editSubject = (values: FormikValues) => {
     console.log('elo');
     updateMutation.mutate({ id: props.subject.id, name: values.name, shortName: values.shortName });
   };

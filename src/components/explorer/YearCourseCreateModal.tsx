@@ -11,26 +11,26 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { Formik, Form } from 'formik';
+import { InputControl } from 'formik-chakra-ui';
+import { useEffect } from 'react';
+import { subjectValidationSchema } from '../../entities/Subject';
+import { YearCourseType, yearCourseValidationSchema } from '../../entities/YearCourse';
 import { useSetState } from '../../hooks/useSetState';
-import useYearCourses, { YearCourseType } from '../../hooks/useYearCourses';
+import useYearCourses from '../../hooks/useYearCourses';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
 
-interface State {
+interface FormikValues {
   name: string;
   startYear: string;
 }
 
 export const YearCourseCreateModal = (props: Props) => {
   const { postMutation } = useYearCourses();
-  const [state, setState] = useSetState({
-    name: '',
-    startYear: '',
-  } as State);
 
   useEffect(() => {
     if (postMutation.isSuccess) {
@@ -39,8 +39,13 @@ export const YearCourseCreateModal = (props: Props) => {
     }
   }, [postMutation.isSuccess]);
 
-  const createSubject = () => {
-    postMutation.mutate({ id: 0, name: state.name, startYear: +state.startYear });
+  const initialValues: FormikValues = {
+    name: '',
+    startYear: '',
+  };
+
+  const createYearCourse = (values: FormikValues) => {
+    postMutation.mutate({ id: 0, name: values.name, startYear: +values.startYear });
   };
 
   return (
@@ -49,24 +54,22 @@ export const YearCourseCreateModal = (props: Props) => {
       <ModalContent>
         <ModalHeader>Dodawanie kierunku</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          <FormControl>
-            <FormLabel>Nazwa</FormLabel>
-            <Input value={state.name} onChange={(e) => setState({ name: e.target.value })} />
-          </FormControl>
-
-          <FormControl mt={4}>
-            <FormLabel>Rok rozpoczęcia</FormLabel>
-            <Input value={state.startYear} onChange={(e) => setState({ startYear: e.target.value })} />
-          </FormControl>
-        </ModalBody>
-
-        <ModalFooter>
-          <Button colorScheme='blue' mr={'3'} onClick={() => createSubject()} isLoading={postMutation.isLoading}>
-            Stwórz
-          </Button>
-          <Button onClick={props.onClose}>Anuluj</Button>
-        </ModalFooter>
+        <Formik initialValues={initialValues} onSubmit={createYearCourse} validationSchema={yearCourseValidationSchema}>
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit}>
+              <ModalBody>
+                <InputControl name='name' label='Nazwa' />
+                <InputControl name='startYear' label='Rok rozpoczęcia' mt={5} />
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme='blue' mr={'3'} type='submit' isLoading={postMutation.isLoading}>
+                  Stwórz
+                </Button>
+                <Button onClick={props.onClose}>Anuluj</Button>
+              </ModalFooter>
+            </Form>
+          )}
+        </Formik>
       </ModalContent>
     </Modal>
   );

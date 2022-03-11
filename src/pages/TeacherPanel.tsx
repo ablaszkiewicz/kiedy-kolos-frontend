@@ -16,7 +16,6 @@ import { useEffect } from 'react';
 import useStore from '../zustand/store';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
 import { Path } from '../other/Paths';
 import { SubjectsPanel } from '../components/admin/subjects/SubjectsPanel';
 import { SettingsPanel } from '../components/admin/settings/SettingsPanel';
@@ -45,8 +44,7 @@ export const TeacherPanel = () => {
       <Tabs isLazy display={'flex'} flexDir={'column'} flexGrow={1} overflow={'hidden'} p={10} m={-10}>
         <TabList px={5}>
           <Tab>Kalendarz</Tab>
-          <Tab>Grupy</Tab>
-          <Tab>Przedmioty</Tab>
+          <Tab>Przedmioty i grupy</Tab>
           <Tab>Ustawienia</Tab>
         </TabList>
 
@@ -54,13 +52,8 @@ export const TeacherPanel = () => {
           <TabPanel>
             <p>Kalendarz</p>
           </TabPanel>
-          <TabPanel>
-            <p>Grupy</p>
-          </TabPanel>
           <TabPanel display={'flex'} flexDir={'column'} flexGrow={1} overflow={'hidden'}>
             <SimpleGrid columns={[1, 2, 2, 3]} gap={6} p={5} m={-4} flexGrow={1} overflow={'hidden'}>
-              <SubjectsPanel />
-              <SubjectsPanel />
               <SubjectsPanel />
             </SimpleGrid>
           </TabPanel>

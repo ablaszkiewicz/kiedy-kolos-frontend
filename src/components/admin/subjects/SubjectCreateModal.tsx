@@ -7,21 +7,21 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
 } from '@chakra-ui/react';
-import { Field, Form, Formik } from 'formik';
-import { InputControl, SubmitButton } from 'formik-chakra-ui';
-import { useState, useEffect } from 'react';
+import { Form, Formik } from 'formik';
+import { InputControl } from 'formik-chakra-ui';
+import { useEffect } from 'react';
 import useSubjects from '../../../hooks/useSubjects';
-import { SubjectType, subjectValidationSchema } from '../../../entities/Subject';
-import { object } from 'yup';
+import { subjectValidationSchema } from '../../../entities/Subject';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+}
+
+interface FormikValues {
+  name: string;
+  shortName: string;
 }
 
 export const SubjectCreateModal = (props: Props) => {
@@ -34,12 +34,12 @@ export const SubjectCreateModal = (props: Props) => {
     }
   }, [postMutation.isSuccess]);
 
-  const initialValues = {
+  const initialValues: FormikValues = {
     name: '',
     shortName: '',
   };
 
-  const editSubject = (values: any) => {
+  const editSubject = (values: FormikValues) => {
     postMutation.mutate({ id: 0, name: values.name, shortName: values.shortName });
   };
 

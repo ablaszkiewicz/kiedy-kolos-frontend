@@ -1,11 +1,12 @@
 import { Flex, Spacer, Box, Heading, Button, SimpleGrid, useDisclosure, Grid } from '@chakra-ui/react';
 import useAuth from '../hooks/useAuth';
-import useYearCourses, { YearCourseType } from '../hooks/useYearCourses';
+import useYearCourses from '../hooks/useYearCourses';
 import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
 
 import { YearCourseCard } from '../components/explorer/YearCourseCard';
 import { YearCourseCreateModal } from '../components/explorer/YearCourseCreateModal';
 import { AddIcon, PlusSquareIcon } from '@chakra-ui/icons';
+import { YearCourseType } from '../entities/YearCourse';
 
 export const Explorer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
