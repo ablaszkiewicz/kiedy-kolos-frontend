@@ -24,7 +24,7 @@ export default function useYearCourses() {
     return response.data;
   };
 
-  const deleteYearCourse = async (id: number) => {
+  const deleteYearCourse = async (id: string) => {
     const response = await axios.delete(`yearCourses/${id}`);
     return response.data;
   };

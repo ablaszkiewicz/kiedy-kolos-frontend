@@ -27,14 +27,12 @@ export const Explorer = () => {
           Wyloguj
         </Button>
       </Flex>
-      <Box p={5}>
-        <SimpleGrid columns={[1, 2, 3, 4, 5]} gap={6}>
-          {yearCourseQuery.data &&
-            yearCourseQuery.data.map((yearCourse: YearCourseType) => (
-              <YearCourseCard key={yearCourse.id} yearCourse={yearCourse} />
-            ))}
-        </SimpleGrid>
-      </Box>
+      <SimpleGrid columns={[1, 2, 3, 4, 5]} gap={6}>
+        {yearCourseQuery.data &&
+          yearCourseQuery.data.map((yearCourse: YearCourseType) => (
+            <YearCourseCard key={yearCourse.id} yearCourse={yearCourse} />
+          ))}
+      </SimpleGrid>
     </Box>
   );
 };

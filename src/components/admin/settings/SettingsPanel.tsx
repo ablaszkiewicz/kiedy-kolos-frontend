@@ -7,7 +7,7 @@ export const SettingsPanel = () => {
   const { yearCourseId } = useParams();
   return (
     <>
-      <YearCourseDeleteModal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} yearCourseId={+yearCourseId!} />
+      <YearCourseDeleteModal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} yearCourseId={yearCourseId!} />
       <Button colorScheme={'red'} onClick={onDeleteModalOpen}>
         Usuń kierunek
       </Button>

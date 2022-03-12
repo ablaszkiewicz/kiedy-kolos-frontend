@@ -20,7 +20,7 @@ import useYearCourses from '../../../hooks/useYearCourses';
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  yearCourseId: number;
+  yearCourseId: string;
 }
 
 interface State {
