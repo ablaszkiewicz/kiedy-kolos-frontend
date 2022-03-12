@@ -1,6 +1,5 @@
 import { Box, Button, Divider, Flex, HStack, SimpleGrid, Spacer, Text, useDisclosure } from '@chakra-ui/react';
 import { SubjectListItem } from './SubjectListItem';
-import { SubjectAdder } from './SubjectAdder';
 import useSubjects from '../../../hooks/useSubjects';
 import { SubjectType } from '../../../entities/Subject';
 import { SubjectCreateModal } from './SubjectCreateModal';

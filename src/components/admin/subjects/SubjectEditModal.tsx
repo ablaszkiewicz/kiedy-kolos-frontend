@@ -46,7 +46,6 @@ export const SubjectEditModal = (props: Props) => {
   };
 
   const editSubject = (values: FormikValues) => {
-    console.log('elo');
     updateMutation.mutate({ id: props.subject.id, name: values.name, shortName: values.shortName });
   };
 

@@ -8,13 +8,13 @@ Yup.setLocale({
     max: ({ max }) => {
       switch (max) {
         case 1:
-          return `Pole może miec maksymalnie ${max} znak`;
+          return `Pole może mieć maksymalnie ${max} znak`;
         case 2:
         case 3:
         case 4:
-          return `Pole może miec maksymalnie ${max} znaki`;
+          return `Pole może mieć maksymalnie ${max} znaki`;
         default:
-          return `Pole może miec maksymalnie ${max} znaków`;
+          return `Pole może mieć maksymalnie ${max} znaków`;
       }
     },
   },
