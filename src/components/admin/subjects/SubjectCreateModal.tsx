@@ -7,17 +7,12 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
 } from '@chakra-ui/react';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import { InputControl } from 'formik-chakra-ui';
 import { useEffect } from 'react';
-import { subjectValidationSchema } from '../../entities/Subject';
-import { YearCourseType, yearCourseValidationSchema } from '../../entities/YearCourse';
-import { useSetState } from '../../hooks/useSetState';
-import useYearCourses from '../../hooks/useYearCourses';
+import useSubjects from '../../../hooks/useSubjects';
+import { subjectValidationSchema } from '../../../entities/Subject';
 
 interface Props {
   isOpen: boolean;
@@ -26,11 +21,11 @@ interface Props {
 
 interface FormikValues {
   name: string;
-  startYear: string;
+  shortName: string;
 }
 
-export const YearCourseCreateModal = (props: Props) => {
-  const { postMutation } = useYearCourses();
+export const SubjectCreateModal = (props: Props) => {
+  const { postMutation } = useSubjects();
 
   useEffect(() => {
     if (postMutation.isSuccess) {
@@ -41,29 +36,30 @@ export const YearCourseCreateModal = (props: Props) => {
 
   const initialValues: FormikValues = {
     name: '',
-    startYear: '',
+    shortName: '',
   };
 
-  const createYearCourse = (values: FormikValues) => {
-    postMutation.mutate({ id: 0, name: values.name, startYear: +values.startYear });
+  const editSubject = (values: FormikValues) => {
+    postMutation.mutate({ id: 0, name: values.name, shortName: values.shortName });
   };
 
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Dodawanie kierunku</ModalHeader>
+        <ModalHeader>Dodawanie przedmiotu</ModalHeader>
         <ModalCloseButton />
-        <Formik initialValues={initialValues} onSubmit={createYearCourse} validationSchema={yearCourseValidationSchema}>
+
+        <Formik initialValues={initialValues} onSubmit={editSubject} validationSchema={subjectValidationSchema}>
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>
                 <InputControl name='name' label='Nazwa' />
-                <InputControl name='startYear' label='Rok rozpoczęcia' mt={5} />
+                <InputControl name='shortName' label='Krótka nazwa' mt={5} />
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme='blue' mr={'3'} type='submit' isLoading={postMutation.isLoading}>
-                  Stwórz
+                  Dodaj
                 </Button>
                 <Button onClick={props.onClose}>Anuluj</Button>
               </ModalFooter>

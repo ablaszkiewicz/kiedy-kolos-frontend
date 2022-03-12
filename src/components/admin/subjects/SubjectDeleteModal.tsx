@@ -10,7 +10,8 @@ import {
   Text,
   Code,
 } from '@chakra-ui/react';
-import useSubjects, { SubjectType } from '../../../hooks/useSubjects';
+import { SubjectType } from '../../../entities/Subject';
+import useSubjects from '../../../hooks/useSubjects';
 
 interface Props {
   isOpen: any;

@@ -10,9 +10,14 @@ import {
   FormControl,
   FormLabel,
   Input,
+  FormErrorMessage,
 } from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
+import { InputControl, SubmitButton } from 'formik-chakra-ui';
 import { useState, useEffect } from 'react';
-import useSubjects, { SubjectType } from '../../../hooks/useSubjects';
+import useSubjects from '../../../hooks/useSubjects';
+import { SubjectType, subjectValidationSchema } from '../../../entities/Subject';
+import { object } from 'yup';
 
 interface Props {
   isOpen: boolean;
@@ -20,9 +25,12 @@ interface Props {
   subject: SubjectType;
 }
 
+interface FormikValues {
+  name: string;
+  shortName: string;
+}
+
 export const SubjectEditModal = (props: Props) => {
-  const [name, setName] = useState<string>(props.subject.name);
-  const [shortName, setShortName] = useState<string>(props.subject.shortName);
   const { updateMutation } = useSubjects();
 
   useEffect(() => {
@@ -32,8 +40,13 @@ export const SubjectEditModal = (props: Props) => {
     }
   }, [updateMutation.isSuccess]);
 
-  const editSubject = () => {
-    updateMutation.mutate({ id: props.subject.id, name: name, shortName: shortName });
+  const initialValues: FormikValues = {
+    name: props.subject.name,
+    shortName: props.subject.shortName,
+  };
+
+  const editSubject = (values: FormikValues) => {
+    updateMutation.mutate({ id: props.subject.id, name: values.name, shortName: values.shortName });
   };
 
   return (
@@ -42,24 +55,23 @@ export const SubjectEditModal = (props: Props) => {
       <ModalContent>
         <ModalHeader>Edytowanie przedmiotu</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          <FormControl>
-            <FormLabel>Nazwa</FormLabel>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
-          </FormControl>
 
-          <FormControl mt={4}>
-            <FormLabel>Skrócona nazwa</FormLabel>
-            <Input value={shortName} onChange={(e) => setShortName(e.target.value)} />
-          </FormControl>
-        </ModalBody>
-
-        <ModalFooter>
-          <Button colorScheme='blue' mr={'3'} onClick={() => editSubject()} isLoading={updateMutation.isLoading}>
-            Edytuj
-          </Button>
-          <Button onClick={props.onClose}>Anuluj</Button>
-        </ModalFooter>
+        <Formik initialValues={initialValues} onSubmit={editSubject} validationSchema={subjectValidationSchema}>
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit}>
+              <ModalBody>
+                <InputControl name='name' label='Nazwa' />
+                <InputControl name='shortName' label='Krótka nazwa' mt={5} />
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme='blue' mr={'3'} type='submit' isLoading={updateMutation.isLoading}>
+                  Edytuj
+                </Button>
+                <Button onClick={props.onClose}>Anuluj</Button>
+              </ModalFooter>
+            </Form>
+          )}
+        </Formik>
       </ModalContent>
     </Modal>
   );

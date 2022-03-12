@@ -1,6 +1,6 @@
-import { DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Flex, Spacer, Button, IconButton, VStack, Text, useDisclosure } from '@chakra-ui/react';
-import { SubjectType } from '../../../hooks/useSubjects';
+import { SubjectType } from '../../../entities/Subject';
 import { SubjectDeleteModal } from './SubjectDeleteModal';
 import { SubjectEditModal } from './SubjectEditModal';
 
@@ -16,16 +16,16 @@ export const SubjectListItem = (props: Props) => {
     <>
       <SubjectEditModal isOpen={isEditModalOpen} onClose={onEditModalClose} subject={props.subject} />
       <SubjectDeleteModal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} subject={props.subject} />
-      <Flex borderWidth={'1px'} m={2} p={2} borderRadius={5}>
+      <Flex py={2} borderRadius={5}>
         <VStack spacing={0} alignItems={'baseline'}>
           <Text>{props.subject.shortName}</Text>
-          <Text fontSize={'xs'}>{props.subject.name}</Text>
+          <Text fontSize={'xs'} color={'gray.400'}>
+            {props.subject.name}
+          </Text>
         </VStack>
         <Spacer />
-        <Button mx={1} onClick={onEditModalOpen}>
-          Edytuj
-        </Button>
-        <IconButton onClick={onDeleteModalOpen} aria-label='Skopiuj link' icon={<DeleteIcon />} />
+        <IconButton onClick={onEditModalOpen} variant={'ghost'} aria-label='Edytuj przedmiot' icon={<EditIcon />} />
+        <IconButton onClick={onDeleteModalOpen} variant={'ghost'} aria-label='Usuń przedmiot' icon={<DeleteIcon />} />
       </Flex>
     </>
   );
