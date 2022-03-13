@@ -21,6 +21,7 @@ import { SubjectsPanel } from '../components/admin/subjects/SubjectsPanel';
 import { SettingsPanel } from '../components/admin/settings/SettingsPanel';
 import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
 import { ArrowBackIcon } from '@chakra-ui/icons';
+import { CalendarPanel } from '../components/admin/calendar/CalendarPanel';
 
 export const TeacherPanel = () => {
   const user = useStore((state) => state.user);
@@ -49,11 +50,11 @@ export const TeacherPanel = () => {
         </TabList>
 
         <TabPanels display={'flex'} flexGrow={1} overflow={'hidden'}>
-          <TabPanel>
-            <p>Kalendarz</p>
+          <TabPanel display={'flex'} flexDir={'column'} flexGrow={1} overflow={'hidden'}>
+            <CalendarPanel />
           </TabPanel>
           <TabPanel display={'flex'} flexDir={'column'} flexGrow={1} overflow={'hidden'}>
-            <SimpleGrid columns={[1, 2, 2, 3]} gap={6} p={5} m={-4} flexGrow={1} overflow={'hidden'}>
+            <SimpleGrid columns={[1, 2, 2, 3]} gap={6} p={4} m={-4} flexGrow={1} overflow={'hidden'}>
               <SubjectsPanel />
             </SimpleGrid>
           </TabPanel>
