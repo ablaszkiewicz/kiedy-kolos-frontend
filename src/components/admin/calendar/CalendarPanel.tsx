@@ -1,27 +1,76 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Grid, HStack, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
+import { Badge, Box, Button, Circle, Flex, Grid, HStack, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { DateSchema } from 'yup';
 
 export const CalendarPanel = () => {
-  const days = Array.apply(null, Array(35)).map(function () {});
+  const [days, setDays] = useState<any[]>([]);
+  const freeDays = [5, 6, 12, 13, 19, 20, 26, 27, 33, 34];
+  const dayNames = ['pon', 'wt', 'śr', 'czw', 'pt', 'sob', 'nie'];
 
-  console.log(days);
+  useEffect(() => {
+    const daysTemp = [];
+
+    for (let i = 0; i < 35; i++) {
+      const day: any = {};
+      const events = [];
+      if (Math.random() > 0.6) {
+        events.push({ bg: 'red' });
+        if (Math.random() > 0.5) {
+          if (Math.random() > 0.5) {
+            events.push({ bg: 'green' });
+          }
+          events.push({ bg: 'yellow' });
+        }
+      }
+      day.events = events;
+      daysTemp.push(day);
+    }
+    setDays(daysTemp);
+  }, []);
 
   return (
-    <HStack w={'100%'} h={'100%'} flexGrow={1}>
-      <Flex w={'70%'} h={'100%'} borderRadius={10}>
-        <SimpleGrid columns={7} flexGrow={1} gap={2}>
-          {days.map((day, i) => (
-            <Flex height={'auto'} backgroundColor={'gray.700'} borderRadius={10} shadow={'xl'} p={2}>
+    <HStack w={'100%'} h={'100%'} flexGrow={1} spacing={4}>
+      <Flex direction={'column'} w={'70%'} h={'100%'} borderRadius={10} p={4} backgroundColor={'gray.750'}>
+        <SimpleGrid columns={7} gap={2} mb={2}>
+          {dayNames.map((name) => (
+            <Flex>
               <Spacer />
-              <Text fontWeight={'bold'}>{i}</Text>
+              <Text opacity={0.6}>{name}</Text>
+              <Spacer />
             </Flex>
           ))}
-          {/* <Flex backgroundColor={'red'} height={'20px'} width={'20px'}></Flex> */}
+        </SimpleGrid>
+        <SimpleGrid minH={0} columns={7} gap={2} flexGrow={1}>
+          {days.map((day, i) => (
+            <Flex
+              direction={'column'}
+              align={'center'}
+              borderRadius={10}
+              backgroundColor={i == 16 ? 'blue.600' : freeDays.includes(i) ? 'gray.700' : 'gray.700'}
+              shadow={i == 16 ? 'md' : 'inner'}
+              minHeight={'0px'}
+              p={2}
+              gap={2}
+            >
+              <Text fontWeight={'medium'} fontSize={'2xl'}>
+                {i}
+              </Text>
+              <HStack spacing={1}>
+                {day.events &&
+                  day.events.map((event: any) => (
+                    <Badge variant={'solid'} colorScheme={event.bg}>
+                      Ako
+                    </Badge>
+                  ))}
+              </HStack>
+            </Flex>
+          ))}
         </SimpleGrid>
       </Flex>
       <Flex
         w={'30%'}
-        backgroundColor={'gray.700'}
+        backgroundColor={'gray.750'}
         h={'100%'}
         shadow={'xl'}
         borderRadius={10}

@@ -15,7 +15,7 @@ export const SubjectsPanel = () => {
       <Flex
         direction={'column'}
         borderRadius={10}
-        backgroundColor={'gray.700'}
+        backgroundColor={'gray.750'}
         p={7}
         shadow={'dark-lg'}
         overflowY={'hidden'}

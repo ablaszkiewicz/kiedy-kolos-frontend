@@ -9,7 +9,11 @@ const config = {
   useSystemColorMode: false,
 };
 
+const colors = {
+  'gray.750': '#242C3A',
+};
+
 // 3. extend the theme
-const theme = extendTheme({ config });
+const theme = extendTheme({ config, colors });
 
 export default theme;

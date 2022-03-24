@@ -30,24 +30,23 @@ export const TeacherPanel = () => {
 
   return (
     <Flex p={0} h={['auto', '100vh']} direction={'column'} overflow={'hidden'}>
-      <Flex mb={5} p={5} pb={0}>
-        <Heading>Panel starosty {user.email}</Heading>
+      <Flex m={4} mb={0} p={1}>
+        <Heading>Kalendarz</Heading>
         <Spacer />
         <Button onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
           Wybór kierunku
         </Button>
-        <ColorModeSwitcher />
         <Button ml={3} onClick={() => logout()}>
           Wyloguj
         </Button>
       </Flex>
 
       <Tabs isLazy display={'flex'} flexDir={'column'} flexGrow={1} overflow={'hidden'} p={10} m={-10}>
-        <TabList px={5}>
+        {/* <TabList px={5}>
           <Tab>Kalendarz</Tab>
           <Tab>Przedmioty i grupy</Tab>
           <Tab>Ustawienia</Tab>
-        </TabList>
+        </TabList> */}
 
         <TabPanels display={'flex'} flexGrow={1} overflow={'hidden'}>
           <TabPanel display={'flex'} flexDir={'column'} flexGrow={1} overflow={'hidden'}>
