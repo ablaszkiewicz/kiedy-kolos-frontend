@@ -41,7 +41,7 @@ export const CalendarPanel = () => {
             </Flex>
           ))}
         </SimpleGrid>
-        <SimpleGrid minH={0} columns={7} gap={2} flexGrow={1}>
+        <Grid templateColumns={'repeat(7, 1fr)'} templateRows={'repeat(5, 1fr)'} gap={2} flexGrow={1} minHeight={0}>
           {days.map((day, i) => (
             <Flex
               direction={'column'}
@@ -53,6 +53,7 @@ export const CalendarPanel = () => {
               p={2}
               gap={2}
             >
+              <Spacer />
               <Text fontWeight={'medium'} fontSize={'2xl'}>
                 {i}
               </Text>
@@ -64,9 +65,10 @@ export const CalendarPanel = () => {
                     </Badge>
                   ))}
               </HStack>
+              <Spacer />
             </Flex>
           ))}
-        </SimpleGrid>
+        </Grid>
       </Flex>
       <Flex
         w={'30%'}

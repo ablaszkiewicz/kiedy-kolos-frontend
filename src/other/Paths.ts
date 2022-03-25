@@ -1,6 +1,7 @@
 export const enum Path {
   LOGIN = '/login',
   REGISTER = '/register',
-  DASHBOARD = '/dashboard',
+  SETTINGS = '/settings',
+  CALENDAR = '/calendar',
   EXPLORER = '/explorer',
 }
