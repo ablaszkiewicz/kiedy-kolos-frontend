@@ -1,4 +1,16 @@
-import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, Spacer, Text, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  HStack,
+  SimpleGrid,
+  Spacer,
+  Text,
+  useDisclosure,
+  VStack,
+} from '@chakra-ui/react';
 import { AddIcon, ArrowBackIcon, CalendarIcon } from '@chakra-ui/icons';
 import { SubjectCreateModal } from '../components/admin/subjects/SubjectCreateModal';
 import { SubjectListItem } from '../components/admin/subjects/SubjectListItem';
@@ -7,6 +19,10 @@ import useSubjects from '../hooks/useSubjects';
 import { Path } from '../other/Paths';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import { SubjectsPanel } from '../components/admin/subjects/SubjectsPanel';
+import { GroupsPanel } from '../components/admin/groups/GroupsPanel';
+import { RolesPanel } from '../components/admin/roles/RolesPanel';
+import { SettingsPanel } from '../components/admin/settings/SettingsPanel';
 
 export const Settings = () => {
   const { isOpen: isCreateModalOpen, onOpen: onCreateModalOpen, onClose: onCreateModalClose } = useDisclosure();
@@ -31,38 +47,12 @@ export const Settings = () => {
           Wyloguj
         </Button>
       </Flex>
-      <SimpleGrid columns={3} flexGrow={1} overflowY={'hidden'}>
-        <Flex direction={'column'} flexGrow={1} overflowY={'hidden'} p={10} m={-10}>
-          <SubjectCreateModal isOpen={isCreateModalOpen} onClose={onCreateModalClose} />
-          <Flex
-            direction={'column'}
-            borderRadius={10}
-            backgroundColor={'gray.750'}
-            p={7}
-            shadow={'dark-lg'}
-            overflowY={'hidden'}
-            flexGrow={1}
-          >
-            <Flex mb={4}>
-              <Text fontWeight={'bold'} fontSize={'2xl'}>
-                Przedmioty
-              </Text>
-              <Spacer />
-              <Button variant={'ghost'} onClick={onCreateModalOpen} leftIcon={<AddIcon />}>
-                Dodaj
-              </Button>
-            </Flex>
-
-            <Box overflowY={'scroll'} css={scrollbarStyle}>
-              {query.data &&
-                query.data.map((subject: SubjectType, i: number) => (
-                  <div key={subject.id}>
-                    <SubjectListItem subject={subject} />
-                    {i < query.data.length - 1 && <Divider />}
-                  </div>
-                ))}
-            </Box>
-          </Flex>
+      <SimpleGrid columns={3} flexGrow={1} overflowY={'hidden'} spacing={4} p={5} m={-5}>
+        <SubjectsPanel />
+        <GroupsPanel />
+        <Flex direction={'column'} gap={4}>
+          <RolesPanel />
+          <SettingsPanel />
         </Flex>
       </SimpleGrid>
     </Flex>
