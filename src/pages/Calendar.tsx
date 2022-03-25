@@ -1,7 +1,7 @@
-import { AddIcon, ArrowBackIcon } from '@chakra-ui/icons';
+import { AddIcon, ArrowBackIcon, SettingsIcon } from '@chakra-ui/icons';
 import { Badge, Box, Button, Circle, Flex, Grid, Heading, HStack, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DateSchema } from 'yup';
 import useAuth from '../hooks/useAuth';
 import { Path } from '../other/Paths';
@@ -35,12 +35,17 @@ export const Calendar = () => {
     setDays(daysTemp);
   }, []);
 
+  const { yearCourseId } = useParams();
+
   return (
     <Flex p={4} m={0} h={['auto', '100vh']} direction={'column'} overflow={'hidden'}>
       <Flex m={0} p={0} mb={2}>
         <Heading>Kalendarz</Heading>
         <Spacer />
-        <Button onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
+        <Button onClick={() => navigate(Path.SETTINGS + `/${yearCourseId}`)} leftIcon={<SettingsIcon />}>
+          Ustawienia
+        </Button>
+        <Button ml={3} onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
           Wybór kierunku
         </Button>
         <Button ml={3} onClick={() => logout()}>

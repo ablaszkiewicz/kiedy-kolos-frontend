@@ -1,11 +1,11 @@
 import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, Spacer, Text, useDisclosure } from '@chakra-ui/react';
-import { AddIcon, ArrowBackIcon } from '@chakra-ui/icons';
+import { AddIcon, ArrowBackIcon, CalendarIcon } from '@chakra-ui/icons';
 import { SubjectCreateModal } from '../components/admin/subjects/SubjectCreateModal';
 import { SubjectListItem } from '../components/admin/subjects/SubjectListItem';
 import { SubjectType } from '../entities/Subject';
 import useSubjects from '../hooks/useSubjects';
 import { Path } from '../other/Paths';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 export const Settings = () => {
@@ -14,12 +14,17 @@ export const Settings = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
+  const { yearCourseId } = useParams();
+
   return (
     <Flex p={4} m={0} h={['auto', '100vh']} direction={'column'} overflow={'hidden'}>
       <Flex m={0} p={0} mb={2}>
         <Heading>Ustawienia</Heading>
         <Spacer />
-        <Button onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
+        <Button onClick={() => navigate(Path.CALENDAR + `/${yearCourseId}`)} leftIcon={<CalendarIcon />}>
+          Kalendarz
+        </Button>
+        <Button ml={3} onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
           Wybór kierunku
         </Button>
         <Button ml={3} onClick={() => logout()}>
