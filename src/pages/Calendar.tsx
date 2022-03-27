@@ -54,7 +54,15 @@ export const Calendar = () => {
       </Flex>
 
       <HStack flexGrow={1} spacing={4}>
-        <Flex direction={'column'} w={'70%'} h={'100%'} borderRadius={10} p={4} backgroundColor={'gray.750'}>
+        <Flex
+          direction={'column'}
+          w={'70%'}
+          h={'100%'}
+          borderRadius={10}
+          p={4}
+          backgroundColor={'gray.750'}
+          shadow={'dark-lg'}
+        >
           <SimpleGrid columns={7} gap={2} mb={2}>
             {dayNames.map((name) => (
               <Flex>
@@ -97,7 +105,7 @@ export const Calendar = () => {
           w={'30%'}
           backgroundColor={'gray.750'}
           h={'100%'}
-          shadow={'xl'}
+          shadow={'dark-lg'}
           borderRadius={10}
           p={7}
           direction={'column'}
