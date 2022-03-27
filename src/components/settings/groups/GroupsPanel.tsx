@@ -8,28 +8,26 @@ export const GroupsPanel = () => {
   const { query } = useSubjects();
 
   return (
-    <Flex direction={'column'} flexGrow={1} overflowY={'hidden'} p={10} m={-10}>
-      <Flex
-        direction={'column'}
-        borderRadius={10}
-        backgroundColor={'gray.750'}
-        p={7}
-        shadow={'dark-lg'}
-        overflowY={'hidden'}
-        flexGrow={1}
-      >
-        <Flex mb={4}>
-          <Text fontWeight={'bold'} fontSize={'2xl'}>
-            Grupy
-          </Text>
-          <Spacer />
-          <Button variant={'ghost'} onClick={onCreateModalOpen} leftIcon={<AddIcon />}>
-            Dodaj
-          </Button>
-        </Flex>
-
-        <Box overflowY={'scroll'} css={scrollbarStyle}></Box>
+    <Flex
+      direction={'column'}
+      borderRadius={10}
+      backgroundColor={'gray.750'}
+      p={7}
+      shadow={'dark-lg'}
+      overflowY={'hidden'}
+      flexGrow={1}
+    >
+      <Flex mb={4}>
+        <Text fontWeight={'bold'} fontSize={'2xl'}>
+          Grupy
+        </Text>
+        <Spacer />
+        <Button variant={'ghost'} onClick={onCreateModalOpen} leftIcon={<AddIcon />}>
+          Dodaj
+        </Button>
       </Flex>
+
+      <Box overflowY={'scroll'} css={scrollbarStyle}></Box>
     </Flex>
   );
 };
