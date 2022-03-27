@@ -83,6 +83,7 @@ export const Calendar = () => {
                 minHeight={'0px'}
                 p={2}
                 gap={2}
+                minW={0}
               >
                 <Spacer />
                 <Text fontWeight={'medium'} fontSize={'2xl'}>
