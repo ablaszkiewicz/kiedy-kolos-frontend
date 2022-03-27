@@ -5,7 +5,7 @@ export const AnimatedTransition = () => {
   const location = useLocation();
 
   return (
-    <ScaleFade initialScale={0.97} in={true} key={location.key}>
+    <ScaleFade initialScale={1} in={true} key={location.key}>
       <Outlet />
     </ScaleFade>
   );
