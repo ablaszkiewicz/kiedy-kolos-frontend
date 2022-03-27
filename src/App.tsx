@@ -8,7 +8,6 @@ import theme from './theme';
 import { Path } from './other/Paths';
 import { RequireAuthRoute } from './components/other/RequireAuthRoute';
 import { UnauthorizedHandler } from './components/other/UnauthorizedHandler';
-import { CalendarPanel } from './components/admin/calendar/CalendarPanel';
 import { Calendar } from './pages/Calendar';
 import { Settings } from './pages/Settings';
 import { AnimatedTransition } from './components/other/AnimatedTransition';

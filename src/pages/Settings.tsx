@@ -12,17 +12,17 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { AddIcon, ArrowBackIcon, CalendarIcon } from '@chakra-ui/icons';
-import { SubjectCreateModal } from '../components/admin/subjects/SubjectCreateModal';
-import { SubjectListItem } from '../components/admin/subjects/SubjectListItem';
+import { SubjectCreateModal } from '../components/settings/subjects/SubjectCreateModal';
+import { SubjectListItem } from '../components/settings/subjects/SubjectListItem';
 import { SubjectType } from '../entities/Subject';
 import useSubjects from '../hooks/useSubjects';
 import { Path } from '../other/Paths';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import { SubjectsPanel } from '../components/admin/subjects/SubjectsPanel';
-import { GroupsPanel } from '../components/admin/groups/GroupsPanel';
-import { RolesPanel } from '../components/admin/roles/RolesPanel';
-import { SettingsPanel } from '../components/admin/settings/SettingsPanel';
+import { SubjectsPanel } from '../components/settings/subjects/SubjectsPanel';
+import { GroupsPanel } from '../components/settings/groups/GroupsPanel';
+import { RolesPanel } from '../components/settings/roles/RolesPanel';
+import { SettingsPanel } from '../components/settings/settings/SettingsPanel';
 
 export const Settings = () => {
   const { isOpen: isCreateModalOpen, onOpen: onCreateModalOpen, onClose: onCreateModalClose } = useDisclosure();
@@ -47,7 +47,7 @@ export const Settings = () => {
           Wyloguj
         </Button>
       </Flex>
-      <SimpleGrid columns={3} flexGrow={1} overflowY={'hidden'} spacing={4} p={5} m={-5}>
+      <SimpleGrid columns={[1, 1, 3]} flexGrow={1} overflowY={'hidden'} spacing={4} p={5} m={-5}>
         <SubjectsPanel />
         <GroupsPanel />
         <Flex direction={'column'} gap={4}>
