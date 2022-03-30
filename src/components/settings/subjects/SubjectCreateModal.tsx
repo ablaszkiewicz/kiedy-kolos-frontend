@@ -54,8 +54,8 @@ export const SubjectCreateModal = (props: Props) => {
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>
-                <InputControl name='name' label='Nazwa' />
-                <InputControl name='shortName' label='Krótka nazwa' mt={5} />
+                <InputControl name='name' label='Nazwa' inputProps={{ placeholder: 'Gry i zabawy' }} />
+                <InputControl name='shortName' label='Krótka nazwa' mt={5} inputProps={{ placeholder: 'GIZ' }} />
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme='blue' mr={'3'} type='submit' isLoading={postMutation.isLoading}>

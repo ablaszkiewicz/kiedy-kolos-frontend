@@ -69,7 +69,7 @@ export const Calendar = () => {
         >
           <SimpleGrid columns={7} gap={2} mb={2}>
             {dayNames.map((name) => (
-              <Flex>
+              <Flex key={name}>
                 <Spacer />
                 <Text opacity={0.6}>{name}</Text>
                 <Spacer />
@@ -77,8 +77,8 @@ export const Calendar = () => {
             ))}
           </SimpleGrid>
           <Grid templateColumns={'repeat(7, 1fr)'} templateRows={'repeat(6, 1fr)'} gap={2} flexGrow={1} minHeight={0}>
-            {days.map((day, i) => (
-              <DayCard day={day} monthOffset={0} />
+            {days.map((day) => (
+              <DayCard day={day} monthOffset={0} key={day} />
             ))}
           </Grid>
         </Flex>
