@@ -1,15 +1,19 @@
 import { AddIcon, ArrowBackIcon, SettingsIcon } from '@chakra-ui/icons';
 import { Badge, Box, Button, Circle, Flex, Grid, Heading, HStack, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DateSchema } from 'yup';
+import { DayCard } from '../components/calendar/DayCard';
 import useAuth from '../hooks/useAuth';
+import useCalendar from '../hooks/useCalendar';
 import { Path } from '../other/Paths';
 
 export const Calendar = () => {
   const [days, setDays] = useState<any[]>([]);
   const freeDays = [5, 6, 12, 13, 19, 20, 26, 27, 33, 34];
   const dayNames = ['pon', 'wt', 'śr', 'czw', 'pt', 'sob', 'nie'];
+  const { getDaysInMonth } = useCalendar();
 
   const navigate = useNavigate();
   const { logout } = useAuth();
@@ -17,7 +21,7 @@ export const Calendar = () => {
   useEffect(() => {
     const daysTemp = [];
 
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 42; i++) {
       const day: any = {};
       const events = [];
       if (Math.random() > 0.6) {
@@ -32,7 +36,7 @@ export const Calendar = () => {
       day.events = events;
       daysTemp.push(day);
     }
-    setDays(daysTemp);
+    setDays(getDaysInMonth(0));
   }, []);
 
   const { yearCourseId } = useParams();
@@ -72,33 +76,9 @@ export const Calendar = () => {
               </Flex>
             ))}
           </SimpleGrid>
-          <Grid templateColumns={'repeat(7, 1fr)'} templateRows={'repeat(5, 1fr)'} gap={2} flexGrow={1} minHeight={0}>
+          <Grid templateColumns={'repeat(7, 1fr)'} templateRows={'repeat(6, 1fr)'} gap={2} flexGrow={1} minHeight={0}>
             {days.map((day, i) => (
-              <Flex
-                direction={'column'}
-                align={'center'}
-                borderRadius={10}
-                backgroundColor={i == 16 ? 'blue.600' : freeDays.includes(i) ? 'gray.700' : 'gray.700'}
-                shadow={i == 16 ? 'md' : 'inner'}
-                minHeight={'0px'}
-                p={2}
-                gap={2}
-                minW={0}
-              >
-                <Spacer />
-                <Text fontWeight={'medium'} fontSize={'2xl'}>
-                  {i}
-                </Text>
-                <HStack spacing={1}>
-                  {day.events &&
-                    day.events.map((event: any) => (
-                      <Badge variant={'solid'} colorScheme={event.bg}>
-                        Ako
-                      </Badge>
-                    ))}
-                </HStack>
-                <Spacer />
-              </Flex>
+              <DayCard day={day} monthOffset={0} />
             ))}
           </Grid>
         </Flex>

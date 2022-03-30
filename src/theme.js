@@ -10,6 +10,9 @@ const config = {
 };
 
 const colors = {
+  'gray.720': '#293242',
+  'gray.730': '#273040',
+  'gray.740': '#252E3D',
   'gray.750': '#242C3A',
 };
 

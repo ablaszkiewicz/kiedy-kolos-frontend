@@ -17,6 +17,7 @@
     "@types/react-dom": "^16.9.14",
     "@types/yup": "^0.29.13",
     "axios": "^0.25.0",
+    "dayjs": "^1.11.0",
     "formik": "^2.2.9",
     "formik-chakra-ui": "^1.6.0",
     "framer-motion": "^4.1.17",
