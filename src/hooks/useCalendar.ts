@@ -11,7 +11,7 @@ export default function useCalendar() {
 
     const startingDay = desiredDay.startOf('month').subtract(startDayOfMonth - 1, 'day');
 
-    for (let i = 0; i < 42; i++) daysTemp[i] = startingDay.add(i, 'day').format('YYYY-MM-DD');
+    for (let i = 0; i < 39; i++) daysTemp[i] = startingDay.add(i, 'day').format('YYYY-MM-DD');
 
     return daysTemp;
   };

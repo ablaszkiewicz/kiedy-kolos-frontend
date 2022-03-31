@@ -11,6 +11,7 @@ export const EventsPanel = () => {
       borderRadius={10}
       p={7}
       direction={'column'}
+      flexGrow={1}
     >
       <Flex mb={4}>
         <Text fontWeight={'bold'} fontSize={'2xl'}>

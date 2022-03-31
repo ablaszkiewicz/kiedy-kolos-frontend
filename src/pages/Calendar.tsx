@@ -1,5 +1,5 @@
 import { AddIcon, ArrowBackIcon, SettingsIcon } from '@chakra-ui/icons';
-import { Button, Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
+import { Button, Flex, Heading, HStack, Spacer, Text, VStack } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CalendarPanel } from '../calendar/CalendarPanel';
 import { EventsPanel } from '../components/calendar/EventsPanel';
