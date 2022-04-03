@@ -10,7 +10,8 @@ export const CalendarPanel = () => {
   const [offset, setOffset] = useState<number>(0);
   const [direction, setDirection] = useState<number>(1);
 
-  const { getDaysInMonth } = useCalendar();
+  const { getDaysInMonth, getMonthName } = useCalendar();
+
   useEffect(() => {
     setDays(getDaysInMonth(offset));
   }, [offset]);
@@ -34,7 +35,14 @@ export const CalendarPanel = () => {
           </Flex>
         ))}
       </SimpleGrid>
-      <Grid templateColumns={'repeat(7, 1fr)'} templateRows={'repeat(6, 1fr)'} gap={2} flexGrow={1} minHeight={0}>
+      <Grid
+        templateColumns={'repeat(7, 1fr)'}
+        templateRows={'repeat(6, 1fr)'}
+        gap={2}
+        flexGrow={1}
+        minHeight={0}
+        overflow={'hidden'}
+      >
         {days.map((day) => (
           <DayCard day={day} monthOffset={offset} direction={direction} key={offset + day} />
         ))}
@@ -49,8 +57,8 @@ export const CalendarPanel = () => {
                 setDirection(-1);
               }}
             />
-            <Text fontWeight={'medium'} fontSize={'2xl'}>
-              Kwiecień {offset}
+            <Text fontWeight={'medium'} fontSize={'2xl'} textAlign={'center'} width={'30%'}>
+              {getMonthName(offset)}
             </Text>
             <IconButton
               aria-label='left'

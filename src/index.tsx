@@ -1,5 +1,7 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import 'dayjs/locale/pl';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -9,6 +11,7 @@ import * as serviceWorker from './serviceWorker';
 
 //axios.defaults.baseURL = 'http://localhost:3001/';
 axios.defaults.baseURL = 'https://testnginx.bieda.it/';
+dayjs.locale('pl');
 
 ReactDOM.render(
   <React.StrictMode>

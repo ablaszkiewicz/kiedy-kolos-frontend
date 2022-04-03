@@ -16,5 +16,14 @@ export default function useCalendar() {
     return daysTemp;
   };
 
-  return { getDaysInMonth };
+  const getMonthName = (offset: number) => {
+    const today = dayjs();
+    const desiredDay = today.add(offset, 'month');
+    const month = desiredDay.format('MMMM');
+    const monthUppercased = month.charAt(0).toUpperCase() + month.slice(1);
+
+    return monthUppercased;
+  };
+
+  return { getDaysInMonth, getMonthName };
 }
