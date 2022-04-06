@@ -11,7 +11,7 @@ export const YearCourseCard = (props: Props) => {
   const navigate = useNavigate();
 
   const navigateToDashboard = (yearCourse: YearCourseType) => {
-    navigate(`${Path.DASHBOARD}/${yearCourse.id}`);
+    navigate(`${Path.CALENDAR}/${yearCourse.id}`);
   };
 
   return (

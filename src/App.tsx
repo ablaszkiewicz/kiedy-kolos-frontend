@@ -4,11 +4,13 @@ import { HashRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Explorer } from './pages/Explorer';
-import { TeacherPanel } from './pages/TeacherPanel';
 import theme from './theme';
 import { Path } from './other/Paths';
 import { RequireAuthRoute } from './components/other/RequireAuthRoute';
 import { UnauthorizedHandler } from './components/other/UnauthorizedHandler';
+import { Calendar } from './pages/Calendar';
+import { Settings } from './pages/Settings';
+import { AnimatedTransition } from './components/other/AnimatedTransition';
 
 const queryClient = new QueryClient();
 
@@ -19,35 +21,17 @@ export const App = () => {
         <Router basename='/'>
           <UnauthorizedHandler />
           <Routes>
-            <Route path={Path.DASHBOARD}>
-              <Route
-                path=''
-                element={
-                  <RequireAuthRoute>
-                    <Explorer />
-                  </RequireAuthRoute>
-                }
-              />
-              <Route
-                path=':yearCourseId'
-                element={
-                  <RequireAuthRoute>
-                    <TeacherPanel />
-                  </RequireAuthRoute>
-                }
-              />
+            <Route element={<AnimatedTransition />}>
+              <Route element={<RequireAuthRoute />}>
+                <Route path={Path.EXPLORER} element={<Explorer />} />
+                <Route path={Path.CALENDAR + '/:yearCourseId'} element={<Calendar />} />
+                <Route path={Path.SETTINGS + '/:yearCourseId'} element={<Settings />} />
+                <Route path='*' element={<Navigate to={Path.EXPLORER} />} />
+              </Route>
+
+              <Route path={Path.LOGIN} element={<Login />} />
+              <Route path={Path.REGISTER} element={<Register />} />
             </Route>
-            <Route
-              path={Path.EXPLORER}
-              element={
-                <RequireAuthRoute>
-                  <Explorer />
-                </RequireAuthRoute>
-              }
-            />
-            <Route path={Path.LOGIN} element={<Login />} />
-            <Route path={Path.REGISTER} element={<Register />} />
-            <Route path='*' element={<Navigate to={Path.EXPLORER} />} />
           </Routes>
         </Router>
       </QueryClientProvider>

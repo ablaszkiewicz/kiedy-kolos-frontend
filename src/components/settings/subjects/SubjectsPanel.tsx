@@ -10,12 +10,12 @@ export const SubjectsPanel = () => {
   const { query } = useSubjects();
 
   return (
-    <Flex direction={'column'} flexGrow={1} overflowY={'hidden'} p={10} m={-10}>
+    <>
       <SubjectCreateModal isOpen={isCreateModalOpen} onClose={onCreateModalClose} />
       <Flex
         direction={'column'}
         borderRadius={10}
-        backgroundColor={'gray.700'}
+        backgroundColor={'gray.750'}
         p={7}
         shadow={'dark-lg'}
         overflowY={'hidden'}
@@ -41,7 +41,7 @@ export const SubjectsPanel = () => {
             ))}
         </Box>
       </Flex>
-    </Flex>
+    </>
   );
 };
 
