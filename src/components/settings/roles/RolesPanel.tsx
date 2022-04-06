@@ -4,9 +4,6 @@ import { SubjectType } from '../../../entities/Subject';
 import { AddIcon } from '@chakra-ui/icons';
 
 export const RolesPanel = () => {
-  const { isOpen: isCreateModalOpen, onOpen: onCreateModalOpen, onClose: onCreateModalClose } = useDisclosure();
-  const { query } = useSubjects();
-
   return (
     <Flex
       direction={'column'}
@@ -22,7 +19,7 @@ export const RolesPanel = () => {
           Role
         </Text>
         <Spacer />
-        <Button variant={'ghost'} onClick={onCreateModalOpen} leftIcon={<AddIcon />}>
+        <Button variant={'ghost'} leftIcon={<AddIcon />}>
           Dodaj
         </Button>
       </Flex>

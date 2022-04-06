@@ -5,10 +5,15 @@ import { DayCard } from '../components/calendar/DayCard';
 import useCalendar from '../hooks/useCalendar';
 import { useSetState } from '../hooks/useSetState';
 
+enum SlideDirection {
+  LEFT = -1,
+  RIGHT = 1,
+}
+
 interface State {
   days: string[];
-  offset: number;
-  direction: number;
+  monthOffset: number;
+  direction: SlideDirection;
 }
 
 export const CalendarPanel = () => {
@@ -16,15 +21,15 @@ export const CalendarPanel = () => {
 
   const [state, setState] = useSetState({
     days: [],
-    offset: 0,
-    direction: 1,
+    monthOffset: 0,
+    direction: SlideDirection.RIGHT,
   } as State);
 
   const { getDaysInMonth, getMonthName } = useCalendar();
 
   useEffect(() => {
-    setState({ days: getDaysInMonth(state.offset) });
-  }, [state.offset]);
+    setState({ days: getDaysInMonth(state.monthOffset) });
+  }, [state.monthOffset]);
 
   return (
     <Flex
@@ -54,7 +59,12 @@ export const CalendarPanel = () => {
         overflow={'hidden'}
       >
         {state.days.map((day) => (
-          <DayCard day={day} monthOffset={state.offset} direction={state.direction} key={state.offset + day} />
+          <DayCard
+            day={day}
+            monthOffset={state.monthOffset}
+            direction={state.direction}
+            key={state.monthOffset + day}
+          />
         ))}
         <GridItem colSpan={3} h={'100%'} my={'auto'}>
           <Center gap={4} backgroundColor={'gray.720'} borderRadius={10} h={'100%'}>
@@ -63,19 +73,19 @@ export const CalendarPanel = () => {
               aria-label='left'
               icon={<ArrowBackIcon />}
               onClick={() => {
-                setState({ offset: state.offset - 1 });
-                setState({ direction: -1 });
+                setState({ monthOffset: state.monthOffset - 1 });
+                setState({ direction: SlideDirection.LEFT });
               }}
             />
             <Text fontWeight={'medium'} fontSize={'2xl'} textAlign={'center'} width={'30%'}>
-              {getMonthName(state.offset)}
+              {getMonthName(state.monthOffset)}
             </Text>
             <IconButton
               aria-label='left'
               icon={<ArrowForwardIcon />}
               onClick={() => {
-                setState({ offset: state.offset + 1 });
-                setState({ direction: 1 });
+                setState({ monthOffset: state.monthOffset + 1 });
+                setState({ direction: SlideDirection.RIGHT });
               }}
             />
             <Spacer />

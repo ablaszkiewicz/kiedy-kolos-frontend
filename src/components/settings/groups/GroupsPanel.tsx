@@ -2,11 +2,9 @@ import { Box, Button, Divider, Flex, HStack, SimpleGrid, Spacer, Text, useDisclo
 import useSubjects from '../../../hooks/useSubjects';
 import { SubjectType } from '../../../entities/Subject';
 import { AddIcon } from '@chakra-ui/icons';
+import dayjs from 'dayjs';
 
 export const GroupsPanel = () => {
-  const { isOpen: isCreateModalOpen, onOpen: onCreateModalOpen, onClose: onCreateModalClose } = useDisclosure();
-  const { query } = useSubjects();
-
   return (
     <Flex
       direction={'column'}
@@ -22,7 +20,7 @@ export const GroupsPanel = () => {
           Grupy
         </Text>
         <Spacer />
-        <Button variant={'ghost'} onClick={onCreateModalOpen} leftIcon={<AddIcon />}>
+        <Button variant={'ghost'} leftIcon={<AddIcon />}>
           Dodaj
         </Button>
       </Flex>

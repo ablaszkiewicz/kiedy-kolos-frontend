@@ -9,8 +9,8 @@ interface Props {
 
 export function DayCard(props: Props) {
   const currentMonth = dayjs().add(props.monthOffset, 'month').format('MM');
-  const monthThisCardIsIn = dayjs(props.day).format('MM');
-  const isInCurrentMonth = currentMonth === monthThisCardIsIn;
+  const cardMonth = dayjs(props.day).format('MM');
+  const isInCurrentMonth: boolean = currentMonth === cardMonth;
   const today = dayjs().format('YYYY-MM-DD');
 
   return (

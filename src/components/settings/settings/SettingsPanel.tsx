@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { YearCourseDeleteModal } from './YearCourseDeleteModal';
 
 export const SettingsPanel = () => {
-  const { isOpen: isDeleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { yearCourseId } = useParams();
 
   return (
@@ -25,8 +25,8 @@ export const SettingsPanel = () => {
       </Flex>
 
       <Box>
-        <YearCourseDeleteModal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} yearCourseId={yearCourseId!} />
-        <Button onClick={onDeleteModalOpen}>Usuń kierunek</Button>
+        <YearCourseDeleteModal isOpen={isOpen} onClose={onClose} yearCourseId={yearCourseId!} />
+        <Button onClick={onOpen}>Usuń kierunek</Button>
       </Box>
     </Flex>
   );
