@@ -12,7 +12,7 @@ import { Form, Formik } from 'formik';
 import { InputControl } from 'formik-chakra-ui';
 import { useEffect } from 'react';
 import useGroups from '../../../hooks/useGroups';
-import { CreateGroupParams, groupValidationSchema } from '../../../entities/Group';
+import { CreateGroupDto, groupValidationSchema } from '../../../entities/Group';
 
 interface Props {
   isOpen: boolean;
@@ -38,7 +38,7 @@ export const GroupCreateModal = (props: Props) => {
   };
 
   const createGroup = (values: FormikValues) => {
-    const params: CreateGroupParams = { dto: { name: values.name } } as CreateGroupParams;
+    const params: CreateGroupDto = { name: values.name } as CreateGroupDto;
     postMutation.mutate(params);
   };
 

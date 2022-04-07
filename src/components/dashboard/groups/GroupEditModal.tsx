@@ -12,7 +12,7 @@ import { Form, Formik } from 'formik';
 import { InputControl } from 'formik-chakra-ui';
 import { useEffect } from 'react';
 import useGroups from '../../../hooks/useGroups';
-import { Group, groupValidationSchema, UpdateGroupParams } from '../../../entities/Group';
+import { Group, groupValidationSchema, UpdateGroupDto } from '../../../entities/Group';
 
 interface Props {
   isOpen: boolean;
@@ -39,7 +39,7 @@ export const GroupEditModal = (props: Props) => {
   };
 
   const editGroup = (values: FormikValues) => {
-    const params: UpdateGroupParams = { id: props.group.id, dto: {name: values.name } } as UpdateGroupParams;
+    const params: UpdateGroupDto = { id: props.group.id, name: values.name } as UpdateGroupDto;
     updateMutation.mutate(params);
   };
 
