@@ -1,7 +1,6 @@
-import { Box, Button, Divider, Flex, HStack, SimpleGrid, Spacer, Text, useDisclosure } from '@chakra-ui/react';
-import useSubjects from '../../../hooks/useSubjects';
-import { SubjectType } from '../../../entities/Subject';
+import { Box, Button, Flex, Spacer, Text } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
+import { scrollbarStyle } from '../shared/styles';
 
 export const RolesPanel = () => {
   return (
@@ -27,17 +26,4 @@ export const RolesPanel = () => {
       <Box overflowY={'scroll'} css={scrollbarStyle}></Box>
     </Flex>
   );
-};
-
-const scrollbarStyle = {
-  '&::-webkit-scrollbar': {
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-track': {
-    width: '6px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    background: 'gray',
-    borderRadius: '24px',
-  },
 };
