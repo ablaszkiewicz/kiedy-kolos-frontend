@@ -1,4 +1,4 @@
-import { AddIcon, ArrowBackIcon, SettingsIcon } from '@chakra-ui/icons';
+import { AddIcon, ArrowBackIcon, HamburgerIcon, SettingsIcon } from '@chakra-ui/icons';
 import { Button, Flex, Heading, HStack, Spacer, Text, VStack } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CalendarPanel } from '../calendar/CalendarPanel';
@@ -17,8 +17,8 @@ export const Calendar = () => {
       <Flex m={0} p={0} mb={2}>
         <Heading>Kalendarz</Heading>
         <Spacer />
-        <Button onClick={() => navigate(Path.SETTINGS + `/${yearCourseId}`)} leftIcon={<SettingsIcon />}>
-          Ustawienia
+        <Button onClick={() => navigate(Path.DASHBOARD + `/${yearCourseId}`)} leftIcon={<HamburgerIcon />}>
+          Panel zarządzania
         </Button>
         <Button ml={3} onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
           Wybór kierunku
