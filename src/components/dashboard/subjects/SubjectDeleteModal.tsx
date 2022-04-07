@@ -14,34 +14,34 @@ import { SubjectType } from '../../../entities/Subject';
 import useSubjects from '../../../hooks/useSubjects';
 
 interface Props {
-  isOpen: any;
-  onClose: any;
+  isOpen: boolean;
+  onClose: () => void;
   subject: SubjectType;
 }
 
-export const SubjectDeleteModal = ({ isOpen, onClose, subject }: Props) => {
+export const SubjectDeleteModal = (props: Props) => {
   const { deleteMutation } = useSubjects();
 
   const deleteSubject = () => {
-    deleteMutation.mutate(subject.id);
+    deleteMutation.mutate(props.subject.id);
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Usuwanie przedmiotu</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Text>Czy na pewno chcesz usunąć ten przedmiot?</Text>
-          <Code mt={5}>{subject.name}</Code>
+          <Code mt={5}>{props.subject.name}</Code>
         </ModalBody>
 
         <ModalFooter>
           <Button colorScheme='blue' mr={'3'} onClick={() => deleteSubject()} isLoading={deleteMutation.isLoading}>
             Usuń
           </Button>
-          <Button onClick={onClose}>Anuluj</Button>
+          <Button onClick={props.onClose}>Anuluj</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
