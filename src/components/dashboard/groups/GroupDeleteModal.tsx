@@ -10,8 +10,6 @@ import {
   Text,
   Code,
 } from '@chakra-ui/react';
-import { SubjectType } from '../../../entities/Subject';
-import useSubjects from '../../../hooks/useSubjects';
 import { Group } from '../../../entities/Group';
 import useGroups from '../../../hooks/useGroups';
 
