@@ -2,7 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { CreateGroupParams, Group, UpdateGroupParams } from '../entities/Group';
+import { CreateGroupDto, Group, UpdateGroupDto } from '../entities/Group';
 
 const GROUPS_QUERY_KEY: string = 'groups';
 
@@ -16,13 +16,13 @@ export default function useGroups() {
     return response.data;
   }
 
-  const postGroup = async (payload: CreateGroupParams): Promise<Group> => {
-    const response = await axios.post(`yearCourse/${yearCourseId}/groups`, payload.dto);
+  const postGroup = async (payload: CreateGroupDto): Promise<Group> => {
+    const response = await axios.post(`yearCourse/${yearCourseId}/groups`, payload);
     return response.data;
   }
 
-  const updateGroup = async (params: UpdateGroupParams): Promise<Group> => {
-    const response = await axios.put(`/groups/${params.id}`, params.dto);
+  const updateGroup = async (payload: UpdateGroupDto): Promise<Group> => {
+    const response = await axios.put(`/groups/${payload.id}`, payload);
     return response.data;
   }
 

@@ -6,16 +6,13 @@ export interface Group {
   yearCourseId: string;
 }
 
-export interface CreateGroupParams {
-  dto: CreateGroupDto;
-}
-
-export interface UpdateGroupParams extends CreateGroupParams {
+export interface UpdateGroupDto {
   id: string;
+  name: string;
 }
 
 export interface CreateGroupDto {
-  name: string;
+  name: string
 }
 
 export const groupValidationSchema = Yup.object({
