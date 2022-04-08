@@ -53,7 +53,7 @@ export const GroupCreateModal = (props: Props) => {
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>
-                <InputControl name='name' label='Nazwa' inputProps={{ placeholder: 'Informatyka' }} />
+                <InputControl name='name' label='Nazwa' inputProps={{ placeholder: 'Grupa 1' }} />
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme='blue' mr={'3'} type='submit' isLoading={postMutation.isLoading}>
