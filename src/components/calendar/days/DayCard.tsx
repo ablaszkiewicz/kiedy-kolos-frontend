@@ -27,12 +27,12 @@ export function DayCard(props: Props) {
         h={'100%'}
       >
         <Spacer />
-        <Text fontWeight={'medium'} fontSize={'2xl'} opacity={isInCurrentMonth ? 1 : 0.5}>
+        <Text fontWeight={'medium'} fontSize={'md'} opacity={isInCurrentMonth ? 1 : 0.5}>
           {dayjs(props.day).format('DD')}
         </Text>
         <HStack spacing={1}>
           <Badge variant={'solid'} colorScheme={'red'}>
-            Ako
+            AKO
           </Badge>
         </HStack>
         <Spacer />

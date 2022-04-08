@@ -4,7 +4,7 @@ import React from 'react';
 export const EventsPanel = () => {
   return (
     <Flex
-      w={'30%'}
+      w={['100%', '30%']}
       backgroundColor={'gray.750'}
       h={'100%'}
       shadow={'dark-lg'}

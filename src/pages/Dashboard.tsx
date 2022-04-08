@@ -1,10 +1,4 @@
-import {
-  Button,
-  Flex,
-  Heading,
-  SimpleGrid,
-  Spacer,
-} from '@chakra-ui/react';
+import { Button, Flex, Heading, SimpleGrid, Spacer } from '@chakra-ui/react';
 import { ArrowBackIcon, CalendarIcon } from '@chakra-ui/icons';
 import { Path } from '../other/Paths';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,6 +7,7 @@ import { SubjectsPanel } from '../components/dashboard/subjects/SubjectsPanel';
 import { GroupsPanel } from '../components/dashboard/groups/GroupsPanel';
 import { RolesPanel } from '../components/dashboard/roles/RolesPanel';
 import { SettingsPanel } from '../components/dashboard/settings/SettingsPanel';
+import { HiOutlineLogout, HiOutlineViewGrid } from 'react-icons/hi';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -28,10 +23,10 @@ export const Dashboard = () => {
         <Button onClick={() => navigate(Path.CALENDAR + `/${yearCourseId}`)} leftIcon={<CalendarIcon />}>
           Kalendarz
         </Button>
-        <Button ml={3} onClick={() => navigate(Path.EXPLORER)} leftIcon={<ArrowBackIcon />}>
+        <Button ml={3} onClick={() => navigate(Path.EXPLORER)} leftIcon={<HiOutlineViewGrid />}>
           Wybór kierunku
         </Button>
-        <Button ml={3} onClick={() => logout()}>
+        <Button ml={3} onClick={() => logout()} leftIcon={<HiOutlineLogout />}>
           Wyloguj
         </Button>
       </Flex>
@@ -46,4 +41,3 @@ export const Dashboard = () => {
     </Flex>
   );
 };
-

@@ -1,9 +1,9 @@
 import { ArrowBackIcon, ArrowForwardIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Flex, SimpleGrid, Spacer, Grid, Text, IconButton, GridItem, Center, SlideFade } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { DayCard } from '../components/calendar/DayCard';
-import useCalendar from '../hooks/useCalendar';
-import { useSetState } from '../hooks/useSetState';
+import { DayCard } from './DayCard';
+import useCalendar from '../../../hooks/useCalendar';
+import { useSetState } from '../../../hooks/useSetState';
 
 enum SlideDirection {
   LEFT = -1,
@@ -34,8 +34,8 @@ export const CalendarPanel = () => {
   return (
     <Flex
       direction={'column'}
-      w={'70%'}
-      h={'100%'}
+      w={['100%', '70%']}
+      h={['60vh', '100%']}
       borderRadius={10}
       p={4}
       backgroundColor={'gray.750'}
