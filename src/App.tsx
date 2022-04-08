@@ -9,7 +9,7 @@ import { Path } from './other/Paths';
 import { RequireAuthRoute } from './components/other/RequireAuthRoute';
 import { UnauthorizedHandler } from './components/other/UnauthorizedHandler';
 import { Calendar } from './pages/Calendar';
-import { Settings } from './pages/Settings';
+import { Dashboard } from './pages/Dashboard';
 import { AnimatedTransition } from './components/other/AnimatedTransition';
 
 const queryClient = new QueryClient();
@@ -25,7 +25,7 @@ export const App = () => {
               <Route element={<RequireAuthRoute />}>
                 <Route path={Path.EXPLORER} element={<Explorer />} />
                 <Route path={Path.CALENDAR + '/:yearCourseId'} element={<Calendar />} />
-                <Route path={Path.SETTINGS + '/:yearCourseId'} element={<Settings />} />
+                <Route path={Path.DASHBOARD + '/:yearCourseId'} element={<Dashboard />} />
                 <Route path='*' element={<Navigate to={Path.EXPLORER} />} />
               </Route>
 

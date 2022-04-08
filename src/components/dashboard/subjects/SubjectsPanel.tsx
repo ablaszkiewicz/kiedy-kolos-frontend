@@ -1,9 +1,10 @@
-import { Box, Button, Divider, Flex, HStack, SimpleGrid, Spacer, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Spacer, Text, useDisclosure } from '@chakra-ui/react';
 import { SubjectListItem } from './SubjectListItem';
 import useSubjects from '../../../hooks/useSubjects';
 import { SubjectType } from '../../../entities/Subject';
 import { SubjectCreateModal } from './SubjectCreateModal';
 import { AddIcon } from '@chakra-ui/icons';
+import { scrollbarStyle } from '../shared/styles';
 
 export const SubjectsPanel = () => {
   const { isOpen: isCreateModalOpen, onOpen: onCreateModalOpen, onClose: onCreateModalClose } = useDisclosure();
@@ -43,17 +44,4 @@ export const SubjectsPanel = () => {
       </Flex>
     </>
   );
-};
-
-const scrollbarStyle = {
-  '&::-webkit-scrollbar': {
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-track': {
-    width: '6px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    background: 'gray',
-    borderRadius: '24px',
-  },
 };

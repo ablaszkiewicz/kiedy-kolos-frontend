@@ -1,32 +1,20 @@
 import {
-  Box,
   Button,
-  Divider,
   Flex,
   Heading,
-  HStack,
   SimpleGrid,
   Spacer,
-  Text,
-  useDisclosure,
-  VStack,
 } from '@chakra-ui/react';
-import { AddIcon, ArrowBackIcon, CalendarIcon } from '@chakra-ui/icons';
-import { SubjectCreateModal } from '../components/settings/subjects/SubjectCreateModal';
-import { SubjectListItem } from '../components/settings/subjects/SubjectListItem';
-import { SubjectType } from '../entities/Subject';
-import useSubjects from '../hooks/useSubjects';
+import { ArrowBackIcon, CalendarIcon } from '@chakra-ui/icons';
 import { Path } from '../other/Paths';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import { SubjectsPanel } from '../components/settings/subjects/SubjectsPanel';
-import { GroupsPanel } from '../components/settings/groups/GroupsPanel';
-import { RolesPanel } from '../components/settings/roles/RolesPanel';
-import { SettingsPanel } from '../components/settings/settings/SettingsPanel';
+import { SubjectsPanel } from '../components/dashboard/subjects/SubjectsPanel';
+import { GroupsPanel } from '../components/dashboard/groups/GroupsPanel';
+import { RolesPanel } from '../components/dashboard/roles/RolesPanel';
+import { SettingsPanel } from '../components/dashboard/settings/SettingsPanel';
 
-export const Settings = () => {
-  const { isOpen: isCreateModalOpen, onOpen: onCreateModalOpen, onClose: onCreateModalClose } = useDisclosure();
-  const { query } = useSubjects();
+export const Dashboard = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
@@ -35,7 +23,7 @@ export const Settings = () => {
   return (
     <Flex p={4} m={0} h={['auto', '100vh']} direction={'column'} overflow={'hidden'}>
       <Flex m={0} p={0} mb={2}>
-        <Heading>Ustawienia</Heading>
+        <Heading>Panel zarządzania</Heading>
         <Spacer />
         <Button onClick={() => navigate(Path.CALENDAR + `/${yearCourseId}`)} leftIcon={<CalendarIcon />}>
           Kalendarz
@@ -59,15 +47,3 @@ export const Settings = () => {
   );
 };
 
-const scrollbarStyle = {
-  '&::-webkit-scrollbar': {
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-track': {
-    width: '6px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    background: 'gray',
-    borderRadius: '24px',
-  },
-};

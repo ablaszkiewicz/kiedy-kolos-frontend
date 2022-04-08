@@ -1,7 +1,4 @@
-import { Box, Button, Divider, Flex, HStack, SimpleGrid, Spacer, Text, useDisclosure } from '@chakra-ui/react';
-import useSubjects from '../../../hooks/useSubjects';
-import { SubjectType } from '../../../entities/Subject';
-import { AddIcon } from '@chakra-ui/icons';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { YearCourseDeleteModal } from './YearCourseDeleteModal';
 
