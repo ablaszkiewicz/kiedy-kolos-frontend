@@ -17,13 +17,11 @@ export const GroupListItem = (props: Props) => {
       <GroupEditModal isOpen={isEditModalOpen} onClose={onEditModalClose} group={props.group} />
       <GroupDeleteModal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} group={props.group} />
       <Flex py={2} borderRadius={5}>
-        <VStack spacing={0} alignItems={'baseline'}>
-          <Text>{props.group.name}</Text>
-        </VStack>
+        <Text my={'auto'}>{props.group.name}</Text>
         <Spacer />
         <IconButton onClick={onEditModalOpen} variant={'ghost'} aria-label='Edytuj przedmiot' icon={<EditIcon />} />
         <IconButton onClick={onDeleteModalOpen} variant={'ghost'} aria-label='Usuń przedmiot' icon={<DeleteIcon />} />
       </Flex>
     </>
   );
-}
+};
