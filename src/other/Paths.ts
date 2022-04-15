@@ -4,4 +4,5 @@ export const enum Path {
   DASHBOARD = '/dashboard',
   CALENDAR = '/calendar',
   EXPLORER = '/explorer',
+  LANDING_PAGE = '/landing-page',
 }

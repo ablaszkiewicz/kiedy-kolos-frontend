@@ -11,6 +11,7 @@ import { UnauthorizedHandler } from './components/other/UnauthorizedHandler';
 import { Calendar } from './pages/Calendar';
 import { Dashboard } from './pages/Dashboard';
 import { AnimatedTransition } from './components/other/AnimatedTransition';
+import { LandingPage } from './pages/LandingPage';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ export const App = () => {
                 <Route path='*' element={<Navigate to={Path.EXPLORER} />} />
               </Route>
 
+              <Route path={Path.LANDING_PAGE} element={<LandingPage />} />
               <Route path={Path.LOGIN} element={<Login />} />
               <Route path={Path.REGISTER} element={<Register />} />
             </Route>
