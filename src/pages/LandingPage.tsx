@@ -26,7 +26,7 @@ export const LandingPage = () => {
           <Laptop />
         </Flex>
       </Flex>
-      <Flex p={4} m={0} h={fullHeight!} direction={'column'} textAlign={'center'}>
+      <Flex p={4} m={0} h={['100vh']} direction={'column'} textAlign={'center'}>
         <Spacer />
         <Heading fontSize={'5xl'} mb={10}>
           Statystyki

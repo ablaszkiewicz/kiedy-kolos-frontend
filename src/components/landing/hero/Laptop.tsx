@@ -48,6 +48,10 @@ export const Laptop = () => {
   ];
 
   useEffect(() => {
+    setTimeout(() => {
+      setCurrentIndex((index) => index + 1);
+    }, 1000);
+
     const addMessageInterval = setInterval(() => {
       setCurrentIndex((index) => index + 1);
     }, 2500);

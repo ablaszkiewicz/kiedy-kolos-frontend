@@ -14,7 +14,7 @@ export default function useFullHeight() {
       setLocked(true);
     }
 
-    if (locked && !isMobile) {
+    if (!isMobile) {
       setHeight(vhHeight);
     }
   }, [vhHeight]);
