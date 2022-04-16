@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import { useState, useEffect, useRef } from 'react';
-import { scrollbarStyle } from '../dashboard/shared/styles';
+import { scrollbarStyle } from '../../dashboard/shared/styles';
 import { MessageListItem } from './MessageListItem';
 import { CustomCanvas } from './Model';
 
