@@ -14,8 +14,6 @@ import {
 } from '@chakra-ui/react';
 import useAuth from '../hooks/useAuth';
 import useYearCourses from '../hooks/useYearCourses';
-import { ColorModeSwitcher } from '../components/other/ColorModeSwitcher';
-
 import { YearCourseCard } from '../components/explorer/YearCourseCard';
 import { YearCourseCreateModal } from '../components/explorer/YearCourseCreateModal';
 import { AddIcon, PlusSquareIcon } from '@chakra-ui/icons';

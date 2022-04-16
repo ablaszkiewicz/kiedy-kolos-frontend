@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import React, { Suspense, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Html, Environment, useGLTF, ContactShadows, OrbitControls } from '@react-three/drei';
-import HeroPage from './HeroPage';
 
 function Model(props) {
   const group = useRef();
@@ -25,10 +24,8 @@ function Model(props) {
           <mesh material={materials['matte.001']} geometry={nodes['Cube008_1'].geometry} />
           <mesh geometry={nodes['Cube008_2'].geometry}>
             {/* Drei's HTML component can now "hide behind" canvas geometry */}
-            <Html className='content' rotation-x={-Math.PI / 2} position={[0, 0.05, -0.09]} transform occlude>
-              <div className='wrapper'>
-                <HeroPage />
-              </div>
+            <Html rotation-x={-Math.PI / 2} position={[0, 0.05, -0.09]} transform occlude>
+              <div>{props.children}</div>
             </Html>
           </mesh>
         </group>
@@ -43,13 +40,13 @@ function Model(props) {
   );
 }
 
-export default function App() {
+export const CustomCanvas = ({ children }) => {
   return (
     <Canvas dpr={[1, 2]} camera={{ position: [-10, 0, -25], fov: 35 }}>
       <pointLight position={[10, 10, 10]} intensity={1.5} />
       <Suspense fallback={null}>
         <group rotation={[0, Math.PI, 0]}>
-          <Model />
+          <Model>{children}</Model>
         </group>
         <Environment preset='city' />
       </Suspense>
@@ -57,12 +54,12 @@ export default function App() {
         rotation-x={Math.PI / 2}
         position={[0, -4.5, 0]}
         opacity={1}
-        width={20}
-        height={20}
+        width={5}
+        height={5}
         blur={2}
         far={4.5}
       />
       <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} />
     </Canvas>
   );
-}
+};
