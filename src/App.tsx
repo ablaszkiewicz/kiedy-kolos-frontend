@@ -12,6 +12,7 @@ import { Calendar } from './pages/Calendar';
 import { Dashboard } from './pages/Dashboard';
 import { AnimatedTransition } from './components/other/AnimatedTransition';
 import { LandingPage } from './pages/LandingPage';
+import './style.css';
 
 const queryClient = new QueryClient();
 

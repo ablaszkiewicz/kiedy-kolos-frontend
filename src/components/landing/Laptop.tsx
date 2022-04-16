@@ -56,7 +56,10 @@ export const Laptop = () => {
   }, []);
 
   const scrollMessages = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current.scrollTo({
+      top: messagesEndRef.current.scrollHeight,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -73,6 +76,7 @@ export const Laptop = () => {
             overflowY: 'scroll',
           }}
           css={scrollbarStyle}
+          ref={messagesEndRef}
         >
           {messages.map((message: any, index) => {
             if (index < currentIndex) {
@@ -86,7 +90,6 @@ export const Laptop = () => {
               );
             }
           })}
-          <div ref={messagesEndRef} />
         </Box>
       </Box>
     </CustomCanvas>
