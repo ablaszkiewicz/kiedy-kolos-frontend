@@ -8,52 +8,67 @@ export const Laptop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const messagesEndRef: any = useRef();
 
-  const messages = [
-    {
-      author: 'Janek',
-      message: 'Kiedy kolos z matematyki?',
-    },
-    {
-      author: 'Anna',
-      message: 'Do kiedy projekt z fizyki?',
-    },
-    {
-      author: 'Kuba',
-      message: 'Kiedy egzamin z angielskiego?',
-    },
-    {
-      author: 'Marcin',
-      message: 'ABC?',
-    },
-    {
-      author: 'Kasia',
-      message: 'ABC?',
-    },
-    {
-      author: 'Tomek',
-      message: 'ABC?',
-    },
-    {
-      author: 'Błażej',
-      message: 'ABC?',
-    },
-    {
-      author: 'Kinga',
-      message: 'ABC?',
-    },
-    {
-      author: 'Julia',
-      message: 'ABC?',
-    },
+  const authors = [
+    'Janek',
+    'Ala',
+    'Kasia',
+    'Julia',
+    'Bartek',
+    'Jurek',
+    'Dominik',
+    'Maciek',
+    'Patryk',
+    'Kuba',
+    'Michał',
+    'Zuzia',
+    'Kinga',
   ];
+
+  const messages = [
+    'Kiedy jest kolos z',
+    'Jaki jest termin projektu z',
+    'Do kiedy trzeba wysłać projekt z',
+    'Na kiedy jest praca domowa z',
+    'Kiedy są dodatkowe zajęcia z',
+    'Kieda są dodatkowe konsultacje z',
+  ];
+
+  const subjects = [
+    'Matematyki',
+    'Angielskiego',
+    'Fizyki',
+    'Informatyki',
+    'Niemieckiego',
+    'Chemii',
+    'Ekonomii',
+    'Psychologii',
+  ];
+
+  const [messagesShown, setMessagesShown] = useState<any[]>([]);
 
   useEffect(() => {
     setTimeout(() => {
-      setCurrentIndex((index) => index + 1);
+      setMessagesShown((old) => [
+        ...old,
+        {
+          author: authors[Math.floor(Math.random() * authors.length)],
+          message: `${messages[Math.floor(Math.random() * messages.length)]} ${
+            subjects[Math.floor(Math.random() * subjects.length)]
+          }?`,
+        },
+      ]);
     }, 1000);
 
     const addMessageInterval = setInterval(() => {
-      setCurrentIndex((index) => index + 1);
+      setMessagesShown((old) => [
+        ...old,
+        {
+          author: authors[Math.floor(Math.random() * authors.length)],
+          message: `${messages[Math.floor(Math.random() * messages.length)]} ${
+            subjects[Math.floor(Math.random() * subjects.length)]
+          }?`,
+        },
+      ]);
     }, 2500);
 
     return () => clearInterval(addMessageInterval);
@@ -82,18 +97,15 @@ export const Laptop = () => {
           css={scrollbarStyle}
           ref={messagesEndRef}
         >
-          {messages.map((message: any, index) => {
-            if (index < currentIndex) {
-              return (
-                <MessageListItem
-                  key={message.message + message.author}
-                  message={message.message}
-                  author={message.author}
-                  scrollFunction={scrollMessages}
-                />
-              );
-            }
-          })}
+          {messagesShown &&
+            messagesShown.map((message: any, index) => (
+              <MessageListItem
+                key={message.message + message.author}
+                message={message.message}
+                author={message.author}
+                scrollFunction={scrollMessages}
+              />
+            ))}
         </Box>
       </Box>
     </CustomCanvas>
