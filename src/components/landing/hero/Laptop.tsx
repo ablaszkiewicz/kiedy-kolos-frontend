@@ -26,6 +26,9 @@ export const Laptop = () => {
 
   const messages = [
     'Kiedy jest kolos z',
+    'Kiedy egzamin z',
+    'Kiedy projekt z',
+    'Kiedy labki z ',
     'Jaki jest termin projektu z',
     'Do kiedy trzeba wysłać projekt z',
     'Na kiedy jest praca domowa z',
@@ -83,7 +86,7 @@ export const Laptop = () => {
 
   return (
     <CustomCanvas>
-      <Box backgroundColor={'#2D3748'} style={{ width: 334, height: 216, padding: 3 }}>
+      <Box backgroundColor={'#171923'} style={{ width: 334, height: 216 }}>
         <Box
           backgroundColor={'#171923'}
           style={{
