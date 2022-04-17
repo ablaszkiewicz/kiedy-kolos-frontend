@@ -4,7 +4,7 @@ import { scrollbarStyle } from '../../dashboard/shared/styles';
 import { MessageListItem } from './MessageListItem';
 import { CustomCanvas } from './Model';
 
-export const Laptop = () => {
+export const Laptop = ({ percentageInView }: any) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const messagesEndRef: any = useRef();
 
@@ -85,7 +85,7 @@ export const Laptop = () => {
   };
 
   return (
-    <CustomCanvas>
+    <CustomCanvas percentageInView={percentageInView}>
       <Box backgroundColor={'#171923'} style={{ width: 334, height: 216 }}>
         <Box
           backgroundColor={'#171923'}

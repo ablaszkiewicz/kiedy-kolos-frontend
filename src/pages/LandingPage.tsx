@@ -1,16 +1,34 @@
 import { Box, Button, Flex, GridItem, Heading, Input, SimpleGrid, Spacer, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { use100vh } from 'react-div-100vh';
+import { useScrollPercentage } from 'react-scroll-percentage';
 import { scrollbarStyle } from '../components/dashboard/shared/styles';
 import { Laptop } from '../components/landing/hero/Laptop';
 import useFullHeight from '../hooks/useFullHeight';
 
 export const LandingPage = () => {
   const fullHeight = useFullHeight();
+  const [fullWidth, setFullWidth] = useState(window.innerWidth);
+  const modelOffset = Math.round(window.innerWidth / 4);
+  const [ref, percentage] = useScrollPercentage({
+    /* Optional options */
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setFullWidth(window.innerWidth));
+  }, []);
 
   return (
     <>
-      <Flex p={4} m={0} h={fullHeight} direction={['column', 'row']} overflow={'hidden'}>
+      <Flex
+        p={4}
+        m={0}
+        h={fullHeight}
+        direction={['column', 'row']}
+        overflow={'hidden'}
+        position={['unset', 'relative']}
+      >
         <Flex h={['50%', '100%']} direction={'column'} w={['100%', '50%']} order={[2, 1]} textAlign={'center'}>
           <Spacer />
           <Heading fontSize={'5xl'}>Skończ z tym</Heading>
@@ -22,11 +40,19 @@ export const LandingPage = () => {
           </Button>
           <Spacer />
         </Flex>
-        <Flex h={['50%', '100%']} direction={'column'} w={['100%', '50%']} order={[1, 2]}>
-          <Laptop />
+        <Flex
+          h={['50%', '100%']}
+          direction={'column'}
+          w={fullWidth}
+          order={[1, 2]}
+          position={['unset', 'absolute']}
+          left={['unset', modelOffset]}
+          m={-4}
+        >
+          <Laptop percentageInView={percentage} />
         </Flex>
       </Flex>
-      <Flex p={4} m={0} h={['100vh']} direction={'column'} textAlign={'center'}>
+      <Flex p={4} m={0} h={['100vh']} direction={'column'} textAlign={'center'} ref={ref}>
         <Spacer />
         <Heading fontSize={'5xl'} mb={10}>
           Statystyki

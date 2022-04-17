@@ -11,14 +11,8 @@ import {
 } from '@chakra-ui/react';
 import { Formik, Form } from 'formik';
 import { InputControl, SelectControl } from 'formik-chakra-ui';
-import { forwardRef, useEffect, useState } from 'react';
-import { groupValidationSchema } from '../../../entities/Group';
 import { SubjectType } from '../../../entities/Subject';
 import useSubjects from '../../../hooks/useSubjects';
-//import { DatePicker } from '../../other/datepicker/DatePicker';
-//import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { DatePicker } from '../../other/DatePicker';
 
 interface Props {
   isOpen: boolean;
@@ -33,7 +27,7 @@ interface FormikValues {
 export const EventCreateModal = (props: Props) => {
   const { query } = useSubjects();
   const initialValues: FormikValues = {
-    date: '0',
+    date: '',
     subjectId: '',
   };
 
@@ -52,15 +46,7 @@ export const EventCreateModal = (props: Props) => {
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>
-                <DatePicker name='date' label='First Name' />
-                {/* <DatePicker
-                  dateFormat='dd / MM / yyyy'
-                  selected={startDate}
-                  onChange={(date: Date) => setStartDate(date)}
-                  customInput={<ExampleCustomInput />}
-                  showTimeSelect
-                  showTimeSelectOnly
-                /> */}
+                <InputControl name='date' label='Data' inputProps={{ type: 'date' }} />
                 <SelectControl
                   name='subjectId'
                   label='Przedmiot'
