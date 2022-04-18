@@ -53,10 +53,6 @@ function Model(props) {
 }
 
 export const CustomCanvas = ({ children, percentageInView }) => {
-  useEffect(() => {
-    console.log(percentageInView);
-  });
-
   return (
     <Canvas dpr={[1, 2]} camera={{ position: [-10, 0, -25], fov: 35 }}>
       <pointLight position={[10, 10, 10]} intensity={1.5} />

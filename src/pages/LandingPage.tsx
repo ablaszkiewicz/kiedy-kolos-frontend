@@ -1,85 +1,23 @@
-import { Box, Button, Flex, GridItem, Heading, Input, SimpleGrid, Spacer, Text, VStack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { use100vh } from 'react-div-100vh';
+import { Box, Flex, GridItem, Heading, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
 import { useScrollPercentage } from 'react-scroll-percentage';
-import { scrollbarStyle } from '../components/dashboard/shared/styles';
-import { Laptop } from '../components/landing/hero/Laptop';
-import useFullHeight from '../hooks/useFullHeight';
+import { CalendarFunction } from '../components/landing/CalendarFunction';
+import { ConfigFunction } from '../components/landing/ConfigFunction';
+import { ElasticFunction } from '../components/landing/ElasticFunction';
+import { Hero } from '../components/landing/hero/Hero';
+import { Statistics } from '../components/landing/Statistics';
 
 export const LandingPage = () => {
-  const fullHeight = useFullHeight();
-  const [fullWidth, setFullWidth] = useState(window.innerWidth);
-  const modelOffset = Math.round(window.innerWidth / 4);
   const [ref, percentage] = useScrollPercentage({
-    /* Optional options */
     threshold: 0,
   });
 
-  useEffect(() => {
-    window.addEventListener('resize', () => setFullWidth(window.innerWidth));
-  }, []);
-
   return (
     <>
-      <Flex
-        p={4}
-        m={0}
-        h={fullHeight}
-        direction={['column', 'row']}
-        overflow={'hidden'}
-        position={['unset', 'relative']}
-      >
-        <Flex h={['50%', '100%']} direction={'column'} w={['100%', '50%']} order={[2, 1]} textAlign={'center'}>
-          <Spacer />
-          <Heading fontSize={'5xl'}>Skończ z tym</Heading>
-          <Text fontSize={'2xl'} opacity={0.6} fontWeight={'light'} mb={10}>
-            Wszystkie uczelniane wydarzenia w jednym miejscu
-          </Text>
-          <Button alignSelf={'center'} colorScheme={'pink'} size={'lg'}>
-            Załóż swoją tablicę
-          </Button>
-          <Spacer />
-        </Flex>
-        <Flex
-          h={['50%', '100%']}
-          direction={'column'}
-          w={fullWidth}
-          order={[1, 2]}
-          position={['unset', 'absolute']}
-          left={['unset', modelOffset]}
-          m={-4}
-        >
-          <Laptop percentageInView={percentage} />
-        </Flex>
-      </Flex>
-      <Flex p={4} m={0} h={['100vh']} direction={'column'} textAlign={'center'} ref={ref}>
-        <Spacer />
-        <Heading fontSize={'5xl'} mb={10}>
-          Statystyki
-        </Heading>
-        <SimpleGrid columns={[1, 5]} gap={[30, 0]}>
-          <GridItem d={['none', 'unset']} />
-          <Box>
-            <Heading fontSize={'8xl'}>214</Heading>
-            <Text fontSize={'3xl'} fontWeight={'light'} opacity={0.8}>
-              użytkowników
-            </Text>
-          </Box>
-          <Box>
-            <Heading fontSize={'8xl'}>5</Heading>
-            <Text fontSize={'3xl'} fontWeight={'light'} opacity={0.8}>
-              tablic
-            </Text>
-          </Box>
-          <Box>
-            <Heading fontSize={'8xl'}>976</Heading>
-            <Text fontSize={'3xl'} fontWeight={'light'} opacity={0.8}>
-              wydarzeń
-            </Text>
-          </Box>
-        </SimpleGrid>
-        <Spacer />
-      </Flex>
+      <Hero scrollPercentage={percentage} />
+      <Statistics refProp={ref} />
+      <CalendarFunction />
+      <ConfigFunction />
+      <ElasticFunction />
     </>
   );
 };
