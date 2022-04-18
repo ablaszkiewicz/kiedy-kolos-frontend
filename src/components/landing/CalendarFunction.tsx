@@ -1,14 +1,15 @@
-import { Flex, Spacer, Heading, Button, Text, Image } from '@chakra-ui/react';
+import { Flex, Spacer, Heading, Button, Text, Image, Grid, GridItem } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { useScrollPercentage } from 'react-scroll-percentage';
-import { number } from 'yup/lib/locale';
+import { Parallax, useParallax } from 'react-scroll-parallax';
 
 export const CalendarFunction = () => {
+  const { ref: imageParallax } = useParallax<any>({ speed: -10 });
+
   return (
     <Flex p={4} m={0} h={['100vh']} direction={['column', 'row']}>
       <Flex h={['50%', '100%']} direction={'column'} w={['100%', '50%']} alignItems={'center'} order={[1, 'unset']}>
         <Spacer />
-        <Image src={'Calendar.png'} shadow={'dark-lg'} w={['100%', '80%']} />
+        <Image src={'Calendar.png'} shadow={'dark-lg'} w={['100%', '80%']} ref={imageParallax} />
 
         <Spacer />
       </Flex>
@@ -19,6 +20,7 @@ export const CalendarFunction = () => {
           Wszystkie wydarzenia uporządkowane w jednym miejscu. <br />
           Dodatkowo wszystko podzielone na grupy.
         </Text>
+
         <Spacer />
       </Flex>
     </Flex>

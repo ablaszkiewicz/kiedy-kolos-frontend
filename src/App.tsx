@@ -12,33 +12,36 @@ import { Calendar } from './pages/Calendar';
 import { Dashboard } from './pages/Dashboard';
 import { AnimatedTransition } from './components/other/AnimatedTransition';
 import { LandingPage } from './pages/LandingPage';
+import { ParallaxProvider } from 'react-scroll-parallax';
 import './style.css';
 
 const queryClient = new QueryClient();
 
 export const App = () => {
   return (
-    <ChakraProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <Router basename='/'>
-          <UnauthorizedHandler />
-          <Routes>
-            <Route element={<AnimatedTransition />}>
-              <Route path='*' element={<Navigate to={Path.LANDING_PAGE} />} />
+    <ParallaxProvider>
+      <ChakraProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <Router basename='/'>
+            <UnauthorizedHandler />
+            <Routes>
+              <Route element={<AnimatedTransition />}>
+                <Route path='*' element={<Navigate to={Path.LANDING_PAGE} />} />
 
-              <Route path={Path.LANDING_PAGE} element={<LandingPage />} />
-              <Route path={Path.LOGIN} element={<Login />} />
-              <Route path={Path.REGISTER} element={<Register />} />
+                <Route path={Path.LANDING_PAGE} element={<LandingPage />} />
+                <Route path={Path.LOGIN} element={<Login />} />
+                <Route path={Path.REGISTER} element={<Register />} />
 
-              <Route element={<RequireAuthRoute />}>
-                <Route path={Path.EXPLORER} element={<Explorer />} />
-                <Route path={Path.CALENDAR + '/:yearCourseId'} element={<Calendar />} />
-                <Route path={Path.DASHBOARD + '/:yearCourseId'} element={<Dashboard />} />
+                <Route element={<RequireAuthRoute />}>
+                  <Route path={Path.EXPLORER} element={<Explorer />} />
+                  <Route path={Path.CALENDAR + '/:yearCourseId'} element={<Calendar />} />
+                  <Route path={Path.DASHBOARD + '/:yearCourseId'} element={<Dashboard />} />
+                </Route>
               </Route>
-            </Route>
-          </Routes>
-        </Router>
-      </QueryClientProvider>
-    </ChakraProvider>
+            </Routes>
+          </Router>
+        </QueryClientProvider>
+      </ChakraProvider>
+    </ParallaxProvider>
   );
 };
