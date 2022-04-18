@@ -8,7 +8,15 @@ interface Props {
 
 export function Statistics(props: Props) {
   return (
-    <Flex p={4} m={0} h={['100vh']} direction={'column'} textAlign={'center'} ref={props.refProp}>
+    <Flex
+      p={4}
+      m={0}
+      h={['100vh']}
+      direction={'column'}
+      textAlign={'center'}
+      ref={props.refProp}
+      backgroundColor={'gray.900'}
+    >
       <Spacer />
       <Heading fontSize={'5xl'} mb={10}>
         Statystyki

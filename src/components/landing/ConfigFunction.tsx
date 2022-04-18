@@ -5,7 +5,7 @@ import { number } from 'yup/lib/locale';
 
 export const ConfigFunction = () => {
   return (
-    <Flex p={4} m={0} h={['100vh']} direction={['column', 'row']}>
+    <Flex p={4} m={0} h={['100vh']} direction={['column', 'row']} backgroundColor={'gray.900'}>
       <Flex h={['50%', '100%']} direction={'column'} w={['100%', '50%']} pl={[0, 24]} order={[2, 'unset']}>
         <Spacer />
         <Heading fontSize={'5xl'}>Konfiguracja</Heading>
