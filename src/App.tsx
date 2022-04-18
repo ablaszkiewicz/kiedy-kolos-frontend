@@ -24,16 +24,17 @@ export const App = () => {
           <UnauthorizedHandler />
           <Routes>
             <Route element={<AnimatedTransition />}>
-              <Route element={<RequireAuthRoute />}>
-                <Route path={Path.EXPLORER} element={<Explorer />} />
-                <Route path={Path.CALENDAR + '/:yearCourseId'} element={<Calendar />} />
-                <Route path={Path.DASHBOARD + '/:yearCourseId'} element={<Dashboard />} />
-                <Route path='*' element={<Navigate to={Path.EXPLORER} />} />
-              </Route>
+              <Route path='*' element={<Navigate to={Path.LANDING_PAGE} />} />
 
               <Route path={Path.LANDING_PAGE} element={<LandingPage />} />
               <Route path={Path.LOGIN} element={<Login />} />
               <Route path={Path.REGISTER} element={<Register />} />
+
+              <Route element={<RequireAuthRoute />}>
+                <Route path={Path.EXPLORER} element={<Explorer />} />
+                <Route path={Path.CALENDAR + '/:yearCourseId'} element={<Calendar />} />
+                <Route path={Path.DASHBOARD + '/:yearCourseId'} element={<Dashboard />} />
+              </Route>
             </Route>
           </Routes>
         </Router>
