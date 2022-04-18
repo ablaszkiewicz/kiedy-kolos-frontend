@@ -18,8 +18,22 @@ export const Hero = (props: Props) => {
     window.addEventListener('resize', () => setFullWidth(window.innerWidth));
   }, []);
   return (
-    <Flex p={4} m={0} h={fullHeight} direction={['column', 'row']} overflow={'hidden'} position={['unset', 'relative']}>
-      <Flex h={['50%', '100%']} direction={'column'} w={['100%', '50%']} order={[2, 1]} textAlign={'center'}>
+    <Flex
+      p={4}
+      m={0}
+      h={fullHeight}
+      direction={['column', 'column', 'row']}
+      overflow={'hidden'}
+      position={['unset', 'unset', 'relative']}
+    >
+      <Flex
+        h={['50%', '50%', '100%']}
+        direction={'column'}
+        w={['100%', '100%', '50%']}
+        order={[2, 2, 1]}
+        textAlign={'center'}
+        zIndex={10000}
+      >
         <Spacer />
         <Heading fontSize={'5xl'}>Skończ z tym</Heading>
         <Text fontSize={'2xl'} opacity={0.6} fontWeight={'light'} mb={10}>
@@ -31,12 +45,12 @@ export const Hero = (props: Props) => {
         <Spacer />
       </Flex>
       <Flex
-        h={['50%', '100%']}
+        h={['50%', '50%', '100%']}
         direction={'column'}
         w={fullWidth}
-        order={[1, 2]}
-        position={['unset', 'absolute']}
-        left={['unset', modelOffset]}
+        order={[1, 1, 2]}
+        position={['unset', 'unset', 'absolute']}
+        left={['unset', 'unset', modelOffset]}
         m={-4}
       >
         <Laptop percentageInView={props.scrollPercentage} />
