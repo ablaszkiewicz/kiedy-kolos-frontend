@@ -19,7 +19,7 @@ export function Statistics(props: Props) {
       backgroundColor={'gray.900'}
     >
       <Spacer />
-      <Parallax speed={10}>
+      <Parallax speed={10} disabled={window.innerWidth < 768}>
         <Heading fontSize={'5xl'} mb={10}>
           Statystyki
         </Heading>
@@ -27,7 +27,7 @@ export function Statistics(props: Props) {
 
       <SimpleGrid columns={[1, 5]} gap={[30, 0]}>
         <GridItem d={['none', 'unset']} />
-        <Parallax speed={15}>
+        <Parallax speed={15} disabled={window.innerWidth < 768}>
           <Box>
             <Heading fontSize={'8xl'}>214</Heading>
             <Text fontSize={'3xl'} fontWeight={'light'} opacity={0.8}>
@@ -35,7 +35,7 @@ export function Statistics(props: Props) {
             </Text>
           </Box>
         </Parallax>
-        <Parallax speed={20}>
+        <Parallax speed={20} disabled={window.innerWidth < 768}>
           <Box>
             <Heading fontSize={'8xl'}>5</Heading>
             <Text fontSize={'3xl'} fontWeight={'light'} opacity={0.8}>
@@ -43,7 +43,7 @@ export function Statistics(props: Props) {
             </Text>
           </Box>
         </Parallax>
-        <Parallax speed={25}>
+        <Parallax speed={25} disabled={window.innerWidth < 768}>
           <Box>
             <Heading fontSize={'8xl'}>976</Heading>
             <Text fontSize={'3xl'} fontWeight={'light'} opacity={0.8}>
