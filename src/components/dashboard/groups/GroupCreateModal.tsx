@@ -38,7 +38,7 @@ export const GroupCreateModal = (props: Props) => {
   };
 
   const createGroup = (values: FormikValues) => {
-    const params: CreateGroupDto = { name: values.name } as CreateGroupDto;
+    const params = { name: values.name } as CreateGroupDto;
     postMutation.mutate(params);
   };
 

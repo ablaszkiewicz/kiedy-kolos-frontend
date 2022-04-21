@@ -14,6 +14,7 @@ import { AnimatedTransition } from './components/other/AnimatedTransition';
 import { LandingPage } from './pages/LandingPage';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import './style.css';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ export const App = () => {
     <ParallaxProvider>
       <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           <Router basename='/'>
             <UnauthorizedHandler />
             <Routes>

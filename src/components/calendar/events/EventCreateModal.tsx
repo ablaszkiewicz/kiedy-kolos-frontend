@@ -9,9 +9,12 @@ import {
   Button,
   Input,
 } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 import { Formik, Form } from 'formik';
 import { InputControl, SelectControl } from 'formik-chakra-ui';
+import { useEffect } from 'react';
 import { SubjectType } from '../../../entities/Subject';
+import useEvents from '../../../hooks/useEvents';
 import useSubjects from '../../../hooks/useSubjects';
 
 interface Props {
@@ -25,14 +28,28 @@ interface FormikValues {
 }
 
 export const EventCreateModal = (props: Props) => {
-  const { query } = useSubjects();
+  const { query: subjectsQuery } = useSubjects();
+  const { query, postMutation: eventPostMutation } = useEvents();
+
+  useEffect(() => {
+    if (eventPostMutation.isSuccess) {
+      props.onClose();
+      eventPostMutation.reset();
+    }
+  }, [eventPostMutation.isSuccess]);
+
   const initialValues: FormikValues = {
     date: '',
     subjectId: '',
   };
 
   const createEvent = (values: FormikValues) => {
-    console.log(values);
+    //console.log(values);
+
+    const params = { date: dayjs(values.date).format('YYYY-MM-DDThh:mm'), subjectId: values.subjectId } as any;
+    console.log(params);
+
+    eventPostMutation.mutate(params);
   };
 
   return (
@@ -53,8 +70,8 @@ export const EventCreateModal = (props: Props) => {
                   selectProps={{ placeholder: 'Wybierz przedmiot' }}
                   mt={5}
                 >
-                  {query.data &&
-                    (query.data as SubjectType[]).map((subject) => (
+                  {subjectsQuery.data &&
+                    (subjectsQuery.data as SubjectType[]).map((subject) => (
                       <option key={subject.id} value={subject.id}>
                         {subject.name} ({subject.shortName})
                       </option>
@@ -62,7 +79,7 @@ export const EventCreateModal = (props: Props) => {
                 </SelectControl>
               </ModalBody>
               <ModalFooter>
-                <Button colorScheme='blue' mr={'3'} type='submit'>
+                <Button colorScheme='blue' mr={'3'} type='submit' isLoading={eventPostMutation.isLoading}>
                   Dodaj
                 </Button>
               </ModalFooter>

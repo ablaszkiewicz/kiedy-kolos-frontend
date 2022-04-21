@@ -1,5 +1,8 @@
 import { Flex, Spacer, HStack, Badge, Text, SlideFade } from '@chakra-ui/react';
 import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { Event } from '../../../entities/Event';
+import useEvents from '../../../hooks/useEvents';
 
 interface Props {
   day: string;
@@ -8,10 +11,17 @@ interface Props {
 }
 
 export function DayCard(props: Props) {
+  const { getEventsForDate } = useEvents();
   const currentMonth = dayjs().add(props.monthOffset, 'month').format('MM');
   const cardMonth = dayjs(props.day).format('MM');
   const isInCurrentMonth: boolean = currentMonth === cardMonth;
   const today = dayjs().format('YYYY-MM-DD');
+
+  const [events, setEvents] = useState<Event[]>([]);
+
+  useEffect(() => {
+    setEvents(getEventsForDate(dayjs(props.day)));
+  });
 
   return (
     <SlideFade in={true} offsetX={100 * props.direction} offsetY={0}>
@@ -30,11 +40,16 @@ export function DayCard(props: Props) {
         <Text fontWeight={'medium'} fontSize={'md'} opacity={isInCurrentMonth ? 1 : 0.5}>
           {dayjs(props.day).format('DD')}
         </Text>
-        <HStack spacing={1}>
-          <Badge variant={'solid'} colorScheme={'red'}>
-            AKO
-          </Badge>
-        </HStack>
+        {events && (
+          <HStack spacing={1}>
+            {events.map((event) => (
+              <Badge variant={'solid'} colorScheme={'red'} key={event.id}>
+                {event.subject.shortName}
+              </Badge>
+            ))}
+          </HStack>
+        )}
+
         <Spacer />
       </Flex>
     </SlideFade>
