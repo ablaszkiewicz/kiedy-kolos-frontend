@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import { SubjectType } from '../../../entities/Subject';
 import useEvents from '../../../hooks/useEvents';
 import useSubjects from '../../../hooks/useSubjects';
+import useStore from '../../../zustand/store';
 
 interface Props {
   isOpen: boolean;
@@ -30,6 +31,7 @@ interface FormikValues {
 export const EventCreateModal = (props: Props) => {
   const { query: subjectsQuery } = useSubjects();
   const { query, postMutation: eventPostMutation } = useEvents();
+  const clickedDate = useStore((state) => state.clickedDate);
 
   useEffect(() => {
     if (eventPostMutation.isSuccess) {
@@ -39,7 +41,7 @@ export const EventCreateModal = (props: Props) => {
   }, [eventPostMutation.isSuccess]);
 
   const initialValues: FormikValues = {
-    date: '',
+    date: clickedDate,
     subjectId: '',
   };
 
@@ -56,14 +58,14 @@ export const EventCreateModal = (props: Props) => {
     <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Dodawanie wydarzenia</ModalHeader>
+        <ModalHeader>Dodawanie wydarzenia {dayjs(clickedDate).format('DD.MM')}</ModalHeader>
         <ModalCloseButton />
 
         <Formik initialValues={initialValues} onSubmit={createEvent} validationSchema={null}>
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>
-                <InputControl name='date' label='Data' inputProps={{ type: 'date' }} />
+                {/* <InputControl name='date' label='Data' inputProps={{ type: 'date' }} /> */}
                 <SelectControl
                   name='subjectId'
                   label='Przedmiot'

@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Event } from '../../../entities/Event';
 import useEvents from '../../../hooks/useEvents';
+import useStore from '../../../zustand/store';
 
 interface Props {
   day: string;
@@ -11,13 +12,13 @@ interface Props {
 }
 
 export function DayCard(props: Props) {
+  const [events, setEvents] = useState<Event[]>([]);
+  const setClickedDate = useStore((state) => state.setClickedDate);
   const { getEventsForDate } = useEvents();
   const currentMonth = dayjs().add(props.monthOffset, 'month').format('MM');
   const cardMonth = dayjs(props.day).format('MM');
   const isInCurrentMonth: boolean = currentMonth === cardMonth;
   const today = dayjs().format('YYYY-MM-DD');
-
-  const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
     setEvents(getEventsForDate(dayjs(props.day)));
@@ -35,13 +36,15 @@ export function DayCard(props: Props) {
         gap={0}
         minW={0}
         h={'100%'}
+        cursor={'pointer'}
+        onClick={() => setClickedDate(dayjs(props.day).format('YYYY-MM-DD'))}
       >
         <Spacer />
         <Text fontWeight={'medium'} fontSize={'md'} opacity={isInCurrentMonth ? 1 : 0.5}>
           {dayjs(props.day).format('DD')}
         </Text>
         {events && (
-          <HStack spacing={1}>
+          <HStack spacing={0.5} flexWrap={'wrap'} gap={1} justifyContent={'center'}>
             {events.map((event) => (
               <Badge variant={'solid'} colorScheme={'red'} key={event.id}>
                 {event.subject.shortName}

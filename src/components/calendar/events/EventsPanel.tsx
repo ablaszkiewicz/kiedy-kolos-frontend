@@ -1,13 +1,17 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Flex, Spacer, Button, Text, useDisclosure } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import dayjs from 'dayjs';
 
 import useEvents from '../../../hooks/useEvents';
+import useStore from '../../../zustand/store';
 import { EventCreateModal } from './EventCreateModal';
+import { EventListItem } from './EventListItem';
 
 export const EventsPanel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { query } = useEvents();
+  const clickedDate = useStore((state) => state.clickedDate);
+  const { getEventsForDate } = useEvents();
+  const events = getEventsForDate(dayjs(clickedDate));
 
   return (
     <>
@@ -24,12 +28,15 @@ export const EventsPanel = () => {
       >
         <Flex mb={4}>
           <Text fontWeight={'bold'} fontSize={'2xl'}>
-            Wydarzenia
+            Wydarzenia {dayjs(clickedDate).format('DD.MM')}
           </Text>
           <Spacer />
           <Button variant={'ghost'} onClick={onOpen} leftIcon={<AddIcon />}>
             Dodaj
           </Button>
+        </Flex>
+        <Flex direction={'column'} gap={2} overflowY={'auto'}>
+          {events && events.map((event) => <EventListItem event={event} />)}
         </Flex>
       </Flex>
     </>

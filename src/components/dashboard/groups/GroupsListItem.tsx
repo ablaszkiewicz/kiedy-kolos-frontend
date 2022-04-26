@@ -16,7 +16,7 @@ export const GroupListItem = (props: Props) => {
     <>
       <GroupEditModal isOpen={isEditModalOpen} onClose={onEditModalClose} group={props.group} />
       <GroupDeleteModal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} group={props.group} />
-      <Flex py={2} borderRadius={5}>
+      <Flex py={2} borderRadius={5} alignItems={'center'}>
         <Text my={'auto'}>{props.group.name}</Text>
         <Spacer />
         <IconButton onClick={onEditModalOpen} variant={'ghost'} aria-label='Edytuj przedmiot' icon={<EditIcon />} />
