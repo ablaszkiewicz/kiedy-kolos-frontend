@@ -25,6 +25,7 @@ export const EventsPanel = () => {
         p={7}
         direction={'column'}
         flexGrow={1}
+        overflow={'hidden'}
       >
         <Flex mb={4}>
           <Text fontWeight={'bold'} fontSize={'2xl'}>
