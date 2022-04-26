@@ -1,8 +1,8 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const createCalendarSlice = (set: any) => ({
-  clickedDate: dayjs().format('YYYY-MM-DD'),
-  setClickedDate: (newDate: string) =>
+  clickedDate: dayjs(),
+  setClickedDate: (newDate: Dayjs) =>
     set((state: any) => {
       state.clickedDate = newDate;
     }),

@@ -1,6 +1,7 @@
 import { Badge, Flex, Text } from '@chakra-ui/react';
 import { Event } from '../../../entities/Event';
 import { BsClockFill, BsDot, BsFillHouseDoorFill } from 'react-icons/bs';
+import dayjs from 'dayjs';
 
 interface Props {
   event: Event;
@@ -26,7 +27,7 @@ export const EventListItem = (props: Props) => {
           </Flex>
           <Flex gap={2} alignItems={'center'} fontSize={'sm'} color={'gray.300'}>
             <BsClockFill />
-            <Text>14:30</Text>
+            <Text>{dayjs(props.event.date).format('hh:mm')}</Text>
           </Flex>
         </Flex>
         <Text w={'70%'}>To jest opis danego wydarzenia</Text>

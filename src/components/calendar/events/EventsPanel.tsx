@@ -37,7 +37,7 @@ export const EventsPanel = () => {
           </Button>
         </Flex>
         <Flex direction={'column'} gap={2} overflowY={'auto'}>
-          {events && events.map((event) => <EventListItem event={event} />)}
+          {events && events.map((event) => <EventListItem key={event.id} event={event} />)}
         </Flex>
       </Flex>
     </>

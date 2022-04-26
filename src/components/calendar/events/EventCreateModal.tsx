@@ -24,13 +24,13 @@ interface Props {
 }
 
 interface FormikValues {
-  date: string;
+  time: string;
   subjectId: string;
 }
 
 export const EventCreateModal = (props: Props) => {
   const { query: subjectsQuery } = useSubjects();
-  const { query, postMutation: eventPostMutation } = useEvents();
+  const { postMutation: eventPostMutation } = useEvents();
   const clickedDate = useStore((state) => state.clickedDate);
 
   useEffect(() => {
@@ -41,14 +41,14 @@ export const EventCreateModal = (props: Props) => {
   }, [eventPostMutation.isSuccess]);
 
   const initialValues: FormikValues = {
-    date: clickedDate,
+    time: '',
     subjectId: '',
   };
 
   const createEvent = (values: FormikValues) => {
-    //console.log(values);
-
-    const params = { date: dayjs(values.date).format('YYYY-MM-DDThh:mm'), subjectId: values.subjectId } as any;
+    const formattedDate = clickedDate.format('YYYY-MM-DD');
+    const date = `${formattedDate}T${values.time}:00`;
+    const params = { date, subjectId: values.subjectId } as any;
     console.log(params);
 
     eventPostMutation.mutate(params);
@@ -65,7 +65,7 @@ export const EventCreateModal = (props: Props) => {
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>
-                {/* <InputControl name='date' label='Data' inputProps={{ type: 'date' }} /> */}
+                <InputControl name='time' label='Godzina' inputProps={{ type: 'time' }} />
                 <SelectControl
                   name='subjectId'
                   label='Przedmiot'

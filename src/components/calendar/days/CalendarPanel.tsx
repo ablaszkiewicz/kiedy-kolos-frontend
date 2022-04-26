@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { DayCard } from './DayCard';
 import useCalendar from '../../../hooks/useCalendar';
 import { useSetState } from '../../../hooks/useSetState';
+import dayjs from 'dayjs';
 
 enum SlideDirection {
   LEFT = -1,
@@ -60,7 +61,7 @@ export const CalendarPanel = () => {
       >
         {state.days.map((day) => (
           <DayCard
-            day={day}
+            date={dayjs(day)}
             monthOffset={state.monthOffset}
             direction={state.direction}
             key={state.monthOffset + day}
