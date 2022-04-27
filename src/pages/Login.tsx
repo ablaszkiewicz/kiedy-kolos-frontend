@@ -35,9 +35,12 @@ export const Login = () => {
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Zaloguj się</Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
-            lub załóż konto <RouterLink to={Path.REGISTER}>tutaj</RouterLink> ✌️
-          </Text>
+          <RouterLink to={Path.REGISTER}>
+            <Text as={'u'} fontSize={'lg'} color={'gray.600'}>
+              lub załóż konto
+            </Text>
+          </RouterLink>{' '}
+          ✌️
         </Stack>
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
           <Stack spacing={4}>

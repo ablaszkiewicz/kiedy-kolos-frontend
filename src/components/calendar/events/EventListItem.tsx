@@ -36,7 +36,7 @@ export const EventListItem = (props: Props) => {
           <Badge colorScheme={'red'} variant={'solid'}>
             egzamin
           </Badge>
-          <IconButton aria-label='Delete' icon={<DeleteIcon />} ml={4} onClick={onDeleteModalOpen} />
+          {/* <IconButton aria-label='Delete' icon={<DeleteIcon />} ml={4} onClick={onDeleteModalOpen} /> */}
         </Flex>
 
         <Flex>

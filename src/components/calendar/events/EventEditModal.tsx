@@ -7,6 +7,7 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { InputControl, SelectControl } from 'formik-chakra-ui';
@@ -18,6 +19,7 @@ import { editEventValidationSchema, Event, UpdateEventDto } from '../../../entit
 import dayjs from 'dayjs';
 import useSubjects from '../../../hooks/useSubjects';
 import { SubjectType } from '../../../entities/Subject';
+import { EventDeleteModal } from './EventDeleteModal';
 
 interface Props {
   isOpen: boolean;
@@ -31,6 +33,7 @@ interface FormikValues {
 }
 
 export const EventEditModal = (props: Props) => {
+  const { isOpen: isDeleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
   const { query: subjectsQuery } = useSubjects();
   const { updateMutation } = useEvents();
 
@@ -56,42 +59,48 @@ export const EventEditModal = (props: Props) => {
   };
 
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Edytowanie wydarzenia</ModalHeader>
-        <ModalCloseButton />
+    <>
+      <EventDeleteModal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} event={props.event} />
+      <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edytowanie wydarzenia</ModalHeader>
+          <ModalCloseButton />
 
-        <Formik initialValues={initialValues} onSubmit={editEvent} validationSchema={editEventValidationSchema}>
-          {({ handleSubmit }) => (
-            <Form onSubmit={handleSubmit}>
-              <ModalBody>
-                <InputControl name='date' label='Data' inputProps={{ type: 'datetime-local' }} />
-                <SelectControl
-                  name='subjectId'
-                  label='Przedmiot'
-                  selectProps={{ placeholder: 'Wybierz przedmiot' }}
-                  mt={5}
-                  onChange={(e) => console.log((e.target as any).value)}
-                >
-                  {subjectsQuery.data &&
-                    (subjectsQuery.data as SubjectType[]).map((subject) => (
-                      <option key={subject.id} value={subject.id}>
-                        {subject.name} ({subject.shortName})
-                      </option>
-                    ))}
-                </SelectControl>
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme='blue' mr={'3'} type='submit' isLoading={updateMutation.isLoading}>
-                  Edytuj
-                </Button>
-                <Button onClick={props.onClose}>Anuluj</Button>
-              </ModalFooter>
-            </Form>
-          )}
-        </Formik>
-      </ModalContent>
-    </Modal>
+          <Formik initialValues={initialValues} onSubmit={editEvent} validationSchema={editEventValidationSchema}>
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
+                <ModalBody>
+                  <InputControl name='date' label='Data' inputProps={{ type: 'datetime-local' }} />
+                  <SelectControl
+                    name='subjectId'
+                    label='Przedmiot'
+                    selectProps={{ placeholder: 'Wybierz przedmiot' }}
+                    mt={5}
+                    onChange={(e) => console.log((e.target as any).value)}
+                  >
+                    {subjectsQuery.data &&
+                      (subjectsQuery.data as SubjectType[]).map((subject) => (
+                        <option key={subject.id} value={subject.id}>
+                          {subject.name} ({subject.shortName})
+                        </option>
+                      ))}
+                  </SelectControl>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme='blue' mr={'3'} type='submit' isLoading={updateMutation.isLoading}>
+                    Zapisz
+                  </Button>
+                  <Button colorScheme='red' mr={'3'} onClick={onDeleteModalOpen} isLoading={updateMutation.isLoading}>
+                    Usuń
+                  </Button>
+                  <Button onClick={props.onClose}>Anuluj</Button>
+                </ModalFooter>
+              </Form>
+            )}
+          </Formik>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
