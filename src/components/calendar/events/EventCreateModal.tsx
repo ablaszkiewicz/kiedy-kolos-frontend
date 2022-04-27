@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import { Formik, Form } from 'formik';
 import { InputControl, SelectControl } from 'formik-chakra-ui';
 import { useEffect } from 'react';
+import { editEventValidationSchema } from '../../../entities/Event';
 import { SubjectType } from '../../../entities/Subject';
 import useEvents from '../../../hooks/useEvents';
 import useSubjects from '../../../hooks/useSubjects';
@@ -61,7 +62,7 @@ export const EventCreateModal = (props: Props) => {
         <ModalHeader>Dodawanie wydarzenia {dayjs(clickedDate).format('DD.MM')}</ModalHeader>
         <ModalCloseButton />
 
-        <Formik initialValues={initialValues} onSubmit={createEvent} validationSchema={null}>
+        <Formik initialValues={initialValues} onSubmit={createEvent} validationSchema={editEventValidationSchema}>
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>

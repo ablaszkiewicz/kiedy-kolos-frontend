@@ -13,7 +13,9 @@ interface Props {
 
 export function DayCard(props: Props) {
   const [events, setEvents] = useState<Event[]>([]);
+
   const setClickedDate = useStore((state) => state.setClickedDate);
+
   const { getEventsForDate } = useEvents();
   const currentMonth = dayjs().add(props.monthOffset, 'month').format('MM');
   const cardMonth = props.date.format('MM');

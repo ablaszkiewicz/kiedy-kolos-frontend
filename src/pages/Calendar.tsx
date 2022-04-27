@@ -14,7 +14,7 @@ export const Calendar = () => {
   const { yearCourseId } = useParams();
 
   return (
-    <Flex p={4} m={0} h={['100vh']} direction={'column'} overflow={'hidden'}>
+    <Flex p={[2, 4]} m={0} h={['100vh']} direction={'column'} overflow={'hidden'}>
       <Flex m={0} p={0} mb={2}>
         <Heading>Kalendarz</Heading>
         <Spacer />
