@@ -18,6 +18,10 @@ Yup.setLocale({
       }
     },
   },
+  number: {
+    min: ({ min }) => `Pole musi być większe od ${min}`,
+    max: ({ max }) => `Pole musi być mniejsze od ${max}`,
+  },
 });
 
 export default Yup;
