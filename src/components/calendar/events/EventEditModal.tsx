@@ -7,71 +7,74 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Input,
 } from '@chakra-ui/react';
-import dayjs from 'dayjs';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import { InputControl, SelectControl } from 'formik-chakra-ui';
 import { useEffect } from 'react';
-import { createEventValidationSchema } from '../../../entities/Event';
-import { SubjectType } from '../../../entities/Subject';
+import useGroups from '../../../hooks/useGroups';
+import { Group, groupValidationSchema, UpdateGroupDto } from '../../../entities/Group';
 import useEvents from '../../../hooks/useEvents';
+import { editEventValidationSchema, Event, UpdateEventDto } from '../../../entities/Event';
+import dayjs from 'dayjs';
 import useSubjects from '../../../hooks/useSubjects';
-import useStore from '../../../zustand/store';
+import { SubjectType } from '../../../entities/Subject';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  event: Event;
 }
 
 interface FormikValues {
-  time: string;
+  date: string;
   subjectId: string;
 }
 
-export const EventCreateModal = (props: Props) => {
+export const EventEditModal = (props: Props) => {
   const { query: subjectsQuery } = useSubjects();
-  const { postMutation: eventPostMutation } = useEvents();
-  const clickedDate = useStore((state) => state.clickedDate);
+  const { updateMutation } = useEvents();
 
   useEffect(() => {
-    if (eventPostMutation.isSuccess) {
+    if (updateMutation.isSuccess) {
       props.onClose();
-      eventPostMutation.reset();
+      updateMutation.reset();
     }
-  }, [eventPostMutation.isSuccess]);
+  }, [updateMutation.isSuccess]);
 
   const initialValues: FormikValues = {
-    time: '',
-    subjectId: '',
+    date: dayjs(props.event.date).utc().format('YYYY-MM-DDThh:mm'),
+    subjectId: props.event.subjectId,
   };
 
-  const createEvent = (values: FormikValues) => {
-    const formattedDate = clickedDate.format('YYYY-MM-DD');
-    const date = `${formattedDate}T${values.time}:00`;
-    const params = { date, subjectId: values.subjectId } as any;
-    console.log(params);
+  const editEvent = (values: FormikValues) => {
+    console.log(values.subjectId);
 
-    eventPostMutation.mutate(params);
+    const params = {
+      id: props.event.id,
+      date: values.date,
+      subjectId: values.subjectId,
+    } as UpdateEventDto;
+    updateMutation.mutate(params);
   };
 
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Dodawanie wydarzenia {dayjs(clickedDate).format('DD.MM')}</ModalHeader>
+        <ModalHeader>Edytowanie wydarzenia</ModalHeader>
         <ModalCloseButton />
 
-        <Formik initialValues={initialValues} onSubmit={createEvent} validationSchema={createEventValidationSchema}>
+        <Formik initialValues={initialValues} onSubmit={editEvent} validationSchema={editEventValidationSchema}>
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>
-                <InputControl name='time' label='Godzina' inputProps={{ type: 'time' }} />
+                <InputControl name='date' label='Data' inputProps={{ type: 'datetime-local' }} />
                 <SelectControl
                   name='subjectId'
                   label='Przedmiot'
                   selectProps={{ placeholder: 'Wybierz przedmiot' }}
                   mt={5}
+                  onChange={(e) => console.log((e.target as any).value)}
                 >
                   {subjectsQuery.data &&
                     (subjectsQuery.data as SubjectType[]).map((subject) => (
@@ -82,9 +85,10 @@ export const EventCreateModal = (props: Props) => {
                 </SelectControl>
               </ModalBody>
               <ModalFooter>
-                <Button colorScheme='blue' mr={'3'} type='submit' isLoading={eventPostMutation.isLoading}>
-                  Dodaj
+                <Button colorScheme='blue' mr={'3'} type='submit' isLoading={updateMutation.isLoading}>
+                  Edytuj
                 </Button>
+                <Button onClick={props.onClose}>Anuluj</Button>
               </ModalFooter>
             </Form>
           )}

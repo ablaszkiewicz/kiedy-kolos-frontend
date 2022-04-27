@@ -3,7 +3,7 @@ import Yup from './yup';
 
 export interface Event {
   id: string;
-  date: Date;
+  date: string;
   subjectId: string;
   subject: SubjectType;
 }
@@ -13,7 +13,18 @@ export interface CreateEventDto {
   subjectId: string;
 }
 
-export const editEventValidationSchema = Yup.object({
+export interface UpdateEventDto {
+  id: string;
+  date: string;
+  subjectId: string;
+}
+
+export const createEventValidationSchema = Yup.object({
   time: Yup.string().required(),
+  subjectId: Yup.string().required(),
+});
+
+export const editEventValidationSchema = Yup.object({
+  date: Yup.string().required(),
   subjectId: Yup.string().required(),
 });

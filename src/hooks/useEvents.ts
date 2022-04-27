@@ -3,7 +3,7 @@ import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { Event } from '../entities/Event';
+import { CreateEventDto, Event, UpdateEventDto } from '../entities/Event';
 
 const EVENTS_QUERY_KEY = 'events';
 
@@ -17,8 +17,13 @@ export default function useEvents() {
     return response.data;
   };
 
-  const postEvent = async (payload: Event): Promise<Event> => {
+  const postEvent = async (payload: CreateEventDto): Promise<Event> => {
     const response = await axios.post(`yearCourse/${yearCourseId}/events`, payload);
+    return response.data;
+  };
+
+  const updateEvent = async (payload: UpdateEventDto): Promise<Event> => {
+    const response = await axios.put(`events/${payload.id}`, payload);
     return response.data;
   };
 
@@ -32,9 +37,19 @@ export default function useEvents() {
   const postMutation = useMutation(postEvent, {
     onSuccess: (event: Event) => {
       queryClient.invalidateQueries(EVENTS_QUERY_KEY);
-      //queryClient.setQueryData(EVENTS_QUERY_KEY, (old: any) => [...old, event]);
       toast({
         title: 'Dodano wydarzenie',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
+  const updateMutation = useMutation(updateEvent, {
+    onSuccess: (event: Event) => {
+      queryClient.invalidateQueries(EVENTS_QUERY_KEY);
+      toast({
+        title: 'Zaktualizowano wydarzenie',
         status: 'success',
         duration: 2000,
       });
@@ -58,5 +73,5 @@ export default function useEvents() {
     })!;
   };
 
-  return { query, postMutation, deleteMutation, getEventsForDate };
+  return { query, postMutation, updateMutation, deleteMutation, getEventsForDate };
 }

@@ -5,6 +5,7 @@ import { DayCard } from './DayCard';
 import useCalendar from '../../../hooks/useCalendar';
 import { useSetState } from '../../../hooks/useSetState';
 import dayjs from 'dayjs';
+import useStore from '../../../zustand/store';
 
 enum SlideDirection {
   LEFT = -1,
@@ -19,6 +20,7 @@ interface State {
 
 export const CalendarPanel = () => {
   const dayNames = ['pon', 'wt', 'śr', 'czw', 'pt', 'sob', 'nie'];
+  const setClickedDate = useStore((state) => state.setClickedDate);
 
   const [state, setState] = useSetState({
     days: [],
@@ -27,6 +29,10 @@ export const CalendarPanel = () => {
   } as State);
 
   const { getDaysInMonth, getMonthName } = useCalendar();
+
+  useEffect(() => {
+    setClickedDate(dayjs());
+  }, []);
 
   useEffect(() => {
     setState({ days: getDaysInMonth(state.monthOffset) });

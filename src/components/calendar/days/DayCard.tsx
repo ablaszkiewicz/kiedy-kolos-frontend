@@ -1,4 +1,5 @@
 import { Flex, Spacer, HStack, Badge, Text, SlideFade } from '@chakra-ui/react';
+import { generateKeyPair } from 'crypto';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Event } from '../../../entities/Event';
@@ -13,18 +14,42 @@ interface Props {
 
 export function DayCard(props: Props) {
   const [events, setEvents] = useState<Event[]>([]);
-
   const setClickedDate = useStore((state) => state.setClickedDate);
-
   const { getEventsForDate } = useEvents();
   const currentMonth = dayjs().add(props.monthOffset, 'month').format('MM');
   const cardMonth = props.date.format('MM');
   const isInCurrentMonth: boolean = currentMonth === cardMonth;
   const today = dayjs().format('YYYY-MM-DD');
+  const clickedDate = useStore((state) => state.clickedDate);
 
   useEffect(() => {
     setEvents(getEventsForDate(props.date));
   });
+
+  const backgroundColor = () => {
+    let clickedDateFormatted = dayjs().format('YYYY-MM-DD');
+    try {
+      clickedDateFormatted = clickedDate.format('YYYY-MM-DD');
+    } catch (e) {}
+
+    // selected
+    if (props.date.format('YYYY-MM-DD') === clickedDateFormatted) {
+      return 'blue.400';
+    }
+
+    // today
+    if (props.date.format('YYYY-MM-DD') === today) {
+      return 'blue.800';
+    }
+
+    // in current month
+    if (isInCurrentMonth) {
+      return 'gray.700';
+    }
+
+    // not in current month
+    return 'gray.740';
+  };
 
   return (
     <SlideFade in={true} offsetX={100 * props.direction} offsetY={0}>
@@ -32,9 +57,7 @@ export function DayCard(props: Props) {
         direction={'column'}
         align={'center'}
         borderRadius={10}
-        backgroundColor={
-          dayjs(props.date).format('YYYY-MM-DD') === today ? 'blue.600' : isInCurrentMonth ? 'gray.700' : 'gray.740'
-        }
+        backgroundColor={backgroundColor()}
         minHeight={'0px'}
         p={2}
         gap={0}
@@ -42,6 +65,7 @@ export function DayCard(props: Props) {
         h={'100%'}
         cursor={'pointer'}
         onClick={() => setClickedDate(props.date)}
+        transitionDuration={'0.2s'}
       >
         <Spacer />
         <Text fontWeight={'medium'} fontSize={'md'} opacity={isInCurrentMonth ? 1 : 0.5}>

@@ -7,10 +7,13 @@ import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
+import utc from 'dayjs/plugin/utc';
 
 //axios.defaults.baseURL = 'http://localhost:3001/';
 axios.defaults.baseURL = 'https://testnginx.bieda.it/';
+
 dayjs.locale('pl');
+dayjs.extend(utc);
 
 const root = createRoot(document.getElementById('root') as any);
 root.render(<App />);
