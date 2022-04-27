@@ -47,8 +47,6 @@ export const EventEditModal = (props: Props) => {
   };
 
   const editEvent = (values: FormikValues) => {
-    console.log(values.subjectId);
-
     const params = {
       id: props.event.id,
       date: values.date,
