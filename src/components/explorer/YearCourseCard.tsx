@@ -15,7 +15,7 @@ export const YearCourseCard = (props: Props) => {
   };
 
   return (
-    <Flex borderRadius={5} p={5} backgroundColor={'gray.700'} shadow={'dark-lg'}>
+    <Flex borderRadius={5} p={5} backgroundColor={'gray.700'} shadow={'dark-lg'} w={'20%'}>
       <VStack alignItems={'baseline'} w={'100%'}>
         <Text>{props.yearCourse.name}</Text>
         <Text>{props.yearCourse.startYear}</Text>

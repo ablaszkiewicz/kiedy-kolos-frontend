@@ -1,9 +1,11 @@
 import { ArrowBackIcon, ArrowForwardIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Flex, SimpleGrid, Spacer, Grid, Text, IconButton, GridItem, Center, SlideFade } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { DayCard } from '../components/calendar/DayCard';
-import useCalendar from '../hooks/useCalendar';
-import { useSetState } from '../hooks/useSetState';
+import { DayCard } from './DayCard';
+import useCalendar from '../../../hooks/useCalendar';
+import { useSetState } from '../../../hooks/useSetState';
+import dayjs from 'dayjs';
+import useStore from '../../../zustand/store';
 
 enum SlideDirection {
   LEFT = -1,
@@ -18,6 +20,7 @@ interface State {
 
 export const CalendarPanel = () => {
   const dayNames = ['pon', 'wt', 'śr', 'czw', 'pt', 'sob', 'nie'];
+  const setClickedDate = useStore((state) => state.setClickedDate);
 
   const [state, setState] = useSetState({
     days: [],
@@ -28,14 +31,18 @@ export const CalendarPanel = () => {
   const { getDaysInMonth, getMonthName } = useCalendar();
 
   useEffect(() => {
+    setClickedDate(dayjs());
+  }, []);
+
+  useEffect(() => {
     setState({ days: getDaysInMonth(state.monthOffset) });
   }, [state.monthOffset]);
 
   return (
     <Flex
       direction={'column'}
-      w={'70%'}
-      h={'100%'}
+      w={['100%', '70%']}
+      h={['60vh', '100%']}
       borderRadius={10}
       p={4}
       backgroundColor={'gray.750'}
@@ -60,7 +67,7 @@ export const CalendarPanel = () => {
       >
         {state.days.map((day) => (
           <DayCard
-            day={day}
+            date={dayjs(day)}
             monthOffset={state.monthOffset}
             direction={state.direction}
             key={state.monthOffset + day}
