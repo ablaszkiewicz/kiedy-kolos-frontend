@@ -29,7 +29,7 @@ export const Calendar = () => {
         </Button>
       </Flex>
 
-      <Flex flexGrow={1} gap={4} direction={['column', 'row']} overflow={'hidden'} m={-10} p={10}>
+      <Flex flexGrow={1} gap={[2, 2, 4]} direction={['column', 'row']} overflow={'hidden'} m={-10} p={10}>
         <CalendarPanel />
         <EventsPanel />
       </Flex>

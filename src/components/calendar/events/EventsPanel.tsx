@@ -28,8 +28,11 @@ export const EventsPanel = () => {
         overflow={'hidden'}
       >
         <Flex mb={4}>
-          <Text fontWeight={'bold'} fontSize={'2xl'}>
+          <Text fontWeight={'bold'} fontSize={'2xl'} display={['none', 'unset']}>
             Wydarzenia {dayjs(clickedDate).format('DD.MM')}
+          </Text>
+          <Text fontWeight={'bold'} fontSize={'2xl'} display={['unset', 'none']}>
+            {dayjs(clickedDate).format('DD.MM')}
           </Text>
           <Spacer />
           <Button variant={'ghost'} onClick={onOpen} leftIcon={<AddIcon />}>
