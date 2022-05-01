@@ -8,9 +8,10 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Flex,
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
-import { InputControl, SelectControl } from 'formik-chakra-ui';
+import { CheckboxContainer, CheckboxControl, InputControl, SelectControl, TextareaControl } from 'formik-chakra-ui';
 import { useEffect } from 'react';
 import useGroups from '../../../hooks/useGroups';
 import { Group, groupValidationSchema, UpdateGroupDto } from '../../../entities/Group';
@@ -30,10 +31,14 @@ interface Props {
 interface FormikValues {
   date: string;
   subjectId: string;
+  room: string;
+  description: string;
+  groups: string[];
 }
 
 export const EventEditModal = (props: Props) => {
   const { isOpen: isDeleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
+  const { query: groupsQuery } = useGroups();
   const { query: subjectsQuery } = useSubjects();
   const { updateMutation } = useEvents();
 
@@ -47,6 +52,9 @@ export const EventEditModal = (props: Props) => {
   const initialValues: FormikValues = {
     date: dayjs(props.event.date).utc().format('YYYY-MM-DDThh:mm'),
     subjectId: props.event.subjectId,
+    room: props.event.room,
+    description: props.event.description,
+    groups: props.event.groups.map((group) => group.id),
   };
 
   const editEvent = (values: FormikValues) => {
@@ -54,6 +62,9 @@ export const EventEditModal = (props: Props) => {
       id: props.event.id,
       date: values.date,
       subjectId: values.subjectId,
+      groups: values.groups,
+      room: values.room,
+      description: values.description,
     } as UpdateEventDto;
     updateMutation.mutate(params);
   };
@@ -71,12 +82,16 @@ export const EventEditModal = (props: Props) => {
             {({ handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
                 <ModalBody>
-                  <InputControl name='date' label='Data' inputProps={{ type: 'datetime-local' }} />
+                  <Flex gap={5}>
+                    <InputControl name='date' label='Data' inputProps={{ type: 'datetime-local' }} w={'70%'} />
+                    <InputControl name='room' label='Miejsce' w={'30%'} />
+                  </Flex>
+
                   <SelectControl
                     name='subjectId'
                     label='Przedmiot'
                     selectProps={{ placeholder: 'Wybierz przedmiot' }}
-                    mt={5}
+                    mt={3}
                     onChange={(e) => console.log((e.target as any).value)}
                   >
                     {subjectsQuery.data &&
@@ -86,12 +101,21 @@ export const EventEditModal = (props: Props) => {
                         </option>
                       ))}
                   </SelectControl>
+                  <CheckboxContainer name='groups' label='Grupy' mt={3}>
+                    {groupsQuery.data &&
+                      groupsQuery.data.map((group) => (
+                        <CheckboxControl name='groups' key={group.id} value={group.id}>
+                          {group.name}
+                        </CheckboxControl>
+                      ))}
+                  </CheckboxContainer>
+                  <TextareaControl name='description' label='Opis' mt={3} />
                 </ModalBody>
                 <ModalFooter>
                   <Button colorScheme='blue' mr={'3'} type='submit' isLoading={updateMutation.isLoading}>
                     Zapisz
                   </Button>
-                  <Button colorScheme='red' mr={'3'} onClick={onDeleteModalOpen} isLoading={updateMutation.isLoading}>
+                  <Button colorScheme='red' mr={'3'} onClick={onDeleteModalOpen}>
                     Usuń
                   </Button>
                   <Button onClick={props.onClose}>Anuluj</Button>

@@ -43,14 +43,14 @@ export const EventListItem = (props: Props) => {
           <Flex direction={'column'} w={'30%'} fontSize={'sm'} color={'gray.300'}>
             <Flex gap={2} alignItems={'center'}>
               <BsFillHouseDoorFill />
-              <Text>NE AUD P1</Text>
+              <Text>{props.event.room}</Text>
             </Flex>
             <Flex gap={2} alignItems={'center'} fontSize={'sm'} color={'gray.300'}>
               <BsClockFill />
               <Text>{dayjs(props.event.date).utc().format('hh:mm')}</Text>
             </Flex>
           </Flex>
-          <Text w={'70%'}>To jest opis danego wydarzenia</Text>
+          <Text w={'70%'}>{props.event.description}</Text>
         </Flex>
       </Flex>
     </>

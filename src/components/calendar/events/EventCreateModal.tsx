@@ -8,14 +8,17 @@ import {
   ModalFooter,
   Button,
   Input,
+  Flex,
 } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import { Formik, Form } from 'formik';
-import { InputControl, SelectControl } from 'formik-chakra-ui';
+import { CheckboxContainer, CheckboxControl, InputControl, SelectControl, TextareaControl } from 'formik-chakra-ui';
 import { useEffect } from 'react';
-import { createEventValidationSchema } from '../../../entities/Event';
+import { CreateEventDto, createEventValidationSchema } from '../../../entities/Event';
+import { Group } from '../../../entities/Group';
 import { SubjectType } from '../../../entities/Subject';
 import useEvents from '../../../hooks/useEvents';
+import useGroups from '../../../hooks/useGroups';
 import useSubjects from '../../../hooks/useSubjects';
 import useStore from '../../../zustand/store';
 
@@ -27,9 +30,13 @@ interface Props {
 interface FormikValues {
   time: string;
   subjectId: string;
+  room: string;
+  description: string;
+  groups: string[];
 }
 
 export const EventCreateModal = (props: Props) => {
+  const { query: groupsQuery } = useGroups();
   const { query: subjectsQuery } = useSubjects();
   const { postMutation: eventPostMutation } = useEvents();
   const clickedDate = useStore((state) => state.clickedDate);
@@ -44,12 +51,21 @@ export const EventCreateModal = (props: Props) => {
   const initialValues: FormikValues = {
     time: '',
     subjectId: '',
+    room: '',
+    description: '',
+    groups: [],
   };
 
   const createEvent = (values: FormikValues) => {
     const formattedDate = clickedDate.format('YYYY-MM-DD');
     const date = `${formattedDate}T${values.time}:00`;
-    const params = { date, subjectId: values.subjectId } as any;
+    const params: CreateEventDto = {
+      date,
+      subjectId: values.subjectId,
+      groups: values.groups,
+      room: values.room,
+      description: values.description,
+    };
     console.log(params);
 
     eventPostMutation.mutate(params);
@@ -66,12 +82,15 @@ export const EventCreateModal = (props: Props) => {
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <ModalBody>
-                <InputControl name='time' label='Godzina' inputProps={{ type: 'time' }} />
+                <Flex gap={5}>
+                  <InputControl name='time' label='Data' inputProps={{ type: 'time' }} w={'70%'} />
+                  <InputControl name='room' label='Miejsce' inputProps={{ placeholder: '201 NE' }} w={'30%'} />
+                </Flex>
                 <SelectControl
                   name='subjectId'
                   label='Przedmiot'
                   selectProps={{ placeholder: 'Wybierz przedmiot' }}
-                  mt={5}
+                  mt={3}
                 >
                   {subjectsQuery.data &&
                     (subjectsQuery.data as SubjectType[]).map((subject) => (
@@ -80,6 +99,21 @@ export const EventCreateModal = (props: Props) => {
                       </option>
                     ))}
                 </SelectControl>
+
+                <CheckboxContainer name='groups' label='Grupy' mt={3}>
+                  {groupsQuery.data &&
+                    groupsQuery.data.map((group) => (
+                      <CheckboxControl name='groups' key={group.id} value={group.id}>
+                        {group.name}
+                      </CheckboxControl>
+                    ))}
+                </CheckboxContainer>
+                <TextareaControl
+                  name='description'
+                  label='Opis'
+                  mt={3}
+                  textareaProps={{ placeholder: 'Pamiętajcie, żeby wziąć ze sobą długopis i kartki' }}
+                />
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme='blue' mr={'3'} type='submit' isLoading={eventPostMutation.isLoading}>

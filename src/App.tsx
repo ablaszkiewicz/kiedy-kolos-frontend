@@ -23,7 +23,7 @@ export const App = () => {
     <ParallaxProvider>
       <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          <ReactQueryDevtools initialIsOpen={false} />
           <Router basename='/'>
             <UnauthorizedHandler />
             <Routes>
