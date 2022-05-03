@@ -7,16 +7,11 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
 } from '@chakra-ui/react';
 import { Formik, Form } from 'formik';
 import { InputControl } from 'formik-chakra-ui';
 import { useEffect } from 'react';
-import { subjectValidationSchema } from '../../entities/Subject';
-import { YearCourseType, yearCourseValidationSchema } from '../../entities/YearCourse';
-import { useSetState } from '../../hooks/useSetState';
+import { yearCourseValidationSchema } from '../../entities/YearCourse';
 import useYearCourses from '../../hooks/useYearCourses';
 
 interface Props {

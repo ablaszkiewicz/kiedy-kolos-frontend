@@ -11,6 +11,7 @@ import {
   VStack,
   HStack,
   Text,
+  VisuallyHidden,
 } from '@chakra-ui/react';
 import useAuth from '../hooks/useAuth';
 import useYearCourses from '../hooks/useYearCourses';
@@ -34,19 +35,32 @@ export const Explorer = () => {
           Wyloguj
         </Button>
       </Flex>
-      <Center flexGrow={1} flexDirection={'column'}>
-        <HStack gap={6} w={'100%'} mt={-10}>
-          <Spacer />
+      <Flex flexGrow={1} flexDirection={'column'} justifyContent={'center'}>
+        <Flex
+          direction={['column', 'column', 'row']}
+          gap={6}
+          w={'100%'}
+          mt={-10}
+          justifyContent={'center'}
+          align={'center'}
+        >
           {yearCourseQuery.data &&
             yearCourseQuery.data.map((yearCourse: YearCourseType) => (
               <YearCourseCard key={yearCourse.id} yearCourse={yearCourse} />
             ))}
-          <Button ml={5} onClick={onOpen} rightIcon={<PlusSquareIcon />} variant={'outline'} w={'20%'} h={'100%'}>
+          <Button
+            ml={5}
+            onClick={onOpen}
+            rightIcon={<PlusSquareIcon />}
+            variant={'outline'}
+            w={['80%', '80%', '20%']}
+            h={'100%'}
+            minH={'10em'}
+          >
             Dodaj kierunek
           </Button>
-          <Spacer />
-        </HStack>
-      </Center>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };
