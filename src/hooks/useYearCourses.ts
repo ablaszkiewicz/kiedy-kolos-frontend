@@ -1,7 +1,8 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
-import { YearCourseType } from '../entities/YearCourse';
+import { useParams } from 'react-router-dom';
+import { AddAdminDTO, CreateYearCourseDTO, YearCourseType } from '../entities/YearCourse';
 
 const YEAR_COURSES_QUERY_KEY: string = 'yearCourses';
 
@@ -9,13 +10,15 @@ export default function useYearCourses() {
   const toast = useToast();
   const queryClient: QueryClient = useQueryClient();
 
-  const getYearCourses = async () => {
+  const { yearCourseId } = useParams();
+
+  const getYearCourses = async (): Promise<YearCourseType[]> => {
     const response = await axios.get('users/me/yearCourses');
     return response.data;
   };
 
-  const postYearCourse = async (yearCourse: YearCourseType) => {
-    const response = await axios.post(YEAR_COURSES_QUERY_KEY, yearCourse);
+  const postYearCourse = async (dto: CreateYearCourseDTO) => {
+    const response = await axios.post(YEAR_COURSES_QUERY_KEY, dto);
     return response.data;
   };
 
@@ -26,6 +29,16 @@ export default function useYearCourses() {
 
   const deleteYearCourse = async (id: string) => {
     const response = await axios.delete(`yearCourses/${id}`);
+    return response.data;
+  };
+
+  const addAdmin = async (dto: AddAdminDTO) => {
+    const response = await axios.post(`yearCourses/${yearCourseId}/admins`, dto);
+    return response.data;
+  };
+
+  const deleteAdmin = async (adminId: string) => {
+    const response = await axios.delete(`yearCourses/${yearCourseId}/admins/${adminId}`);
     return response.data;
   };
 
@@ -69,5 +82,27 @@ export default function useYearCourses() {
     },
   });
 
-  return { query, postMutation, updateMutation, deleteMutation };
+  const addAdminMutation = useMutation(addAdmin, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(YEAR_COURSES_QUERY_KEY);
+      toast({
+        title: 'Dodano moderatora',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
+  const deleteAdminMutation = useMutation(deleteAdmin, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(YEAR_COURSES_QUERY_KEY);
+      toast({
+        title: 'Usunięto moderatora',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
+  return { query, postMutation, updateMutation, deleteMutation, addAdminMutation, deleteAdminMutation };
 }

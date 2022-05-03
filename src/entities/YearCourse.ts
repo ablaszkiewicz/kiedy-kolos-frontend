@@ -1,10 +1,21 @@
+import { User } from './User';
 import Yup from './yup';
 
 export type YearCourseType = {
-  id: number;
+  id: string;
   name: string;
   startYear: number;
+  admins?: User[];
 };
+
+export interface CreateYearCourseDTO {
+  name: string;
+  startYear: number;
+}
+
+export interface AddAdminDTO {
+  email: string;
+}
 
 export const yearCourseValidationSchema = Yup.object({
   name: Yup.string().required(),

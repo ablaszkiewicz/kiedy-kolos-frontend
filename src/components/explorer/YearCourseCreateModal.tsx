@@ -45,7 +45,7 @@ export const YearCourseCreateModal = (props: Props) => {
   };
 
   const createYearCourse = (values: FormikValues) => {
-    postMutation.mutate({ id: 0, name: values.name, startYear: +values.startYear });
+    postMutation.mutate({ name: values.name, startYear: +values.startYear });
   };
 
   return (
