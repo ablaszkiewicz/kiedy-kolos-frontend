@@ -6,6 +6,8 @@ import { Path } from '../other/Paths';
 import { MdDashboard } from 'react-icons/md';
 import { HiOutlineLogout, HiOutlineViewGrid } from 'react-icons/hi';
 import { Flex, Heading, Spacer, Button, Text } from '@chakra-ui/react';
+import { CalendarIcon } from '@chakra-ui/icons';
+import { UserMenu } from '../components/navbar/UserMenu';
 
 export const Calendar = () => {
   const navigate = useNavigate();
@@ -18,7 +20,10 @@ export const Calendar = () => {
       <Flex m={0} p={0} mb={2}>
         <Heading>Kalendarz</Heading>
         <Spacer />
-        <Button onClick={() => navigate(Path.DASHBOARD + `/${yearCourseId}`)} leftIcon={<MdDashboard />}>
+        <Button onClick={() => navigate(Path.CALENDAR + `/${yearCourseId}`)} leftIcon={<CalendarIcon />}>
+          Kalendarz
+        </Button>
+        <Button ml={3} onClick={() => navigate(Path.DASHBOARD + `/${yearCourseId}`)} leftIcon={<MdDashboard />}>
           <Text display={['none', 'unset']}>Panel zarządzania</Text>
         </Button>
         <Button ml={3} onClick={() => navigate(Path.EXPLORER)} leftIcon={<HiOutlineViewGrid />}>
@@ -27,6 +32,7 @@ export const Calendar = () => {
         <Button ml={3} onClick={() => logout()} leftIcon={<HiOutlineLogout />}>
           <Text display={['none', 'unset']}>Wyloguj</Text>
         </Button>
+        <UserMenu />
       </Flex>
 
       <Flex flexGrow={1} gap={[2, 2, 4]} direction={['column', 'row']} overflow={'hidden'} m={-10} p={10}>

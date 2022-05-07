@@ -15,6 +15,7 @@ import { LandingPage } from './pages/LandingPage';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import './style.css';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Ctf } from './pages/Ctf';
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ export const App = () => {
                 <Route path={Path.LANDING_PAGE} element={<LandingPage />} />
                 <Route path={Path.LOGIN} element={<Login />} />
                 <Route path={Path.REGISTER} element={<Register />} />
+                <Route path={Path.CTF} element={<Ctf />} />
 
                 <Route element={<RequireAuthRoute />}>
                   <Route path={Path.EXPLORER} element={<Explorer />} />

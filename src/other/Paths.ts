@@ -5,4 +5,5 @@ export const enum Path {
   CALENDAR = '/calendar',
   EXPLORER = '/explorer',
   LANDING_PAGE = '/landing-page',
+  CTF = '/ctf',
 }
