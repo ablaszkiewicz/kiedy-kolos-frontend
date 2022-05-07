@@ -28,7 +28,7 @@ export const RolesPanel = () => {
         p={7}
         shadow={'dark-lg'}
         overflowY={'hidden'}
-        flexGrow={10}
+        flexGrow={1}
       >
         <Flex mb={4}>
           <Text fontWeight={'bold'} fontSize={'2xl'}>
@@ -45,6 +45,7 @@ export const RolesPanel = () => {
             yearCourse.admins!.map((admin, index) => (
               <div key={admin.id}>
                 <RoleListItem user={admin} />
+
                 {index < yearCourse.admins!.length - 1 && <Divider />}
               </div>
             ))}

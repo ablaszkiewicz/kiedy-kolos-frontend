@@ -30,10 +30,10 @@ export const Dashboard = () => {
           Wyloguj
         </Button>
       </Flex>
-      <SimpleGrid columns={[1, 1, 3]} flexGrow={1} overflowY={'hidden'} spacing={4} p={5} m={-5}>
+      <SimpleGrid columns={[1, 1, 3]} h={'100%'} overflowY={'hidden'} spacing={4} p={5} m={-5}>
         <SubjectsPanel />
         <GroupsPanel />
-        <Flex direction={'column'} gap={4}>
+        <Flex direction={'column'} gap={4} overflowY={'hidden'} p={5} m={-5}>
           <RolesPanel />
           <SettingsPanel />
         </Flex>
