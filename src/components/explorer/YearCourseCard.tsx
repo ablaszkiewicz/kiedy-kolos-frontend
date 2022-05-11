@@ -1,6 +1,8 @@
 import { Badge, Button, Flex, HStack, Spacer, Text, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { YearCourseType } from '../../entities/YearCourse';
+import useEvents from '../../hooks/useEvents';
 import { Path } from '../../other/Paths';
 import useStore from '../../zustand/store';
 
@@ -9,10 +11,14 @@ interface Props {
 }
 
 export const YearCourseCard = (props: Props) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
+  const { query } = useEvents(true, props.yearCourse.id);
 
-  const navigateToDashboard = (yearCourse: YearCourseType) => {
+  const navigateToDashboard = async (yearCourse: YearCourseType) => {
+    setIsLoading(true);
+    await query.refetch();
     navigate(`${Path.CALENDAR}/${yearCourse.id}`);
   };
 
@@ -34,7 +40,7 @@ export const YearCourseCard = (props: Props) => {
 
         <Text>{props.yearCourse.startYear}</Text>
         <Spacer />
-        <Button w={'100%'} onClick={() => navigateToDashboard(props.yearCourse)}>
+        <Button w={'100%'} onClick={() => navigateToDashboard(props.yearCourse)} isLoading={isLoading}>
           Wybierz
         </Button>
       </VStack>

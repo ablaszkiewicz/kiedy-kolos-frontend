@@ -7,13 +7,21 @@ import { CreateEventDto, Event, UpdateEventDto } from '../entities/Event';
 
 const EVENTS_QUERY_KEY = 'events';
 
-export default function useEvents() {
+export default function useEvents(disableAutoRefetch = false, injectedYearCourseId?: string) {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const { yearCourseId } = useParams<{ yearCourseId: string }>();
+  const { yearCourseId } = useParams();
 
   const getEvents = async (): Promise<Event[]> => {
-    const response = await axios.get(`yearCourse/${yearCourseId}/events`);
+    let computedYearCourseId;
+    if (!yearCourseId) {
+      computedYearCourseId = injectedYearCourseId;
+    } else {
+      computedYearCourseId = yearCourseId;
+    }
+
+    console.log('Getting events for ' + computedYearCourseId);
+    const response = await axios.get(`yearCourse/${computedYearCourseId}/events`);
     return response.data;
   };
 
@@ -32,7 +40,7 @@ export default function useEvents() {
     return response.data;
   };
 
-  const query = useQuery(EVENTS_QUERY_KEY, getEvents);
+  const query = useQuery(EVENTS_QUERY_KEY, getEvents, { enabled: !disableAutoRefetch });
 
   const postMutation = useMutation(postEvent, {
     onSuccess: (event: Event) => {

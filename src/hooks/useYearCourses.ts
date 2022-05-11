@@ -6,7 +6,7 @@ import { AddAdminDTO, CreateYearCourseDTO, YearCourseType } from '../entities/Ye
 
 const YEAR_COURSES_QUERY_KEY: string = 'yearCourses';
 
-export default function useYearCourses() {
+export default function useYearCourses(disableAutoRefetch = false) {
   const toast = useToast();
   const queryClient: QueryClient = useQueryClient();
 
@@ -42,7 +42,7 @@ export default function useYearCourses() {
     return response.data;
   };
 
-  const query = useQuery(YEAR_COURSES_QUERY_KEY, getYearCourses);
+  const query = useQuery(YEAR_COURSES_QUERY_KEY, getYearCourses, { enabled: !disableAutoRefetch });
 
   const postMutation = useMutation(postYearCourse, {
     onSuccess: (yearCourse: YearCourseType) => {
