@@ -15,9 +15,12 @@ export const UnauthorizedHandler = () => {
         const statusCode: StatusCodes = error.response ? error.response.status : null;
         if (statusCode === StatusCodes.UNAUTHORIZED) {
           navigate(Path.LOGIN, { state: { customMessage: 'Widzisz ten ekran, ponieważ zostałeś wylogowany' } });
+        } else {
+          return Promise.reject(error);
         }
       }
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;
