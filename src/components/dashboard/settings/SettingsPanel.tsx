@@ -24,7 +24,9 @@ export const SettingsPanel = () => {
 
       <Box>
         <YearCourseDeleteModal isOpen={isOpen} onClose={onClose} yearCourseId={yearCourseId!} />
-        <Button onClick={onOpen}>Usuń kierunek</Button>
+        <Button onClick={onOpen} disabled>
+          Usuń kierunek
+        </Button>
       </Box>
     </Flex>
   );

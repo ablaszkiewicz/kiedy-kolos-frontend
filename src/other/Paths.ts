@@ -6,4 +6,5 @@ export const enum Path {
   EXPLORER = '/explorer',
   LANDING_PAGE = '/landing-page',
   CTF = '/ctf',
+  CTF_RESULTS = '/ctf-results',
 }

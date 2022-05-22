@@ -1,0 +1,64 @@
+import {
+  Flex,
+  FormLabel,
+  Input,
+  Button,
+  Text,
+  FormControl,
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from '@chakra-ui/react';
+import { useState } from 'react';
+
+interface Props {
+  completed: boolean;
+  taskNumber: number;
+  description: string;
+  checkMethod: any;
+}
+
+export const FlagTask = (props: Props) => {
+  const [flag, setFlag] = useState('');
+
+  return (
+    <Flex w={'40%'} backgroundColor={'gray.750'} borderRadius={10} p={7} direction={'column'}>
+      <Text fontWeight={'bold'} fontSize={'2xl'} mb={4}>
+        Zadanie {props.taskNumber}
+      </Text>
+
+      <Text>{props.description}</Text>
+
+      {!props.completed && (
+        <>
+          <FormControl mt={10}>
+            <FormLabel htmlFor='flag'>Flaga</FormLabel>
+            <Input id='flag' value={flag} onChange={(e) => setFlag(e.target.value)} />
+          </FormControl>
+
+          <Button mt={2} onClick={() => props.checkMethod.mutate(flag)} isLoading={props.checkMethod.isLoading}>
+            Sprawdź
+          </Button>
+        </>
+      )}
+      {props.completed && (
+        <Alert
+          mt={3}
+          status='success'
+          variant='subtle'
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          textAlign='center'
+          borderRadius={10}
+        >
+          <AlertIcon boxSize='40px' mr={0} />
+          <AlertTitle mt={4} mb={1} fontSize='lg'>
+            Ukończono flagę
+          </AlertTitle>
+        </Alert>
+      )}
+    </Flex>
+  );
+};

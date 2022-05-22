@@ -1,117 +1,72 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Button,
-  Code,
-  Flex,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Heading,
-  Input,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Button, Flex, Heading, Spacer, Text, VStack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { HiOutlineViewGrid } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
+import { AutomaticTask } from '../components/ctf/AutomaticTask';
+import { FlagTask } from '../components/ctf/FlagTask';
+import { useCtf } from '../hooks/useCtf';
+import { Path } from '../other/Paths';
 
 export const Ctf = () => {
+  const navigate = useNavigate();
+  const {
+    individualResultsQuery: query,
+    checkTask1Mutation,
+    checkTask2Mutation,
+    checkTask3Mutation,
+    checkTask4Mutation,
+    enrollMutation,
+  } = useCtf();
+
+  useEffect(() => {
+    if (!query.data) {
+      enrollToCtf();
+    }
+  }, [query.data]);
+
+  const enrollToCtf = () => {
+    enrollMutation.mutate();
+  };
+
   return (
     <Flex p={4} m={0} h={['auto', '100vh']} direction={'column'}>
-      <Heading>Sekcja CTF</Heading>
+      <Flex m={0} p={0} mb={2}>
+        <Heading>Sekcja CTF</Heading>
+        <Spacer />
+        <Button ml={3} onClick={() => navigate(Path.CTF_RESULTS)} leftIcon={<HiOutlineViewGrid />}>
+          <Text display={['none', 'unset']}>Wyniki CTF</Text>
+        </Button>
+        <Button ml={3} onClick={() => navigate(Path.EXPLORER)} leftIcon={<HiOutlineViewGrid />}>
+          <Text display={['none', 'unset']}>Wybór kierunku</Text>
+        </Button>
+      </Flex>
       <VStack w={'100%'} flexGrow={1} mt={10} gap={6}>
-        <Flex w={'40%'} backgroundColor={'gray.750'} borderRadius={10} p={7} direction={'column'}>
-          <Text fontWeight={'bold'} fontSize={'2xl'} mb={4}>
-            Zadanie 1
-          </Text>
-          <Text mb={2}>Stwórz kierunek z datą rozpoczęcia:</Text>
-          <Code borderRadius={10} p={2} mb={2}>
-            1000
-          </Code>
-
-          <Alert
-            mt={3}
-            status='warning'
-            variant='subtle'
-            flexDirection='column'
-            alignItems='center'
-            justifyContent='center'
-            textAlign='center'
-            borderRadius={10}
-          >
-            <AlertIcon boxSize='40px' mr={0} />
-            <AlertTitle mt={4} mb={1} fontSize='lg'>
-              Nie wykryto ukończenia flagi
-            </AlertTitle>
-            <AlertDescription maxWidth='sm'>Ta flaga sprawdza się automatycznie</AlertDescription>
-          </Alert>
-        </Flex>
-
-        <Flex w={'40%'} backgroundColor={'gray.750'} borderRadius={10} p={7} direction={'column'}>
-          <Text fontWeight={'bold'} fontSize={'2xl'} mb={4}>
-            Zadanie 2
-          </Text>
-          <Text mb={2}>Istnieje kierunek, który nazywa się:</Text>
-          <Code borderRadius={10} p={2} mb={2}>
-            kryjewsobieflage
-          </Code>
-          <Text>Znajdziesz w nim flagę</Text>
-
-          <FormControl mt={10}>
-            <FormLabel htmlFor='flag1'>Flaga</FormLabel>
-            <Input id='flag1' type='email' />
-          </FormControl>
-
-          <Button mt={2}>Sprawdź</Button>
-        </Flex>
-        <Flex w={'40%'} backgroundColor={'gray.750'} borderRadius={10} p={7} direction={'column'}>
-          <Text fontWeight={'bold'} fontSize={'2xl'} mb={4}>
-            Zadanie 3
-          </Text>
-          <Text mb={2}>Istnieje kierunek, którego UUID to:</Text>
-          <Code borderRadius={10} p={2} mb={2}>
-            123e4567-e89b-12d3-a456-426614174000
-          </Code>
-          <Text mb={2}>Spróbuj sobie do niego nadać prawa administratora</Text>
-
-          <Alert
-            status='warning'
-            variant='subtle'
-            flexDirection='column'
-            alignItems='center'
-            justifyContent='center'
-            textAlign='center'
-            borderRadius={10}
-          >
-            <AlertIcon boxSize='40px' mr={0} />
-            <AlertTitle mt={4} mb={1} fontSize='lg'>
-              Nie wykryto ukończenia flagi
-            </AlertTitle>
-            <AlertDescription maxWidth='sm'>Ta flaga sprawdza się automatycznie.</AlertDescription>
-          </Alert>
-        </Flex>
-        <Flex w={'40%'} backgroundColor={'gray.750'} borderRadius={10} p={7} direction={'column'}>
-          <Text fontWeight={'bold'} fontSize={'2xl'} mb={4}>
-            Zadanie 4
-          </Text>
-          <Text mb={2}>Użytkownik </Text>
-
-          <Alert
-            status='warning'
-            variant='subtle'
-            flexDirection='column'
-            alignItems='center'
-            justifyContent='center'
-            textAlign='center'
-            borderRadius={10}
-          >
-            <AlertIcon boxSize='40px' mr={0} />
-            <AlertTitle mt={4} mb={1} fontSize='lg'>
-              Nie wykryto ukończenia flagi
-            </AlertTitle>
-            <AlertDescription maxWidth='sm'>Ta flaga sprawdza się automatycznie.</AlertDescription>
-          </Alert>
-        </Flex>
+        <AutomaticTask
+          completed={query.data?.task1 == 1}
+          taskNumber={1}
+          checkMethod={checkTask1Mutation}
+          description={'Stwórz kierunek z datą rozpoczęcia "1000"'}
+        />
+        <FlagTask
+          completed={query.data?.task2 == 1}
+          taskNumber={2}
+          checkMethod={checkTask2Mutation}
+          description={'Istnieje kierunek, który nazywa się "kryjewsobieflage ...". Znajdziesz w nim flagę.'}
+        />
+        <AutomaticTask
+          completed={query.data?.task3 == 1}
+          taskNumber={3}
+          checkMethod={checkTask3Mutation}
+          description={
+            'Istnieje kierunek, którego UUID to "29872d18-715d-446d-b341-0ddd262364dc". Spróbuj nadać sobie do niego prawa administratora'
+          }
+        />
+        <FlagTask
+          completed={query.data?.task4 == 1}
+          taskNumber={4}
+          checkMethod={checkTask4Mutation}
+          description={'Istnieje użytkownik, którego UUID to "b97c3d02-ea33-49a1-9537-dbdb0872c953". Email to flaga.'}
+        />
       </VStack>
     </Flex>
   );

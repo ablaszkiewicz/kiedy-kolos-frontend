@@ -5,6 +5,7 @@ import { MdDashboard } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { Path } from '../../other/Paths';
+import { SiHackaday } from 'react-icons/si';
 
 interface Props {
   pageTitle: string;
@@ -20,6 +21,15 @@ export const Navbar = (props: Props) => {
       <Heading>{props.pageTitle}</Heading>
       <Spacer />
       <Button
+        ml={3}
+        onClick={() => navigate(Path.CTF)}
+        leftIcon={<SiHackaday />}
+        colorScheme={props.pageTitle === 'CTF' ? 'blue' : 'gray'}
+      >
+        <Text display={['none', 'unset']}>CTF</Text>
+      </Button>
+      <Button
+        ml={3}
         onClick={() => navigate(Path.CALENDAR + `/${yearCourseId}`)}
         leftIcon={<CalendarIcon />}
         colorScheme={props.pageTitle === 'Kalendarz' ? 'blue' : 'gray'}
