@@ -13,10 +13,10 @@ import { Dashboard } from './pages/Dashboard';
 import { AnimatedTransition } from './components/other/AnimatedTransition';
 import { LandingPage } from './pages/LandingPage';
 import { ParallaxProvider } from 'react-scroll-parallax';
-import './style.css';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Ctf } from './pages/Ctf';
 import { CtfResults } from './pages/CtfResults';
+import './style.css';
 
 const queryClient = new QueryClient();
 
