@@ -29,6 +29,11 @@ export default function useAuth() {
     return response.data;
   };
 
+  const googleLogin = async (token: string) => {
+    const response = await axios.post('auth/google/login', { googleToken: token });
+    return response.data;
+  };
+
   const register = async (credentials: Credentials) => {
     const response = await axios.post('users', { email: credentials.email, password: credentials.password });
     return response.data;
@@ -41,6 +46,15 @@ export default function useAuth() {
   };
 
   const loginMutation = useMutation(login, {
+    onSuccess: async (response: LoginResponse) => {
+      loginToStore(response.email, response.token);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
+      await query.refetch();
+      navigate(Path.EXPLORER);
+    },
+  });
+
+  const googleLoginMutation = useMutation(googleLogin, {
     onSuccess: async (response: LoginResponse) => {
       loginToStore(response.email, response.token);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
@@ -62,5 +76,5 @@ export default function useAuth() {
     tokenExpired(user.token)
   );
 
-  return { loginMutation, registerMutation, isLoggedIn, logout };
+  return { loginMutation, googleLoginMutation, registerMutation, isLoggedIn, logout };
 }

@@ -20,8 +20,12 @@ import { YearCourseCreateModal } from '../components/explorer/YearCourseCreateMo
 import { AddIcon, PlusSquareIcon } from '@chakra-ui/icons';
 import { YearCourseType } from '../entities/YearCourse';
 import { HiOutlineLogout } from 'react-icons/hi';
+import { SiHackaday } from 'react-icons/si';
+import { Path } from '../other/Paths';
+import { useNavigate } from 'react-router-dom';
 
 export const Explorer = () => {
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { query: yearCourseQuery } = useYearCourses();
   const { logout } = useAuth();
@@ -31,6 +35,9 @@ export const Explorer = () => {
       <YearCourseCreateModal isOpen={isOpen} onClose={onClose} />
       <Flex mb={5}>
         <Spacer />
+        <Button ml={3} onClick={() => navigate(Path.CTF)} leftIcon={<SiHackaday />}>
+          <Text display={['none', 'unset']}>CTF</Text>
+        </Button>
         <Button ml={3} onClick={() => logout()} leftIcon={<HiOutlineLogout />}>
           Wyloguj
         </Button>
