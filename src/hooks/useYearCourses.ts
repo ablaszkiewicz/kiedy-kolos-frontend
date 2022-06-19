@@ -60,7 +60,7 @@ export default function useYearCourses(disableAutoRefetch = false) {
       const yearCourses: YearCourseType[] = queryClient.getQueryData(YEAR_COURSES_QUERY_KEY)!;
       const index = yearCourses.findIndex((yearCourseTmp) => yearCourseTmp.id === yearCourse.id);
       yearCourses[index] = yearCourse;
-      queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (_) => yearCourses);
+      queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (_: any) => yearCourses);
       toast({
         title: 'Zaktualizowano kierunek',
         status: 'success',
