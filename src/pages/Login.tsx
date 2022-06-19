@@ -1,17 +1,18 @@
 import { CopyIcon, LinkIcon } from '@chakra-ui/icons';
-import { Box, Flex, Heading, Stack, useColorModeValue, Text, Button, useToast } from '@chakra-ui/react';
-import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import { Box, Flex, Heading, Stack, Text, Button, useToast, Spacer } from '@chakra-ui/react';
+import { CredentialResponse, GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import copy from 'copy-to-clipboard';
 import { detect } from 'detect-browser';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
 
 export const Login = () => {
   const [supported, setSupported] = useState(false);
-  const { googleLoginMutation } = useAuth();
+  const { googleLoginMutationRedirect } = useAuth();
   const { state: routerState } = useLocation();
-  const bgColor = useColorModeValue('white', 'gray.700');
 
   const toast = useToast();
 
@@ -38,40 +39,43 @@ export const Login = () => {
     });
   };
 
-  const login = (response: CredentialResponse) => {
-    googleLoginMutation.mutate(response.credential!);
-    document.getElementById('g_a11y_announcement')!.style.height = '0px';
-  };
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      googleLoginMutationRedirect.mutate(tokenResponse.access_token, { onSuccess: () => console.log('chuj') });
+    },
+  });
 
   console.log(supported);
 
   return (
-    <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
-      <Stack align={'center'}>
-        {supported && (
-          <>
-            <Heading mb={4} fontSize={'4xl'}>
-              Zaloguj się kontem google
-            </Heading>
-            <GoogleLogin onSuccess={login} size={'medium'} auto_select={false} useOneTap />
-          </>
-        )}
-        {!supported && (
-          <>
-            <Heading> Przeglądarka nieobsługiwana</Heading>
-            <Text>Włącz stronę w pełnej wersji przeglądarki</Text>
-            <Button leftIcon={<LinkIcon />} onClick={copyToClipboard}>
-              Skopiuj link
-            </Button>
-          </>
-        )}
-      </Stack>
+    <Flex h={'100vh'} direction={'column'} textAlign={'center'} alignItems={'center'}>
+      <Spacer />
+      {supported && (
+        <>
+          <Heading mb={4} fontSize={'4xl'}>
+            Zaloguj się
+          </Heading>
+          <Button onClick={() => login()} leftIcon={<FcGoogle />}>
+            Zaloguj się przez google
+          </Button>
+        </>
+      )}
+      {!supported && (
+        <>
+          <Heading> Przeglądarka nieobsługiwana</Heading>
+          <Text>Włącz stronę w pełnej wersji przeglądarki</Text>
+          <Button leftIcon={<LinkIcon />} onClick={copyToClipboard}>
+            Skopiuj link
+          </Button>
+        </>
+      )}
 
       {routerState && (routerState as any).customMessage && (
-        <Box rounded={'lg'} bg={bgColor} boxShadow={'lg'} p={8}>
+        <Box rounded={'lg'} boxShadow={'lg'} p={8}>
           <Text>{(routerState as any).customMessage}</Text>
         </Box>
       )}
+      <Spacer />
     </Flex>
   );
 };

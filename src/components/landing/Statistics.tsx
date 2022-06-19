@@ -26,7 +26,7 @@ export function Statistics(props: Props) {
       </Parallax>
 
       <SimpleGrid columns={[1, 5]} gap={[30, 0]}>
-        <GridItem d={['none', 'unset']} />
+        <GridItem display={['none', 'unset']} />
         <Parallax speed={15} disabled={window.innerWidth < 768}>
           <Box>
             <Heading fontSize={'8xl'}>214</Heading>

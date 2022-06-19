@@ -1,6 +1,7 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Flex, Spacer, Button, Text, useDisclosure } from '@chakra-ui/react';
 import dayjs from 'dayjs';
+import useAdmin from '../../../hooks/useAdmin';
 
 import useEvents from '../../../hooks/useEvents';
 import useStore from '../../../zustand/store';
@@ -12,6 +13,7 @@ export const EventsPanel = () => {
   const clickedDate = useStore((state) => state.clickedDate);
   const { getEventsForDate } = useEvents();
   const events = getEventsForDate(dayjs(clickedDate));
+  const { isAdmin } = useAdmin();
 
   return (
     <>
@@ -35,9 +37,11 @@ export const EventsPanel = () => {
             {dayjs(clickedDate).format('DD.MM')}
           </Text>
           <Spacer />
-          <Button variant={'ghost'} onClick={onOpen} leftIcon={<AddIcon />}>
-            Dodaj
-          </Button>
+          {isAdmin && (
+            <Button variant={'ghost'} onClick={onOpen} leftIcon={<AddIcon />}>
+              Dodaj
+            </Button>
+          )}
         </Flex>
         <Flex direction={'column'} gap={2} overflowY={'auto'}>
           {events && events.map((event) => <EventListItem key={event.id} event={event} />)}

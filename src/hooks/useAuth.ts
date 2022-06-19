@@ -59,6 +59,14 @@ export default function useAuth() {
       loginToStore(response.email, response.token);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
       await query.refetch();
+    },
+  });
+
+  const googleLoginMutationRedirect = useMutation(googleLogin, {
+    onSuccess: async (response: LoginResponse) => {
+      loginToStore(response.email, response.token);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
+      await query.refetch();
       navigate(Path.EXPLORER);
     },
   });
@@ -76,5 +84,5 @@ export default function useAuth() {
     tokenExpired(user.token)
   );
 
-  return { loginMutation, googleLoginMutation, registerMutation, isLoggedIn, logout };
+  return { loginMutation, googleLoginMutation, googleLoginMutationRedirect, registerMutation, isLoggedIn, logout };
 }

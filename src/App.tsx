@@ -2,7 +2,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { HashRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { Login } from './pages/Login';
-import { Register } from './pages/Register';
 import { Explorer } from './pages/Explorer';
 import theme from './theme';
 import { Path } from './other/Paths';
@@ -36,11 +35,10 @@ export const App = () => {
 
                   <Route path={Path.LANDING_PAGE} element={<LandingPage />} />
                   <Route path={Path.LOGIN} element={<Login />} />
-                  <Route path={Path.REGISTER} element={<Register />} />
 
+                  <Route path={Path.CALENDAR + '/:yearCourseId'} element={<Calendar />} />
                   <Route element={<RequireAuthRoute />}>
                     <Route path={Path.EXPLORER} element={<Explorer />} />
-                    <Route path={Path.CALENDAR + '/:yearCourseId'} element={<Calendar />} />
                     <Route path={Path.DASHBOARD + '/:yearCourseId'} element={<Dashboard />} />
                     <Route path={Path.CTF} element={<Ctf />} />
                     <Route path={Path.CTF_RESULTS} element={<CtfResults />} />
