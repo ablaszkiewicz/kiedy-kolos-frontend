@@ -41,11 +41,9 @@ export const Login = () => {
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      googleLoginMutationRedirect.mutate(tokenResponse.access_token, { onSuccess: () => console.log('chuj') });
+      googleLoginMutationRedirect.mutate(tokenResponse.access_token);
     },
   });
-
-  console.log(supported);
 
   return (
     <Flex h={'100vh'} direction={'column'} textAlign={'center'} alignItems={'center'}>
