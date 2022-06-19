@@ -9,7 +9,6 @@ import useStore from '../../../zustand/store';
 interface Props {
   date: Dayjs;
   monthOffset: number;
-  direction: number;
 }
 
 export function DayCard(props: Props) {
@@ -52,37 +51,38 @@ export function DayCard(props: Props) {
   };
 
   return (
-    <SlideFade in={true} offsetX={100 * props.direction} offsetY={0}>
-      <Flex
-        direction={'column'}
-        align={'center'}
-        borderRadius={10}
-        backgroundColor={backgroundColor()}
-        minHeight={'0px'}
-        p={2}
-        gap={0}
-        minW={0}
-        h={'100%'}
-        cursor={'pointer'}
-        onClick={() => setClickedDate(props.date)}
-        transitionDuration={'0.2s'}
-      >
-        <Spacer />
-        <Text fontWeight={'medium'} fontSize={'md'} opacity={isInCurrentMonth ? 1 : 0.5}>
-          {props.date.format('DD')}
-        </Text>
-        {events && (
-          <HStack spacing={0.5} flexWrap={'wrap'} gap={1} justifyContent={'center'}>
-            {events.map((event) => (
-              <Badge variant={'solid'} colorScheme={'red'} key={event.id}>
-                {event.subject.shortName}
-              </Badge>
-            ))}
-          </HStack>
-        )}
+    <Flex
+      direction={'column'}
+      align={'center'}
+      borderRadius={10}
+      backgroundColor={backgroundColor()}
+      minHeight={'0px'}
+      p={2}
+      gap={0}
+      minW={0}
+      h={'100%'}
+      cursor={'pointer'}
+      onClick={() => setClickedDate(props.date)}
+      _hover={{
+        borderWidth: '3px',
+      }}
+      transition={'background-color 0.2s'}
+    >
+      <Spacer />
+      <Text fontWeight={'medium'} fontSize={'md'} opacity={isInCurrentMonth ? 1 : 0.5}>
+        {props.date.format('DD')}
+      </Text>
+      {events && (
+        <HStack spacing={0.5} flexWrap={'wrap'} gap={1} justifyContent={'center'}>
+          {events.map((event) => (
+            <Badge variant={'solid'} colorScheme={'red'} key={event.id}>
+              {event.subject.shortName}
+            </Badge>
+          ))}
+        </HStack>
+      )}
 
-        <Spacer />
-      </Flex>
-    </SlideFade>
+      <Spacer />
+    </Flex>
   );
 }

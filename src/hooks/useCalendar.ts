@@ -4,7 +4,7 @@ export default function useCalendar() {
   const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
 
   const getDaysInMonth = (offset: number) => {
-    const cardsInCalendar = 39;
+    const cardsInCalendar = 42;
     const polishLocaleOffset = 1;
     const today = dayjs();
     const desiredDay: Dayjs = today.add(offset, 'month');

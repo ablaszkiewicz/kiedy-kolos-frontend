@@ -27,6 +27,10 @@ export const EventListItem = (props: Props) => {
         borderRadius={10}
         onClick={onEditModalOpen}
         cursor={'pointer'}
+        _hover={{
+          backgroundColor: 'gray.600',
+        }}
+        transitionDuration={'0.1s'}
       >
         <Flex align={'self-start'}>
           <Text fontWeight={'semibold'} fontSize={'lg'} lineHeight={1}>
@@ -47,7 +51,7 @@ export const EventListItem = (props: Props) => {
             </Flex>
             <Flex gap={2} alignItems={'center'} fontSize={'sm'} color={'gray.300'}>
               <BsClockFill />
-              <Text>{dayjs(props.event.date).utc().format('hh:mm')}</Text>
+              <Text>{dayjs(props.event.date).utc().format('HH:mm')}</Text>
             </Flex>
           </Flex>
           <Text w={'70%'}>{props.event.description}</Text>

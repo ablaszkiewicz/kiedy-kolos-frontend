@@ -48,6 +48,43 @@ export const CalendarPanel = () => {
       backgroundColor={'gray.750'}
       shadow={'dark-lg'}
     >
+      <Center gap={1} backgroundColor={''} borderRadius={10} mb={2}>
+        <Spacer />
+        <IconButton
+          aria-label='left'
+          icon={<ArrowBackIcon />}
+          onClick={() => {
+            setState({ monthOffset: state.monthOffset - 1 });
+            setState({ direction: SlideDirection.LEFT });
+          }}
+        />
+        <Flex direction={'column'} w={'20%'} textAlign={'center'}>
+          <SlideFade
+            in={true}
+            key={state.monthOffset}
+            offsetX={20 * state.direction}
+            offsetY={0}
+            style={{ width: '100%' }}
+          >
+            <Text fontWeight={'medium'} fontSize={'2xl'} width={'100%'}>
+              {getMonthName(state.monthOffset)}
+            </Text>
+          </SlideFade>
+          <Text w={'100%'} fontSize={'sm'} color={'gray.400'}>
+            {dayjs().add(state.monthOffset, 'month').format('YYYY')}
+          </Text>
+        </Flex>
+
+        <IconButton
+          aria-label='left'
+          icon={<ArrowForwardIcon />}
+          onClick={() => {
+            setState({ monthOffset: state.monthOffset + 1 });
+            setState({ direction: SlideDirection.RIGHT });
+          }}
+        />
+        <Spacer />
+      </Center>
       <SimpleGrid columns={7} gap={2} mb={2}>
         {dayNames.map((name) => (
           <Flex key={name}>
@@ -57,48 +94,28 @@ export const CalendarPanel = () => {
           </Flex>
         ))}
       </SimpleGrid>
-      <Grid
-        templateColumns={'repeat(7, 1fr)'}
-        templateRows={'repeat(6, 1fr)'}
-        gap={2}
-        flexGrow={1}
-        minHeight={0}
-        overflow={'hidden'}
+
+      <SlideFade
+        in={true}
+        key={state.monthOffset}
+        offsetX={75 * state.direction}
+        offsetY={0}
+        style={{ height: '100%', overflow: 'hidden' }}
       >
-        {state.days.map((day) => (
-          <DayCard
-            date={dayjs(day)}
-            monthOffset={state.monthOffset}
-            direction={state.direction}
-            key={state.monthOffset + day}
-          />
-        ))}
-        <GridItem colSpan={3} h={'100%'} my={'auto'}>
-          <Center gap={4} backgroundColor={'gray.720'} borderRadius={10} h={'100%'}>
-            <Spacer />
-            <IconButton
-              aria-label='left'
-              icon={<ArrowBackIcon />}
-              onClick={() => {
-                setState({ monthOffset: state.monthOffset - 1 });
-                setState({ direction: SlideDirection.LEFT });
-              }}
-            />
-            <Text fontWeight={'medium'} fontSize={'2xl'} textAlign={'center'} width={'30%'}>
-              {getMonthName(state.monthOffset)}
-            </Text>
-            <IconButton
-              aria-label='left'
-              icon={<ArrowForwardIcon />}
-              onClick={() => {
-                setState({ monthOffset: state.monthOffset + 1 });
-                setState({ direction: SlideDirection.RIGHT });
-              }}
-            />
-            <Spacer />
-          </Center>
-        </GridItem>
-      </Grid>
+        <Grid
+          templateColumns={'repeat(7, 1fr)'}
+          templateRows={'repeat(6, 1fr)'}
+          gap={2}
+          flexGrow={1}
+          minHeight={0}
+          height={'100%'}
+          overflow={'hidden'}
+        >
+          {state.days.map((day) => (
+            <DayCard date={dayjs(day)} monthOffset={state.monthOffset} key={state.monthOffset + day} />
+          ))}
+        </Grid>
+      </SlideFade>
     </Flex>
   );
 };

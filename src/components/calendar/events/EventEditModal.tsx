@@ -83,7 +83,12 @@ export const EventEditModal = (props: Props) => {
               <Form onSubmit={handleSubmit}>
                 <ModalBody>
                   <Flex gap={5}>
-                    <InputControl name='date' label='Data' inputProps={{ type: 'datetime-local' }} w={'70%'} />
+                    <InputControl
+                      name='date'
+                      label='Data i godzina'
+                      inputProps={{ type: 'datetime-local' }}
+                      w={'70%'}
+                    />
                     <InputControl name='room' label='Miejsce' w={'30%'} />
                   </Flex>
 

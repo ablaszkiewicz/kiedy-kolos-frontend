@@ -83,7 +83,7 @@ export const EventCreateModal = (props: Props) => {
             <Form onSubmit={handleSubmit}>
               <ModalBody>
                 <Flex gap={5}>
-                  <InputControl name='time' label='Data' inputProps={{ type: 'time' }} w={'70%'} />
+                  <InputControl name='time' label='Godzina' inputProps={{ type: 'time' }} w={'70%'} />
                   <InputControl name='room' label='Miejsce' inputProps={{ placeholder: '201 NE' }} w={'30%'} />
                 </Flex>
                 <SelectControl
