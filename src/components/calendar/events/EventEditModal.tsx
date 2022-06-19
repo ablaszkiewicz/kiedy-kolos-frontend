@@ -50,7 +50,7 @@ export const EventEditModal = (props: Props) => {
   }, [updateMutation.isSuccess]);
 
   const initialValues: FormikValues = {
-    date: dayjs(props.event.date).utc().format('YYYY-MM-DDThh:mm'),
+    date: dayjs(props.event.date).utc().format('YYYY-MM-DDTHH:mm'),
     subjectId: props.event.subjectId,
     room: props.event.room,
     description: props.event.description,
