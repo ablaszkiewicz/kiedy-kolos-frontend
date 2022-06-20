@@ -44,11 +44,11 @@ export const CalendarPanel = () => {
       w={['100%', '70%']}
       h={['60vh', '100%']}
       borderRadius={10}
-      p={4}
+      p={[2, 4]}
       backgroundColor={'gray.750'}
       shadow={'dark-lg'}
     >
-      <Center gap={1} backgroundColor={''} borderRadius={10} mb={2}>
+      <Center gap={1} backgroundColor={''} borderRadius={10} mb={[0, 2]} px={4}>
         <Spacer />
         <IconButton
           aria-label='left'
@@ -58,7 +58,7 @@ export const CalendarPanel = () => {
             setState({ direction: SlideDirection.LEFT });
           }}
         />
-        <Flex direction={'column'} w={'20%'} textAlign={'center'}>
+        <Flex direction={'column'} w={['80%', '20%']} textAlign={'center'}>
           <SlideFade
             in={true}
             key={state.monthOffset}
@@ -100,12 +100,12 @@ export const CalendarPanel = () => {
         key={state.monthOffset}
         offsetX={75 * state.direction}
         offsetY={0}
-        style={{ height: '100%', overflow: 'hidden' }}
+        style={{ height: '100%', overflow: 'hidden', flexGrow: ' 1' }}
       >
         <Grid
           templateColumns={'repeat(7, 1fr)'}
           templateRows={'repeat(6, 1fr)'}
-          gap={2}
+          gap={[1, 2]}
           flexGrow={1}
           minHeight={0}
           height={'100%'}

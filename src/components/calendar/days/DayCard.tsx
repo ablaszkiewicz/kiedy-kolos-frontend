@@ -69,7 +69,7 @@ export function DayCard(props: Props) {
       transition={'background-color 0.2s'}
     >
       <Spacer />
-      <Text fontWeight={'medium'} fontSize={'md'} opacity={isInCurrentMonth ? 1 : 0.5}>
+      <Text fontWeight={'medium'} fontSize={['xs', 'md']} opacity={isInCurrentMonth ? 1 : 0.5}>
         {props.date.format('DD')}
       </Text>
       {events && (

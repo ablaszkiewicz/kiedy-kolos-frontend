@@ -9,8 +9,8 @@ import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import utc from 'dayjs/plugin/utc';
 
-//axios.defaults.baseURL = 'http://localhost:3001/';
-axios.defaults.baseURL = 'https://testnginx.bieda.it/';
+axios.defaults.baseURL = 'http://localhost:3001/';
+//axios.defaults.baseURL = 'https://testnginx.bieda.it/';
 
 dayjs.locale('pl');
 dayjs.extend(utc);

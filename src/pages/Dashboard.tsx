@@ -7,7 +7,7 @@ import { Navbar } from '../components/navbar/Navbar';
 
 export const Dashboard = () => {
   return (
-    <Flex p={4} m={0} h={['auto', '100vh']} direction={'column'} overflow={'hidden'}>
+    <Flex p={4} m={0} h={['unset', '100vh']} direction={'column'} overflow={'hidden'}>
       <Navbar pageTitle={'Panel zarządzania'} />
       <SimpleGrid columns={[1, 1, 3]} h={'100%'} overflowY={'hidden'} spacing={4} p={5} m={-5}>
         <SubjectsPanel />
