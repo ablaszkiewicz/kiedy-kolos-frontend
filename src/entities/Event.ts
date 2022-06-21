@@ -2,6 +2,12 @@ import { Group } from './Group';
 import { SubjectType } from './Subject';
 import Yup from './yup';
 
+export enum Status {
+  NEW,
+  COMPLETED,
+  NOT_APPLICABLE,
+}
+
 export interface Event {
   id: string;
   date: string;
@@ -10,6 +16,12 @@ export interface Event {
   room: string;
   description: string;
   groups: Group[];
+  status: Status;
+}
+
+export interface UpdateEventStatus {
+  eventId: string;
+  status: Status;
 }
 
 export interface CreateEventDto {
@@ -40,3 +52,25 @@ export const editEventValidationSchema = Yup.object({
   subjectId: Yup.string().required(),
   groups: Yup.array().min(1),
 });
+
+export const getStatusText = (status: Status) => {
+  switch (status) {
+    case Status.NEW:
+      return 'Nowe';
+    case Status.COMPLETED:
+      return 'Ukończone';
+    case Status.NOT_APPLICABLE:
+      return 'Nie dotyczy';
+  }
+};
+
+export const getStatusColor = (status: Status) => {
+  switch (status) {
+    case Status.NEW:
+      return 'yellow';
+    case Status.COMPLETED:
+      return 'green';
+    case Status.NOT_APPLICABLE:
+      return 'gray';
+  }
+};

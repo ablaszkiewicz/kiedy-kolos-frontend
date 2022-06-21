@@ -2,7 +2,7 @@ import { Flex, Spacer, HStack, Badge, Text, SlideFade } from '@chakra-ui/react';
 import { generateKeyPair } from 'crypto';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
-import { Event } from '../../../entities/Event';
+import { Event, getStatusColor } from '../../../entities/Event';
 import useEvents from '../../../hooks/useEvents';
 import useStore from '../../../zustand/store';
 
@@ -75,7 +75,7 @@ export function DayCard(props: Props) {
       {events && (
         <HStack spacing={0.5} flexWrap={'wrap'} gap={1} justifyContent={'center'}>
           {events.map((event) => (
-            <Badge variant={'solid'} colorScheme={'red'} key={event.id}>
+            <Badge variant={'solid'} colorScheme={getStatusColor(event.status)} key={event.id}>
               {event.subject.shortName}
             </Badge>
           ))}

@@ -1,9 +1,9 @@
 import { Flex, Spacer, Heading, Button, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useScrollPercentage } from 'react-scroll-percentage';
-import { number } from 'yup/lib/locale';
+import useAuth from '../../../hooks/useAuth';
 import useFullHeight from '../../../hooks/useFullHeight';
+import useYearCourses from '../../../hooks/useYearCourses';
 import { Path } from '../../../other/Paths';
 import { Laptop } from './Laptop';
 
@@ -12,14 +12,26 @@ interface Props {
 }
 
 export const Hero = (props: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const fullHeight = useFullHeight();
   const [fullWidth, setFullWidth] = useState(window.innerWidth);
   const modelOffset = Math.round(window.innerWidth / 4);
   const navigate = useNavigate();
+  const { query } = useYearCourses(true);
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     window.addEventListener('resize', () => setFullWidth(window.innerWidth));
   }, []);
+
+  const navigateToExplorer = async () => {
+    if (isLoggedIn) {
+      setIsLoading(true);
+      await query.refetch();
+    }
+    navigate(Path.EXPLORER);
+  };
+
   return (
     <Flex
       p={4}
@@ -42,7 +54,13 @@ export const Hero = (props: Props) => {
         <Text fontSize={'2xl'} opacity={0.6} fontWeight={'light'} mb={10}>
           Wszystkie uczelniane wydarzenia w jednym miejscu
         </Text>
-        <Button alignSelf={'center'} colorScheme={'pink'} size={'lg'} onClick={() => navigate(Path.EXPLORER)}>
+        <Button
+          isLoading={isLoading}
+          alignSelf={'center'}
+          colorScheme={'pink'}
+          size={'lg'}
+          onClick={navigateToExplorer}
+        >
           Załóż swoją tablicę
         </Button>
         <Spacer />

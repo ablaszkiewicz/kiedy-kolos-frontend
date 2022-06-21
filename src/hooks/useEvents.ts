@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { CreateEventDto, Event, UpdateEventDto } from '../entities/Event';
 
-const EVENTS_QUERY_KEY = 'events';
+export const EVENTS_QUERY_KEY = 'events';
 
 export default function useEvents(disableAutoRefetch = false, injectedYearCourseId?: string) {
   const toast = useToast();
@@ -20,8 +20,7 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
       computedYearCourseId = yearCourseId;
     }
 
-    console.log('Getting events for ' + computedYearCourseId);
-    const response = await axios.get(`yearCourse/${computedYearCourseId}/events`);
+    const response = await axios.get(`yearCourse/${computedYearCourseId}/eventsWithStatuses`);
     return response.data;
   };
 

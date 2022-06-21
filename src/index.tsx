@@ -1,7 +1,6 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pl';
-import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './App';

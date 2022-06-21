@@ -1,18 +1,38 @@
-import { Badge, Flex, IconButton, Spacer, Text, useDisclosure } from '@chakra-ui/react';
-import { Event } from '../../../entities/Event';
+import {
+  Badge,
+  Flex,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  Select,
+  Spacer,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { Event, getStatusColor, getStatusText, Status } from '../../../entities/Event';
 import { BsClockFill, BsDot, BsFillHouseDoorFill } from 'react-icons/bs';
 import dayjs from 'dayjs';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons';
 import { EventDeleteModal } from './EventDeleteModal';
 import { EventEditModal } from './EventEditModal';
+import useEventStatuses from '../../../hooks/useEventStatuses';
 
 interface Props {
   event: Event;
 }
 
 export const EventListItem = (props: Props) => {
+  const { updateMutation } = useEventStatuses();
+
   const { isOpen: isEditModalOpen, onOpen: onEditModalOpen, onClose: onEditModalClose } = useDisclosure();
   const { isOpen: isDeleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
+
+  const updateEventStatus = (status: Status) => {
+    updateMutation.mutate({ eventId: props.event.id, status });
+  };
 
   return (
     <>
@@ -37,22 +57,60 @@ export const EventListItem = (props: Props) => {
             {props.event.subject.name}
           </Text>
           <Spacer />
-          <Badge colorScheme={'red'} variant={'solid'}>
-            egzamin
-          </Badge>
-          {/* <IconButton aria-label='Delete' icon={<DeleteIcon />} ml={4} onClick={onDeleteModalOpen} /> */}
+
+          <Menu>
+            <MenuButton
+              as={Badge as any}
+              colorScheme={getStatusColor(props.event.status)}
+              variant={'solid'}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {getStatusText(props.event.status)} <ChevronDownIcon mb={1} />
+            </MenuButton>
+            <MenuList>
+              <MenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  updateEventStatus(Status.NEW);
+                }}
+              >
+                Nowe
+              </MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  updateEventStatus(Status.COMPLETED);
+                }}
+              >
+                Ukończone
+              </MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  updateEventStatus(Status.NOT_APPLICABLE);
+                }}
+              >
+                Nie dotyczy
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </Flex>
 
         <Flex>
           <Flex direction={'column'} w={'30%'} fontSize={'sm'} color={'gray.300'}>
-            <Flex gap={2} alignItems={'center'}>
-              <BsFillHouseDoorFill />
-              <Text>{props.event.room}</Text>
-            </Flex>
+            {props.event.room.length > 0 && (
+              <Flex gap={2} alignItems={'center'}>
+                <BsFillHouseDoorFill />
+                <Text>{props.event.room}</Text>
+              </Flex>
+            )}
             <Flex gap={2} alignItems={'center'} fontSize={'sm'} color={'gray.300'}>
               <BsClockFill />
               <Text>{dayjs(props.event.date).utc().format('HH:mm')}</Text>
             </Flex>
+            <Badge colorScheme={'gray'} variant={'solid'} mr={2} alignSelf={'flex-start'} mt={1}>
+              egzamin
+            </Badge>
           </Flex>
           <Text w={'70%'}>{props.event.description}</Text>
         </Flex>
