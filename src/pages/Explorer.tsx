@@ -35,9 +35,9 @@ export const Explorer = () => {
       <YearCourseCreateModal isOpen={isOpen} onClose={onClose} />
       <Flex mb={5}>
         <Spacer />
-        <Button ml={3} onClick={() => navigate(Path.CTF)} leftIcon={<SiHackaday />}>
+        {/* <Button ml={3} onClick={() => navigate(Path.CTF)} leftIcon={<SiHackaday />}>
           <Text display={['none', 'unset']}>CTF</Text>
-        </Button>
+        </Button> */}
         <Button ml={3} onClick={() => logout()} leftIcon={<HiOutlineLogout />}>
           Wyloguj
         </Button>

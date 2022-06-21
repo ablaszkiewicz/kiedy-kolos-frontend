@@ -19,12 +19,16 @@ import { ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons';
 import { EventDeleteModal } from './EventDeleteModal';
 import { EventEditModal } from './EventEditModal';
 import useEventStatuses from '../../../hooks/useEventStatuses';
+import useAuth from '../../../hooks/useAuth';
+import useRole from '../../../hooks/useRole';
 
 interface Props {
   event: Event;
 }
 
 export const EventListItem = (props: Props) => {
+  const { isAdmin } = useRole();
+  const { isLoggedIn } = useAuth();
   const { updateMutation } = useEventStatuses();
 
   const { isOpen: isEditModalOpen, onOpen: onEditModalOpen, onClose: onEditModalClose } = useDisclosure();
@@ -32,6 +36,12 @@ export const EventListItem = (props: Props) => {
 
   const updateEventStatus = (status: Status) => {
     updateMutation.mutate({ eventId: props.event.id, status });
+  };
+
+  const editEvent = () => {
+    if (isAdmin) {
+      onEditModalOpen();
+    }
   };
 
   return (
@@ -45,7 +55,7 @@ export const EventListItem = (props: Props) => {
         direction={'column'}
         p={5}
         borderRadius={10}
-        onClick={onEditModalOpen}
+        onClick={editEvent}
         cursor={'pointer'}
         _hover={{
           backgroundColor: 'gray.600',
@@ -58,42 +68,44 @@ export const EventListItem = (props: Props) => {
           </Text>
           <Spacer />
 
-          <Menu>
-            <MenuButton
-              as={Badge as any}
-              colorScheme={getStatusColor(props.event.status)}
-              variant={'solid'}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {getStatusText(props.event.status)} <ChevronDownIcon mb={1} />
-            </MenuButton>
-            <MenuList>
-              <MenuItem
-                onClick={(e) => {
-                  e.stopPropagation();
-                  updateEventStatus(Status.NEW);
-                }}
+          {isLoggedIn && (
+            <Menu>
+              <MenuButton
+                as={Badge as any}
+                colorScheme={getStatusColor(props.event.status)}
+                variant={'solid'}
+                onClick={(e) => e.stopPropagation()}
               >
-                Nowe
-              </MenuItem>
-              <MenuItem
-                onClick={(e) => {
-                  e.stopPropagation();
-                  updateEventStatus(Status.COMPLETED);
-                }}
-              >
-                Ukończone
-              </MenuItem>
-              <MenuItem
-                onClick={(e) => {
-                  e.stopPropagation();
-                  updateEventStatus(Status.NOT_APPLICABLE);
-                }}
-              >
-                Nie dotyczy
-              </MenuItem>
-            </MenuList>
-          </Menu>
+                {getStatusText(props.event.status)} <ChevronDownIcon mb={1} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    updateEventStatus(Status.NEW);
+                  }}
+                >
+                  Nowe
+                </MenuItem>
+                <MenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    updateEventStatus(Status.COMPLETED);
+                  }}
+                >
+                  Ukończone
+                </MenuItem>
+                <MenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    updateEventStatus(Status.NOT_APPLICABLE);
+                  }}
+                >
+                  Nie dotyczy
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          )}
         </Flex>
 
         <Flex>

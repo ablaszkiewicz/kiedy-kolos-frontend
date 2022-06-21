@@ -6,9 +6,10 @@ import { YearCourseType } from '../entities/YearCourse';
 import useStore from '../zustand/store';
 import useAuth from './useAuth';
 
-const YEAR_COURSE_QUERY_KEY: string = 'yearCourse';
+export const YEAR_COURSE_QUERY_KEY: string = 'yearCourse';
 
-export default function useAdmin() {
+export default function useRole() {
+  const [isUser, setIsUser] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const email = useStore((store) => store.user.email);
   const { isLoggedIn } = useAuth();
@@ -26,16 +27,18 @@ export default function useAdmin() {
       return;
     }
 
-    console.log(query.data);
-
-    if (query.data.admins?.some((admin) => admin.email === email)) {
+    if (isLoggedIn && query.data.admins?.some((admin) => admin.email === email)) {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);
     }
-  }, [query.data]);
 
-  //const isAdmin = isLoggedIn && query.data?.admins?.some((admin) => admin.email === email);
+    if (isLoggedIn && query.data.users?.some((user) => user.email === email)) {
+      setIsUser(true);
+    } else {
+      setIsUser(false);
+    }
+  }, [query.data, isLoggedIn]);
 
-  return { isAdmin };
+  return { isAdmin, isUser };
 }

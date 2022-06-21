@@ -1,7 +1,7 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Flex, Spacer, Button, Text, useDisclosure } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import useAdmin from '../../../hooks/useAdmin';
+import useRole from '../../../hooks/useRole';
 
 import useEvents from '../../../hooks/useEvents';
 import useStore from '../../../zustand/store';
@@ -13,7 +13,7 @@ export const EventsPanel = () => {
   const clickedDate = useStore((state) => state.clickedDate);
   const { getEventsForDate } = useEvents();
   const events = getEventsForDate(dayjs(clickedDate));
-  const { isAdmin } = useAdmin();
+  const { isAdmin } = useRole();
 
   return (
     <>

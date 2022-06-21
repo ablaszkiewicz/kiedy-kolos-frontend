@@ -4,6 +4,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { CreateEventDto, Event, UpdateEventDto } from '../entities/Event';
+import useAuth from './useAuth';
 
 export const EVENTS_QUERY_KEY = 'events';
 
@@ -11,6 +12,7 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
   const toast = useToast();
   const queryClient = useQueryClient();
   const { yearCourseId } = useParams();
+  const { isLoggedIn } = useAuth();
 
   const getEvents = async (): Promise<Event[]> => {
     let computedYearCourseId;
@@ -20,7 +22,8 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
       computedYearCourseId = yearCourseId;
     }
 
-    const response = await axios.get(`yearCourse/${computedYearCourseId}/eventsWithStatuses`);
+    const endpoint = isLoggedIn ? 'eventsWithStatuses' : 'events';
+    const response = await axios.get(`yearCourse/${computedYearCourseId}/${endpoint}`);
     return response.data;
   };
 

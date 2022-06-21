@@ -2,7 +2,7 @@ import { Flex, Heading, Spacer, Button, Text } from '@chakra-ui/react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import useAdmin from '../../hooks/useAdmin';
+import useRole from '../../hooks/useRole';
 import useAuth from '../../hooks/useAuth';
 
 export const CalendarViewNavbar = () => {

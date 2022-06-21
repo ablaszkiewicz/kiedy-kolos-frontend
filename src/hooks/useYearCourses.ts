@@ -3,6 +3,7 @@ import axios from 'axios';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { AddAdminDTO, CreateYearCourseDTO, YearCourseType } from '../entities/YearCourse';
+import { YEAR_COURSE_QUERY_KEY } from './useRole';
 
 const YEAR_COURSES_QUERY_KEY: string = 'yearCourses';
 
@@ -39,6 +40,16 @@ export default function useYearCourses(disableAutoRefetch = false) {
 
   const deleteAdmin = async (adminId: string) => {
     const response = await axios.delete(`yearCourses/${yearCourseId}/admins/${adminId}`);
+    return response.data;
+  };
+
+  const addUser = async () => {
+    const response = await axios.post(`yearCourses/${yearCourseId}/users`);
+    return response.data;
+  };
+
+  const deleteUser = async () => {
+    const response = await axios.delete(`yearCourses/${yearCourseId}/users`);
     return response.data;
   };
 
@@ -104,5 +115,39 @@ export default function useYearCourses(disableAutoRefetch = false) {
     },
   });
 
-  return { query, postMutation, updateMutation, deleteMutation, addAdminMutation, deleteAdminMutation };
+  const addUserMutation = useMutation(addUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(YEAR_COURSES_QUERY_KEY);
+      queryClient.invalidateQueries(YEAR_COURSE_QUERY_KEY);
+      toast({
+        title: 'Dodano Cię do kierunku',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
+  const deleteUserMutation = useMutation(deleteUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(YEAR_COURSES_QUERY_KEY);
+      queryClient.invalidateQueries(YEAR_COURSE_QUERY_KEY);
+
+      toast({
+        title: 'Usunięto Cię z kierunku',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
+  return {
+    query,
+    postMutation,
+    updateMutation,
+    deleteMutation,
+    addAdminMutation,
+    deleteAdminMutation,
+    addUserMutation,
+    deleteUserMutation,
+  };
 }

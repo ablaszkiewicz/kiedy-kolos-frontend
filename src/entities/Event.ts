@@ -56,9 +56,9 @@ export const editEventValidationSchema = Yup.object({
 export const getStatusText = (status: Status) => {
   switch (status) {
     case Status.NEW:
-      return 'Nowe';
+      return 'Nienauczone';
     case Status.COMPLETED:
-      return 'Ukończone';
+      return 'Nauczone';
     case Status.NOT_APPLICABLE:
       return 'Nie dotyczy';
   }
@@ -72,5 +72,7 @@ export const getStatusColor = (status: Status) => {
       return 'green';
     case Status.NOT_APPLICABLE:
       return 'gray';
+    default:
+      return 'yellow';
   }
 };

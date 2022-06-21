@@ -33,7 +33,7 @@ export const YearCourseCard = (props: Props) => {
         <Flex w={'100%'} align={'self-start'}>
           <Text>{props.yearCourse.name}</Text>
           <Spacer />
-          <Badge colorScheme={'red'} variant={'solid'}>
+          <Badge colorScheme={isAdmin() ? 'red' : 'green'} variant={'solid'}>
             {isAdmin() ? 'admin' : 'user'}
           </Badge>
         </Flex>

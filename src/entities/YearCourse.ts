@@ -6,6 +6,7 @@ export type YearCourseType = {
   name: string;
   startYear: number;
   admins?: User[];
+  users?: User[];
 };
 
 export interface CreateYearCourseDTO {

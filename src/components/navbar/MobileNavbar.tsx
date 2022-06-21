@@ -26,7 +26,7 @@ export const MobileNavbar = (props: Props) => {
           <HamburgerIcon ml={1} />
         </MenuButton>
         <MenuList>
-          <MenuItem onClick={() => navigate(Path.CTF)}>CTF</MenuItem>
+          {/* <MenuItem onClick={() => navigate(Path.CTF)}>CTF</MenuItem> */}
           <MenuItem onClick={() => navigate(Path.CALENDAR + `/${yearCourseId}`)}>Kalendarz</MenuItem>
           <MenuItem onClick={() => navigate(Path.DASHBOARD + `/${yearCourseId}`)}>Panel zarządzania</MenuItem>
           <MenuItem onClick={() => navigate(Path.EXPLORER)}>Wybór kierunku</MenuItem>
