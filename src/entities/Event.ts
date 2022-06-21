@@ -53,10 +53,10 @@ export const editEventValidationSchema = Yup.object({
   groups: Yup.array().min(1),
 });
 
-export const getStatusText = (status: Status) => {
+export const getEventStatusText = (status: Status) => {
   switch (status) {
     case Status.NEW:
-      return 'Nienauczone';
+      return 'Nowe';
     case Status.COMPLETED:
       return 'Nauczone';
     case Status.NOT_APPLICABLE:
@@ -64,7 +64,7 @@ export const getStatusText = (status: Status) => {
   }
 };
 
-export const getStatusColor = (status: Status) => {
+export const getEventStatusColor = (status: Status) => {
   switch (status) {
     case Status.NEW:
       return 'yellow';

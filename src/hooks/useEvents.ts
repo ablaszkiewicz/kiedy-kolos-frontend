@@ -3,7 +3,7 @@ import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { CreateEventDto, Event, UpdateEventDto } from '../entities/Event';
+import { CreateEventDto, Event, UpdateEventDto, UpdateEventStatus } from '../entities/Event';
 import useAuth from './useAuth';
 
 export const EVENTS_QUERY_KEY = 'events';
@@ -42,6 +42,12 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
     return response.data;
   };
 
+  const updateEventStatus = async (payload: UpdateEventStatus): Promise<Event> => {
+    console.log('Updating');
+    const response = await axios.post(`event-statuses`, payload);
+    return response.data;
+  };
+
   const query = useQuery(EVENTS_QUERY_KEY, getEvents, { enabled: !disableAutoRefetch });
 
   const postMutation = useMutation(postEvent, {
@@ -77,11 +83,22 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
     },
   });
 
+  const updateStatusMutation = useMutation(updateEventStatus, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(EVENTS_QUERY_KEY);
+      toast({
+        title: 'Zaktualizowano status wydarzenia',
+        status: 'success',
+        duration: 2000,
+      });
+    },
+  });
+
   const getEventsForDate = (date: Dayjs): Event[] => {
     return query.data?.filter((event: Event) => {
       return dayjs(event.date).format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
     })!;
   };
 
-  return { query, postMutation, updateMutation, deleteMutation, getEventsForDate };
+  return { query, postMutation, updateMutation, deleteMutation, updateStatusMutation, getEventsForDate };
 }

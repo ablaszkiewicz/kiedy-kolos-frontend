@@ -1,26 +1,13 @@
-import {
-  Badge,
-  Flex,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
-  Select,
-  Spacer,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
-import { Event, getStatusColor, getStatusText, Status } from '../../../entities/Event';
+import { Badge, Flex, Spacer, Text, useDisclosure } from '@chakra-ui/react';
+import { Event, getEventStatusColor, getEventStatusText, Status } from '../../../entities/Event';
 import { BsClockFill, BsDot, BsFillHouseDoorFill } from 'react-icons/bs';
 import dayjs from 'dayjs';
 import { ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons';
 import { EventDeleteModal } from './EventDeleteModal';
 import { EventEditModal } from './EventEditModal';
-import useEventStatuses from '../../../hooks/useEventStatuses';
 import useAuth from '../../../hooks/useAuth';
 import useRole from '../../../hooks/useRole';
+import { EventStatusMenu } from './EventStatusMenu';
 
 interface Props {
   event: Event;
@@ -29,14 +16,9 @@ interface Props {
 export const EventListItem = (props: Props) => {
   const { isAdmin } = useRole();
   const { isLoggedIn } = useAuth();
-  const { updateMutation } = useEventStatuses();
 
   const { isOpen: isEditModalOpen, onOpen: onEditModalOpen, onClose: onEditModalClose } = useDisclosure();
   const { isOpen: isDeleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
-
-  const updateEventStatus = (status: Status) => {
-    updateMutation.mutate({ eventId: props.event.id, status });
-  };
 
   const editEvent = () => {
     if (isAdmin) {
@@ -68,44 +50,7 @@ export const EventListItem = (props: Props) => {
           </Text>
           <Spacer />
 
-          {isLoggedIn && (
-            <Menu>
-              <MenuButton
-                as={Badge as any}
-                colorScheme={getStatusColor(props.event.status)}
-                variant={'solid'}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {getStatusText(props.event.status)} <ChevronDownIcon mb={1} />
-              </MenuButton>
-              <MenuList>
-                <MenuItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    updateEventStatus(Status.NEW);
-                  }}
-                >
-                  Nowe
-                </MenuItem>
-                <MenuItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    updateEventStatus(Status.COMPLETED);
-                  }}
-                >
-                  Ukończone
-                </MenuItem>
-                <MenuItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    updateEventStatus(Status.NOT_APPLICABLE);
-                  }}
-                >
-                  Nie dotyczy
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          )}
+          {isLoggedIn && <EventStatusMenu event={props.event} />}
         </Flex>
 
         <Flex>
