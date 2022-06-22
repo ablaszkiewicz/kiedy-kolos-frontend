@@ -23,12 +23,13 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { SiHackaday } from 'react-icons/si';
 import { Path } from '../other/Paths';
 import { useNavigate } from 'react-router-dom';
+import useMyDetails from '../hooks/useMyDetails';
 
 export const Explorer = () => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { query: yearCourseQuery } = useYearCourses();
   const { logout } = useAuth();
+  const { query: myDetailsQuery } = useMyDetails();
 
   return (
     <Flex p={4} m={0} h={['100vh']} direction={'column'} overflow={'hidden'}>
@@ -51,9 +52,13 @@ export const Explorer = () => {
           justifyContent={'center'}
           align={'center'}
         >
-          {yearCourseQuery.data &&
-            yearCourseQuery.data.map((yearCourse: YearCourseType) => (
-              <YearCourseCard key={yearCourse.id} yearCourse={yearCourse} />
+          {myDetailsQuery.data &&
+            myDetailsQuery.data.yearCoursesAdminOf.map((yearCourse: YearCourseType) => (
+              <YearCourseCard key={yearCourse.id} yearCourse={yearCourse} isAdmin={true} />
+            ))}
+          {myDetailsQuery.data &&
+            myDetailsQuery.data.yearCoursesUserOf.map((yearCourse: YearCourseType) => (
+              <YearCourseCard key={yearCourse.id} yearCourse={yearCourse} isAdmin={false} />
             ))}
           <Button
             ml={[0, 0, 5]}

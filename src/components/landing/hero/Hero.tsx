@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import useFullHeight from '../../../hooks/useFullHeight';
+import useMyDetails from '../../../hooks/useMyDetails';
 import useYearCourses from '../../../hooks/useYearCourses';
 import { Path } from '../../../other/Paths';
 import { Laptop } from './Laptop';
@@ -17,7 +18,7 @@ export const Hero = (props: Props) => {
   const [fullWidth, setFullWidth] = useState(window.innerWidth);
   const modelOffset = Math.round(window.innerWidth / 4);
   const navigate = useNavigate();
-  const { query } = useYearCourses(true);
+  const { query } = useMyDetails(false);
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {

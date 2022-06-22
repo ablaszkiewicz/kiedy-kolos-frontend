@@ -7,16 +7,22 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { YearCourseType } from '../../../entities/YearCourse';
 import { RoleListItem } from './RoleListItem';
+import useMyDetails from '../../../hooks/useMyDetails';
+import axios from 'axios';
 
 export const RolesPanel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { query } = useYearCourses();
   const { yearCourseId } = useParams();
   const [yearCourse, setYearCourse] = useState<YearCourseType>();
 
   useEffect(() => {
-    setYearCourse(query.data?.filter((yearCourse) => yearCourse.id == yearCourseId)[0]);
+    initializeYearCourseData();
   });
+
+  const initializeYearCourseData = async () => {
+    const response = await axios.get(`/yearCourses/${yearCourseId}`);
+    setYearCourse(response.data);
+  };
 
   return (
     <>

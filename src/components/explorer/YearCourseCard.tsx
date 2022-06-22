@@ -7,6 +7,7 @@ import { Path } from '../../other/Paths';
 import useStore from '../../zustand/store';
 
 interface Props {
+  isAdmin: boolean;
   yearCourse: YearCourseType;
 }
 
@@ -22,19 +23,14 @@ export const YearCourseCard = (props: Props) => {
     navigate(`${Path.CALENDAR}/${yearCourse.id}`);
   };
 
-  const isAdmin = () => {
-    const admins = props.yearCourse.admins;
-    return admins && admins.some((admin) => admin.email === user.email);
-  };
-
   return (
     <Flex borderRadius={5} p={5} backgroundColor={'gray.700'} shadow={'dark-lg'} w={['80%', '80%', '20%']}>
       <VStack alignItems={'baseline'} w={'100%'}>
         <Flex w={'100%'} align={'self-start'}>
           <Text>{props.yearCourse.name}</Text>
           <Spacer />
-          <Badge colorScheme={isAdmin() ? 'red' : 'green'} variant={'solid'}>
-            {isAdmin() ? 'admin' : 'user'}
+          <Badge colorScheme={props.isAdmin ? 'red' : 'green'} variant={'solid'}>
+            {props.isAdmin ? 'admin' : 'user'}
           </Badge>
         </Flex>
 

@@ -13,11 +13,6 @@ export default function useYearCourses(disableAutoRefetch = false) {
 
   const { yearCourseId } = useParams();
 
-  const getYearCourses = async (): Promise<YearCourseType[]> => {
-    const response = await axios.get('users/me/yearCourses');
-    return response.data;
-  };
-
   const postYearCourse = async (dto: CreateYearCourseDTO) => {
     const response = await axios.post(YEAR_COURSES_QUERY_KEY, dto);
     return response.data;
@@ -52,8 +47,6 @@ export default function useYearCourses(disableAutoRefetch = false) {
     const response = await axios.delete(`yearCourses/${yearCourseId}/users`);
     return response.data;
   };
-
-  const query = useQuery(YEAR_COURSES_QUERY_KEY, getYearCourses, { enabled: !disableAutoRefetch });
 
   const postMutation = useMutation(postYearCourse, {
     onSuccess: (yearCourse: YearCourseType) => {
@@ -141,7 +134,6 @@ export default function useYearCourses(disableAutoRefetch = false) {
   });
 
   return {
-    query,
     postMutation,
     updateMutation,
     deleteMutation,

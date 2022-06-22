@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Path } from '../other/Paths';
 import { tokenExpired } from '../zustand/jwtExpiration';
 import useStore from '../zustand/store';
+import useMyDetails from './useMyDetails';
 import useYearCourses from './useYearCourses';
 
 interface Credentials {
@@ -22,7 +23,7 @@ export default function useAuth() {
   const logoutUserFromStore = useStore((state) => state.logoutUser);
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
-  const { query } = useYearCourses(true);
+  const { query } = useMyDetails(false);
 
   const login = async (credentials: Credentials) => {
     const response = await axios.post('auth/login', { email: credentials.email, password: credentials.password });
