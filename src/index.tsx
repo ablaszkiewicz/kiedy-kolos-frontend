@@ -2,7 +2,6 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pl';
 import { createRoot } from 'react-dom/client';
-
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
