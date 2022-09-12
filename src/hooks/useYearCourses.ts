@@ -3,6 +3,7 @@ import axios from 'axios';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { AddAdminDTO, CreateYearCourseDTO, YearCourseType } from '../entities/YearCourse';
+import { MY_DETAILS_QUERY_KEY } from './useMyDetails';
 import { YEAR_COURSE_QUERY_KEY } from './useRole';
 
 const YEAR_COURSES_QUERY_KEY: string = 'yearCourses';
@@ -50,7 +51,8 @@ export default function useYearCourses(disableAutoRefetch = false) {
 
   const postMutation = useMutation(postYearCourse, {
     onSuccess: (yearCourse: YearCourseType) => {
-      queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (old: any) => [...old, yearCourse]);
+      queryClient.invalidateQueries(MY_DETAILS_QUERY_KEY);
+
       toast({
         title: 'Dodano kierunek',
         status: 'success',

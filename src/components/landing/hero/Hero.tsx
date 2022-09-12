@@ -51,7 +51,6 @@ export const Hero = (props: Props) => {
         zIndex={10000}
       >
         <Spacer />
-        <Heading fontSize={'5xl'}>BACKEND_URL: {process.env.BACKEND_URL}</Heading>
         <Heading fontSize={'5xl'}>Skończ z tym</Heading>
         <Text fontSize={'2xl'} opacity={0.6} fontWeight={'light'} mb={10}>
           Wszystkie uczelniane wydarzenia w jednym miejscu

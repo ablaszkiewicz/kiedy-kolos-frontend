@@ -7,8 +7,8 @@ import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import utc from 'dayjs/plugin/utc';
 
-//const backendUrl = 'https://testnginx.bieda.it/';
-const backendUrl = 'http://localhost:3001/';
+const backendUrl = 'https://testnginx.bieda.it/';
+//const backendUrl = 'http://localhost:3001/';
 
 axios.defaults.baseURL = process.env.BACKEND_URL ?? backendUrl;
 
