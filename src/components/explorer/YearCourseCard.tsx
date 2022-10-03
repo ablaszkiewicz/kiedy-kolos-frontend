@@ -12,16 +12,16 @@ interface Props {
 }
 
 export const YearCourseCard = (props: Props) => {
-  const { yearCourseId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const { getEvents } = useEvents();
-  const eventsQuery = useQuery(EVENTS_QUERY_KEY, () => getEvents(yearCourseId!), { enabled: false });
+  const eventsQuery = useQuery(EVENTS_QUERY_KEY, () => getEvents(props.yearCourse.id), { enabled: false });
 
   const navigateToDashboard = async (yearCourse: YearCourseType) => {
     setIsLoading(true);
     await eventsQuery.refetch();
+
     navigate(`${Path.CALENDAR}/${yearCourse.id}`);
   };
 

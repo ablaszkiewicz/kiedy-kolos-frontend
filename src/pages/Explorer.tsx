@@ -1,34 +1,18 @@
-import {
-  Flex,
-  Spacer,
-  Box,
-  Heading,
-  Button,
-  SimpleGrid,
-  useDisclosure,
-  Grid,
-  Center,
-  VStack,
-  HStack,
-  Text,
-  VisuallyHidden,
-} from '@chakra-ui/react';
+import { Flex, Spacer, Button, useDisclosure } from '@chakra-ui/react';
 import useAuth from '../hooks/useAuth';
-import useYearCourses from '../hooks/useYearCourses';
 import { YearCourseCard } from '../components/explorer/YearCourseCard';
 import { YearCourseCreateModal } from '../components/explorer/YearCourseCreateModal';
-import { AddIcon, PlusSquareIcon } from '@chakra-ui/icons';
+import { PlusSquareIcon } from '@chakra-ui/icons';
 import { YearCourseType } from '../entities/YearCourse';
 import { HiOutlineLogout } from 'react-icons/hi';
-import { SiHackaday } from 'react-icons/si';
-import { Path } from '../other/Paths';
-import { useNavigate } from 'react-router-dom';
-import useMyDetails from '../hooks/useMyDetails';
+import useMyDetails, { MY_DETAILS_QUERY_KEY } from '../hooks/useMyDetails';
+import { useQuery } from 'react-query';
 
 export const Explorer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { logout } = useAuth();
-  const { query: myDetailsQuery } = useMyDetails();
+  const { getMyDetails } = useMyDetails();
+  const myDetailsQuery = useQuery(MY_DETAILS_QUERY_KEY, getMyDetails);
 
   return (
     <Flex p={4} m={0} h={['100vh']} direction={'column'} overflow={'hidden'}>

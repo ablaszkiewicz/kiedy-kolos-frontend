@@ -1,9 +1,10 @@
 import { Flex, Spacer, Heading, Button, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import useFullHeight from '../../../hooks/useFullHeight';
-import useMyDetails from '../../../hooks/useMyDetails';
+import useMyDetails, { MY_DETAILS_QUERY_KEY } from '../../../hooks/useMyDetails';
 import useYearCourses from '../../../hooks/useYearCourses';
 import { Path } from '../../../other/Paths';
 import { Laptop } from './Laptop';
@@ -18,7 +19,8 @@ export const Hero = (props: Props) => {
   const [fullWidth, setFullWidth] = useState(window.innerWidth);
   const modelOffset = Math.round(window.innerWidth / 4);
   const navigate = useNavigate();
-  const { query } = useMyDetails(false);
+  const { getMyDetails } = useMyDetails();
+  const myDetailsQuery = useQuery(MY_DETAILS_QUERY_KEY, getMyDetails, { enabled: false });
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export const Hero = (props: Props) => {
   const navigateToExplorer = async () => {
     if (isLoggedIn) {
       setIsLoading(true);
-      await query.refetch();
+      await myDetailsQuery.refetch();
     }
     navigate(Path.EXPLORER);
   };

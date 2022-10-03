@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { Path } from '../other/Paths';
 import { tokenExpired } from '../zustand/jwtExpiration';
 import useStore from '../zustand/store';
-import useMyDetails from './useMyDetails';
+import useMyDetails, { MY_DETAILS_QUERY_KEY } from './useMyDetails';
 import useYearCourses from './useYearCourses';
 
 interface Credentials {
@@ -23,7 +23,9 @@ export default function useAuth() {
   const logoutUserFromStore = useStore((state) => state.logoutUser);
   const user = useStore((state) => state.user);
   const navigate = useNavigate();
-  const { query } = useMyDetails(false);
+
+  const { getMyDetails } = useMyDetails();
+  const myDetailsQuery = useQuery(MY_DETAILS_QUERY_KEY, getMyDetails, { enabled: false });
 
   const login = async (credentials: Credentials) => {
     const response = await axios.post('auth/login', { email: credentials.email, password: credentials.password });
@@ -50,7 +52,7 @@ export default function useAuth() {
     onSuccess: async (response: LoginResponse) => {
       loginToStore(response.email, response.token);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
-      await query.refetch();
+      await myDetailsQuery.refetch();
       navigate(Path.EXPLORER);
     },
   });
@@ -59,7 +61,7 @@ export default function useAuth() {
     onSuccess: async (response: LoginResponse) => {
       loginToStore(response.email, response.token);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
-      await query.refetch();
+      await myDetailsQuery.refetch();
     },
   });
 
@@ -67,7 +69,7 @@ export default function useAuth() {
     onSuccess: async (response: LoginResponse) => {
       loginToStore(response.email, response.token);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
-      await query.refetch();
+      await myDetailsQuery.refetch();
       navigate(Path.EXPLORER);
     },
   });
