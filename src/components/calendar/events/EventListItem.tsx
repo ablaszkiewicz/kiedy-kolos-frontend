@@ -65,9 +65,9 @@ export const EventListItem = (props: Props) => {
               <BsClockFill />
               <Text>{dayjs(props.event.date).utc().format('HH:mm')}</Text>
             </Flex>
-            <Badge colorScheme={'gray'} variant={'solid'} mr={2} alignSelf={'flex-start'} mt={1}>
+            {/* <Badge colorScheme={'gray'} variant={'solid'} mr={2} alignSelf={'flex-start'} mt={1}>
               egzamin
-            </Badge>
+            </Badge> */}
           </Flex>
           <Text w={'70%'}>{props.event.description}</Text>
         </Flex>

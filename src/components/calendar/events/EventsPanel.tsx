@@ -3,16 +3,21 @@ import { Flex, Spacer, Button, Text, useDisclosure } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import useRole from '../../../hooks/useRole';
 
-import useEvents from '../../../hooks/useEvents';
+import useEvents, { EVENTS_QUERY_KEY } from '../../../hooks/useEvents';
 import useStore from '../../../zustand/store';
 import { EventCreateModal } from './EventCreateModal';
 import { EventListItem } from './EventListItem';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 
 export const EventsPanel = () => {
+  const { yearCourseId } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const clickedDate = useStore((state) => state.clickedDate);
-  const { getEventsForDate } = useEvents();
-  const events = getEventsForDate(dayjs(clickedDate));
+  const { getEvents, getEventsForDate } = useEvents();
+
+  const eventsQuery = useQuery(EVENTS_QUERY_KEY, () => getEvents(yearCourseId!));
+
   const { isAdmin } = useRole();
 
   return (
@@ -44,7 +49,10 @@ export const EventsPanel = () => {
           )}
         </Flex>
         <Flex direction={'column'} gap={2} overflowY={'auto'}>
-          {events && events.map((event) => <EventListItem key={event.id} event={event} />)}
+          {eventsQuery.data &&
+            getEventsForDate(dayjs(clickedDate), eventsQuery.data).map((event) => (
+              <EventListItem key={event.id} event={event} />
+            ))}
         </Flex>
       </Flex>
     </>

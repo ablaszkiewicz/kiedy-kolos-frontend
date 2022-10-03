@@ -1,10 +1,10 @@
 import { Badge, Button, Flex, HStack, Spacer, Text, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import { YearCourseType } from '../../entities/YearCourse';
-import useEvents from '../../hooks/useEvents';
+import useEvents, { EVENTS_QUERY_KEY } from '../../hooks/useEvents';
 import { Path } from '../../other/Paths';
-import useStore from '../../zustand/store';
 
 interface Props {
   isAdmin: boolean;
@@ -12,13 +12,16 @@ interface Props {
 }
 
 export const YearCourseCard = (props: Props) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { yearCourseId } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { query } = useEvents(true, props.yearCourse.id);
+
+  const { getEvents } = useEvents();
+  const eventsQuery = useQuery(EVENTS_QUERY_KEY, () => getEvents(yearCourseId!), { enabled: false });
 
   const navigateToDashboard = async (yearCourse: YearCourseType) => {
     setIsLoading(true);
-    await query.refetch();
+    await eventsQuery.refetch();
     navigate(`${Path.CALENDAR}/${yearCourse.id}`);
   };
 

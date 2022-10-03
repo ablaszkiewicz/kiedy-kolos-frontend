@@ -14,16 +14,16 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
   const { yearCourseId } = useParams();
   const { isLoggedIn } = useAuth();
 
-  const getEvents = async (): Promise<Event[]> => {
-    let computedYearCourseId;
-    if (!yearCourseId) {
-      computedYearCourseId = injectedYearCourseId;
-    } else {
-      computedYearCourseId = yearCourseId;
-    }
+  const getEvents = async (yearCourseId: string): Promise<Event[]> => {
+    // let computedYearCourseId;
+    // if (!yearCourseId) {
+    //   computedYearCourseId = injectedYearCourseId;
+    // } else {
+    //   computedYearCourseId = yearCourseId;
+    // }
 
     const endpoint = isLoggedIn ? 'eventsWithStatuses' : 'events';
-    const response = await axios.get(`yearCourse/${computedYearCourseId}/${endpoint}`);
+    const response = await axios.get(`yearCourse/${yearCourseId}/${endpoint}`);
     return response.data;
   };
 
@@ -47,7 +47,7 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
     return response.data;
   };
 
-  const query = useQuery(EVENTS_QUERY_KEY, getEvents, { enabled: !disableAutoRefetch });
+  //const query = useQuery(EVENTS_QUERY_KEY, getEvents, { enabled: !disableAutoRefetch });
 
   const postMutation = useMutation(postEvent, {
     onSuccess: (event: Event) => {
@@ -93,11 +93,11 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
     },
   });
 
-  const getEventsForDate = (date: Dayjs): Event[] => {
-    return query.data?.filter((event: Event) => {
+  const getEventsForDate = (date: Dayjs, events: Event[]): Event[] => {
+    return events.filter((event: Event) => {
       return dayjs(event.date).format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
     })!;
   };
 
-  return { query, postMutation, updateMutation, deleteMutation, updateStatusMutation, getEventsForDate };
+  return { getEvents, postMutation, updateMutation, deleteMutation, updateStatusMutation, getEventsForDate };
 }

@@ -2,8 +2,10 @@ import { Flex, Spacer, HStack, Badge, Text, SlideFade } from '@chakra-ui/react';
 import { generateKeyPair } from 'crypto';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { Event, getEventStatusColor } from '../../../entities/Event';
-import useEvents from '../../../hooks/useEvents';
+import useEvents, { EVENTS_QUERY_KEY } from '../../../hooks/useEvents';
 import useStore from '../../../zustand/store';
 
 interface Props {
@@ -12,18 +14,16 @@ interface Props {
 }
 
 export function DayCard(props: Props) {
-  const [events, setEvents] = useState<Event[]>([]);
+  const { yearCourseId } = useParams();
   const setClickedDate = useStore((state) => state.setClickedDate);
-  const { query, getEventsForDate } = useEvents();
+  const { getEvents, getEventsForDate } = useEvents();
   const currentMonth = dayjs().add(props.monthOffset, 'month').format('MM');
   const cardMonth = props.date.format('MM');
-  const isInCurrentMonth: boolean = currentMonth === cardMonth;
+  const isInCurrentMonth = currentMonth === cardMonth;
   const today = dayjs().format('YYYY-MM-DD');
   const clickedDate = useStore((state) => state.clickedDate);
 
-  useEffect(() => {
-    setEvents(getEventsForDate(props.date));
-  }, [query.data]);
+  const eventsQuery = useQuery(EVENTS_QUERY_KEY, () => getEvents(yearCourseId!));
 
   const backgroundColor = () => {
     let clickedDateFormatted = dayjs().format('YYYY-MM-DD');
@@ -75,15 +75,15 @@ export function DayCard(props: Props) {
       <Text fontWeight={'medium'} fontSize={['xs', 'md']} opacity={isInCurrentMonth ? 1 : 0.5}>
         {props.date.format('DD')}
       </Text>
-      {events && (
-        <HStack spacing={0.5} flexWrap={'wrap'} gap={1} justifyContent={'center'}>
-          {events.map((event) => (
+
+      <HStack spacing={0.5} flexWrap={'wrap'} gap={1} justifyContent={'center'}>
+        {eventsQuery.data &&
+          getEventsForDate(props.date, eventsQuery.data)?.map((event) => (
             <Badge variant={'solid'} colorScheme={getEventStatusColor(event.status)} key={event.id}>
               {event.subject.shortName}
             </Badge>
           ))}
-        </HStack>
-      )}
+      </HStack>
 
       <Spacer />
     </Flex>
