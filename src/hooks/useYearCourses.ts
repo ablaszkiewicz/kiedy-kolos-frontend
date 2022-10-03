@@ -14,6 +14,11 @@ export default function useYearCourses(disableAutoRefetch = false) {
 
   const { yearCourseId } = useParams();
 
+  const getYearCourse = async (id: string): Promise<YearCourseType> => {
+    const response = await axios.get(`yearCourses/${id}`);
+    return response.data;
+  };
+
   const postYearCourse = async (dto: CreateYearCourseDTO) => {
     const response = await axios.post(YEAR_COURSES_QUERY_KEY, dto);
     return response.data;
@@ -63,10 +68,7 @@ export default function useYearCourses(disableAutoRefetch = false) {
 
   const updateMutation = useMutation(updateYearCourse, {
     onSuccess: (yearCourse: YearCourseType) => {
-      const yearCourses: YearCourseType[] = queryClient.getQueryData(YEAR_COURSES_QUERY_KEY)!;
-      const index = yearCourses.findIndex((yearCourseTmp) => yearCourseTmp.id === yearCourse.id);
-      yearCourses[index] = yearCourse;
-      queryClient.setQueryData(YEAR_COURSES_QUERY_KEY, (_: any) => yearCourses);
+      queryClient.invalidateQueries(YEAR_COURSES_QUERY_KEY);
       toast({
         title: 'Zaktualizowano kierunek',
         status: 'success',
@@ -91,6 +93,7 @@ export default function useYearCourses(disableAutoRefetch = false) {
   const addAdminMutation = useMutation(addAdmin, {
     onSuccess: () => {
       queryClient.invalidateQueries(YEAR_COURSES_QUERY_KEY);
+      queryClient.invalidateQueries(YEAR_COURSE_QUERY_KEY);
       toast({
         title: 'Dodano moderatora',
         status: 'success',
@@ -102,6 +105,8 @@ export default function useYearCourses(disableAutoRefetch = false) {
   const deleteAdminMutation = useMutation(deleteAdmin, {
     onSuccess: () => {
       queryClient.invalidateQueries(YEAR_COURSES_QUERY_KEY);
+      queryClient.invalidateQueries(YEAR_COURSE_QUERY_KEY);
+
       toast({
         title: 'Usunięto moderatora',
         status: 'success',
@@ -136,6 +141,7 @@ export default function useYearCourses(disableAutoRefetch = false) {
   });
 
   return {
+    getYearCourse,
     postMutation,
     updateMutation,
     deleteMutation,

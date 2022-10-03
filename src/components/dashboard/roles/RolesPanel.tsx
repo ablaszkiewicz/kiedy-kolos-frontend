@@ -3,24 +3,18 @@ import { AddIcon } from '@chakra-ui/icons';
 import { scrollbarStyle } from '../shared/styles';
 import { RoleCreateModal } from './RoleCreateModal';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { YearCourseType } from '../../../entities/YearCourse';
 import { RoleListItem } from './RoleListItem';
-import axios from 'axios';
+import { useQuery } from 'react-query';
+import { YEAR_COURSE_QUERY_KEY } from '../../../hooks/useRole';
+import useYearCourses from '../../../hooks/useYearCourses';
 
 export const RolesPanel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { yearCourseId } = useParams();
-  const [yearCourse, setYearCourse] = useState<YearCourseType>();
 
-  useEffect(() => {
-    initializeYearCourseData();
-  });
+  const { getYearCourse } = useYearCourses();
 
-  const initializeYearCourseData = async () => {
-    const response = await axios.get(`/yearCourses/${yearCourseId}`);
-    setYearCourse(response.data);
-  };
+  const yearCourseDataQuery = useQuery(YEAR_COURSE_QUERY_KEY, () => getYearCourse(yearCourseId!));
 
   return (
     <>
@@ -45,14 +39,13 @@ export const RolesPanel = () => {
         </Flex>
 
         <Box overflowY={'scroll'} css={scrollbarStyle}>
-          {yearCourse &&
-            yearCourse.admins!.map((admin, index) => (
-              <div key={admin.id}>
-                <RoleListItem user={admin} />
+          {yearCourseDataQuery.data?.admins!.map((admin, index) => (
+            <div key={admin.id}>
+              <RoleListItem user={admin} />
 
-                {index < yearCourse.admins!.length - 1 && <Divider />}
-              </div>
-            ))}
+              {index < yearCourseDataQuery.data?.admins!.length - 1 && <Divider />}
+            </div>
+          ))}
         </Box>
       </Flex>
     </>

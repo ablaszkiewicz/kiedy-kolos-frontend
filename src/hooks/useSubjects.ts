@@ -3,6 +3,7 @@ import axios from 'axios';
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { SubjectType } from '../entities/Subject';
+import { EVENTS_QUERY_KEY } from './useEvents';
 
 const SUBJECTS_QUERY_KEY: string = 'subjects';
 
@@ -35,7 +36,8 @@ export default function useSubjects() {
 
   const postMutation = useMutation(postSubject, {
     onSuccess: (subject: SubjectType) => {
-      queryClient.setQueryData(SUBJECTS_QUERY_KEY, (old: any) => [...old, subject]);
+      queryClient.invalidateQueries(SUBJECTS_QUERY_KEY);
+      queryClient.invalidateQueries(EVENTS_QUERY_KEY);
       toast({
         title: 'Dodano przedmiot',
         status: 'success',
@@ -46,10 +48,8 @@ export default function useSubjects() {
 
   const updateMutation = useMutation(updateSubject, {
     onSuccess: (subject: SubjectType) => {
-      const subjects: SubjectType[] = queryClient.getQueryData(SUBJECTS_QUERY_KEY)!;
-      const index: number = subjects.findIndex((subjectTmp) => subjectTmp.id === subject.id);
-      subjects[index] = subject;
-      queryClient.setQueryData(SUBJECTS_QUERY_KEY, (_) => subjects);
+      queryClient.invalidateQueries(SUBJECTS_QUERY_KEY);
+      queryClient.invalidateQueries(EVENTS_QUERY_KEY);
       toast({
         title: 'Zaktualizowano przedmiot',
         status: 'success',
@@ -60,9 +60,8 @@ export default function useSubjects() {
 
   const deleteMutation = useMutation(deleteSubject, {
     onSuccess: (subject: SubjectType) => {
-      queryClient.setQueryData(SUBJECTS_QUERY_KEY, (old: any) =>
-        old.filter((subjectTmp: SubjectType) => subjectTmp.id !== subject.id)
-      );
+      queryClient.invalidateQueries(SUBJECTS_QUERY_KEY);
+      queryClient.invalidateQueries(EVENTS_QUERY_KEY);
       toast({
         title: 'Usunięto przedmiot',
         status: 'success',
