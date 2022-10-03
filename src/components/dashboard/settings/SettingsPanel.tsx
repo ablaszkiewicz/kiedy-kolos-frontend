@@ -14,7 +14,7 @@ export const SettingsPanel = () => {
       p={7}
       shadow={'dark-lg'}
       overflowY={'hidden'}
-      flexGrow={1}
+      flexGrow={0}
     >
       <Flex mb={4}>
         <Text fontWeight={'bold'} fontSize={'2xl'}>

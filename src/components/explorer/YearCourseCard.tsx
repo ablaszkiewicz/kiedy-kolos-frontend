@@ -13,7 +13,6 @@ interface Props {
 
 export const YearCourseCard = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const user = useStore((state) => state.user);
   const navigate = useNavigate();
   const { query } = useEvents(true, props.yearCourse.id);
 

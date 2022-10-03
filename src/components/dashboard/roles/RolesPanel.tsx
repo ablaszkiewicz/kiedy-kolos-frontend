@@ -2,12 +2,10 @@ import { Box, Button, Divider, Flex, Spacer, Text, useDisclosure } from '@chakra
 import { AddIcon } from '@chakra-ui/icons';
 import { scrollbarStyle } from '../shared/styles';
 import { RoleCreateModal } from './RoleCreateModal';
-import useYearCourses from '../../../hooks/useYearCourses';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { YearCourseType } from '../../../entities/YearCourse';
 import { RoleListItem } from './RoleListItem';
-import useMyDetails from '../../../hooks/useMyDetails';
 import axios from 'axios';
 
 export const RolesPanel = () => {

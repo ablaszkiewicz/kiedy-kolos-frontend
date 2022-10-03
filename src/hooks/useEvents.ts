@@ -43,7 +43,6 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
   };
 
   const updateEventStatus = async (payload: UpdateEventStatus): Promise<Event> => {
-    console.log('Updating');
     const response = await axios.post(`event-statuses`, payload);
     return response.data;
   };

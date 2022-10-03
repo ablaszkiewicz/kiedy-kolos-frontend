@@ -26,7 +26,6 @@ import { useNavigate } from 'react-router-dom';
 import useMyDetails from '../hooks/useMyDetails';
 
 export const Explorer = () => {
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { logout } = useAuth();
   const { query: myDetailsQuery } = useMyDetails();
