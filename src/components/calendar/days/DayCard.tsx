@@ -55,6 +55,8 @@ export function DayCard(props: Props) {
       direction={'column'}
       align={'center'}
       borderRadius={10}
+      borderWidth={3}
+      borderColor={backgroundColor()}
       backgroundColor={backgroundColor()}
       minHeight={'0px'}
       p={2}
@@ -65,6 +67,7 @@ export function DayCard(props: Props) {
       onClick={() => setClickedDate(props.date)}
       _hover={{
         borderWidth: '3px',
+        borderColor: 'gray.600',
       }}
       transition={'background-color 0.2s'}
     >
