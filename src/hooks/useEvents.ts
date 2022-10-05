@@ -89,7 +89,7 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
   });
 
   const getEventsForDate = (date: Dayjs, events: Event[]): Event[] => {
-    const groupFiltered = events.filter((event) => !event.groups.some((group) => !visibleGroupIds.includes(group.id)));
+    const groupFiltered = events.filter((event) => !event.groups.every((group) => !visibleGroupIds.includes(group.id)));
 
     return groupFiltered.filter((event) => {
       return dayjs(event.date).format('YYYY-MM-DD') === date.format('YYYY-MM-DD');

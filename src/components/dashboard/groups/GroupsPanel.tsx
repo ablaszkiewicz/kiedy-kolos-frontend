@@ -33,10 +33,11 @@ export const GroupsPanel = () => {
         </Flex>
 
         <Box overflowY={'scroll'} css={scrollbarStyle}>
-          {groupsQuery.data &&
-            groupsQuery.data.map((group: Group, index: number) => (
+          {groupsQuery.data
+            ?.sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((group: Group, index: number) => (
               <div key={group.id}>
-                <GroupListItem group={group}/>
+                <GroupListItem group={group} />
                 {index < groupsQuery.data.length - 1 && <Divider />}
               </div>
             ))}
