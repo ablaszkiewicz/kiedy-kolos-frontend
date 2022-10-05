@@ -4,6 +4,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { CreateEventDto, Event, UpdateEventDto, UpdateEventStatus } from '../entities/Event';
+import useStore from '../zustand/store';
 import useAuth from './useAuth';
 
 export const EVENTS_QUERY_KEY = 'events';
@@ -13,15 +14,9 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
   const queryClient = useQueryClient();
   const { yearCourseId } = useParams();
   const { isLoggedIn } = useAuth();
+  const visibleGroupIds = useStore((store) => store.visibleGroupIds);
 
   const getEvents = async (yearCourseId: string): Promise<Event[]> => {
-    // let computedYearCourseId;
-    // if (!yearCourseId) {
-    //   computedYearCourseId = injectedYearCourseId;
-    // } else {
-    //   computedYearCourseId = yearCourseId;
-    // }
-
     const endpoint = isLoggedIn ? 'eventsWithStatuses' : 'events';
     const response = await axios.get(`yearCourse/${yearCourseId}/${endpoint}`);
     return response.data;
@@ -94,7 +89,9 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
   });
 
   const getEventsForDate = (date: Dayjs, events: Event[]): Event[] => {
-    return events.filter((event: Event) => {
+    const groupFiltered = events.filter((event) => !event.groups.some((group) => !visibleGroupIds.includes(group.id)));
+
+    return groupFiltered.filter((event) => {
       return dayjs(event.date).format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
     })!;
   };

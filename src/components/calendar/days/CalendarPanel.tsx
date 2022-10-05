@@ -10,6 +10,12 @@ import {
   Center,
   SlideFade,
   Button,
+  useDisclosure,
+  Badge,
+  Avatar,
+  AvatarBadge,
+  Show,
+  Hide,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { DayCard } from './DayCard';
@@ -18,6 +24,8 @@ import { useSetState } from '../../../hooks/useSetState';
 import dayjs from 'dayjs';
 import useStore from '../../../zustand/store';
 import { BsFilter } from 'react-icons/bs';
+import { FiltersModal } from './FiltersModal';
+import useGroups from '../../../hooks/useGroups';
 
 enum SlideDirection {
   LEFT = -1,
@@ -31,8 +39,11 @@ interface State {
 }
 
 export const CalendarPanel = () => {
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const dayNames = ['pon', 'wt', 'śr', 'czw', 'pt', 'sob', 'nie'];
   const setClickedDate = useStore((state) => state.setClickedDate);
+  const { query } = useGroups();
+  const visibleGroupIds = useStore((state) => state.visibleGroupIds);
 
   const [state, setState] = useSetState({
     days: [],
@@ -50,6 +61,8 @@ export const CalendarPanel = () => {
     setState({ days: getDaysInMonth(state.monthOffset) });
   }, [state.monthOffset]);
 
+  const anyGroupSelected = query.data?.some((group) => visibleGroupIds.includes(group.id));
+
   return (
     <Flex
       direction={'column'}
@@ -60,6 +73,7 @@ export const CalendarPanel = () => {
       backgroundColor={'gray.750'}
       shadow={'dark-lg'}
     >
+      <FiltersModal isOpen={isOpen} onClose={onClose} />
       <Center gap={[1, 3]} backgroundColor={''} borderRadius={10} mb={[0, 2]}>
         <Spacer />
         <IconButton
@@ -85,6 +99,9 @@ export const CalendarPanel = () => {
           <Text w={'100%'} fontSize={'sm'} color={'gray.400'}>
             {dayjs().add(state.monthOffset, 'month').format('YYYY')}
           </Text>
+          <Text h={0} opacity={0}>
+            This is the longest month
+          </Text>
         </Flex>
 
         <IconButton
@@ -96,8 +113,16 @@ export const CalendarPanel = () => {
           }}
         />
         <Spacer />
-        <Button leftIcon={<BsFilter />} disabled>
-          Filtry
+        <Button leftIcon={<BsFilter />} onClick={onOpen}>
+          <Hide below={'md'}>
+            <Text>Filtry</Text>
+          </Hide>
+
+          {!anyGroupSelected && (
+            <Badge colorScheme={'red'} variant={'solid'} ml={3} fontSize={'md'}>
+              !
+            </Badge>
+          )}
         </Button>
       </Center>
       <SimpleGrid columns={7} gap={2} mb={2}>
