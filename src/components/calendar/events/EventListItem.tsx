@@ -69,7 +69,9 @@ export const EventListItem = (props: Props) => {
               egzamin
             </Badge> */}
           </Flex>
-          <Text w={'70%'}>{props.event.description}</Text>
+          <Text w={'70%'} whiteSpace={'pre-line'}>
+            {props.event.description}
+          </Text>
         </Flex>
       </Flex>
     </>
