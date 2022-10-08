@@ -107,7 +107,7 @@ export const CalendarPanel = () => {
               {dayjs().add(state.monthOffset, 'month').format('YYYY')}
             </Text>
             <Text h={0} opacity={0}>
-              This is the longest month
+              Thisisthelongest
             </Text>
           </Flex>
           <IconButton
