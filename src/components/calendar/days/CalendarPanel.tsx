@@ -23,9 +23,10 @@ import useCalendar from '../../../hooks/useCalendar';
 import { useSetState } from '../../../hooks/useSetState';
 import dayjs from 'dayjs';
 import useStore from '../../../zustand/store';
-import { BsFilter } from 'react-icons/bs';
+import { BsBell, BsBellFill, BsFilter } from 'react-icons/bs';
 import { FiltersModal } from './FiltersModal';
 import useGroups from '../../../hooks/useGroups';
+import { MobileIconButton } from '../../other/MobileIconButton';
 
 enum SlideDirection {
   LEFT = -1,
@@ -75,55 +76,55 @@ export const CalendarPanel = () => {
     >
       <FiltersModal isOpen={isOpen} onClose={onClose} />
       <Center gap={[1, 3]} backgroundColor={''} borderRadius={10} mb={[0, 2]}>
-        <Spacer />
-        <IconButton
-          aria-label='left'
-          icon={<ArrowBackIcon />}
-          onClick={() => {
-            setState({ monthOffset: state.monthOffset - 1 });
-            setState({ direction: SlideDirection.LEFT });
-          }}
-        />
-        <Flex direction={'column'} textAlign={'center'}>
-          <SlideFade
-            in={true}
-            key={state.monthOffset}
-            offsetX={20 * state.direction}
-            offsetY={0}
-            style={{ width: '100%' }}
-          >
-            <Text fontWeight={'medium'} fontSize={'2xl'} width={'100%'}>
-              {getMonthName(state.monthOffset)}
-            </Text>
-          </SlideFade>
-          <Text w={'100%'} fontSize={'sm'} color={'gray.400'}>
-            {dayjs().add(state.monthOffset, 'month').format('YYYY')}
-          </Text>
-          <Text h={0} opacity={0}>
-            This is the longest month
-          </Text>
+        <Flex flex={'1 1 0'} position={'relative'}>
+          <MobileIconButton icon={<BsBellFill />} onClick={onOpen} label={'Powiadomienia'} warning />
+          <Spacer />
         </Flex>
 
-        <IconButton
-          aria-label='left'
-          icon={<ArrowForwardIcon />}
-          onClick={() => {
-            setState({ monthOffset: state.monthOffset + 1 });
-            setState({ direction: SlideDirection.RIGHT });
-          }}
-        />
         <Spacer />
-        <Button leftIcon={<BsFilter />} onClick={onOpen}>
-          <Hide below={'md'}>
-            <Text>Filtry</Text>
-          </Hide>
+        <Flex alignItems={'center'} flex={'1 1 0'} gap={3}>
+          <IconButton
+            aria-label='left'
+            icon={<ArrowBackIcon />}
+            onClick={() => {
+              setState({ monthOffset: state.monthOffset - 1 });
+              setState({ direction: SlideDirection.LEFT });
+            }}
+          />
+          <Flex direction={'column'} textAlign={'center'}>
+            <SlideFade
+              in={true}
+              key={state.monthOffset}
+              offsetX={20 * state.direction}
+              offsetY={0}
+              style={{ width: '100%' }}
+            >
+              <Text fontWeight={'medium'} fontSize={'2xl'} width={'100%'}>
+                {getMonthName(state.monthOffset)}
+              </Text>
+            </SlideFade>
+            <Text w={'100%'} fontSize={'sm'} color={'gray.400'}>
+              {dayjs().add(state.monthOffset, 'month').format('YYYY')}
+            </Text>
+            <Text h={0} opacity={0}>
+              This is the longest month
+            </Text>
+          </Flex>
+          <IconButton
+            aria-label='left'
+            icon={<ArrowForwardIcon />}
+            onClick={() => {
+              setState({ monthOffset: state.monthOffset + 1 });
+              setState({ direction: SlideDirection.RIGHT });
+            }}
+          />
+        </Flex>
 
-          {!anyGroupSelected && (
-            <Badge colorScheme={'red'} variant={'solid'} ml={3} fontSize={'md'}>
-              !
-            </Badge>
-          )}
-        </Button>
+        <Spacer />
+        <Flex flex={'1 1 0'} alignContent={'end'}>
+          <Spacer />
+          <MobileIconButton icon={<BsFilter />} onClick={onOpen} label={'Filtry'} warning={!anyGroupSelected} />
+        </Flex>
       </Center>
       <SimpleGrid columns={7} gap={2} mb={2}>
         {dayNames.map((name) => (
