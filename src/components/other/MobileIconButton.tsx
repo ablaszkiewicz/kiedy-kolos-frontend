@@ -6,6 +6,7 @@ interface Props {
   icon: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   label: string;
   warning?: boolean;
+  disabled?: boolean;
 }
 
 export const MobileIconButton = (props: Props) => {
@@ -18,12 +19,12 @@ export const MobileIconButton = (props: Props) => {
   return (
     <>
       <Show below='md'>
-        <IconButton aria-label='button' icon={props.icon} onClick={props.onClick}>
+        <IconButton aria-label='button' icon={props.icon} onClick={props.onClick} disabled={props.disabled}>
           {props.warning && warning}
         </IconButton>
       </Show>
       <Hide below='md'>
-        <Button leftIcon={props.icon} onClick={props.onClick}>
+        <Button leftIcon={props.icon} onClick={props.onClick} disabled={props.disabled}>
           {props.label}
           {props.warning && warning}
         </Button>

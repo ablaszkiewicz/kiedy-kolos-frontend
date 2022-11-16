@@ -77,8 +77,7 @@ export const CalendarPanel = () => {
       <FiltersModal isOpen={isOpen} onClose={onClose} />
       <Center gap={[1, 3]} backgroundColor={''} borderRadius={10} mb={[0, 2]}>
         <Flex flex={'1 1 0'} position={'relative'}>
-          <MobileIconButton icon={<BsBellFill />} onClick={onOpen} label={'Powiadomienia'} warning />
-          <Spacer />
+          {/* <MobileIconButton icon={<BsBellFill />} onClick={onOpen} label={'Powiadomienia'} warning /> */}
         </Flex>
 
         <Spacer />

@@ -6,6 +6,9 @@ import { useParams } from 'react-router-dom';
 import { CreateEventDto, Event, UpdateEventDto, UpdateEventStatus } from '../entities/Event';
 import useStore from '../zustand/store';
 import useAuth from './useAuth';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 export const EVENTS_QUERY_KEY = 'events';
 
@@ -92,7 +95,7 @@ export default function useEvents(disableAutoRefetch = false, injectedYearCourse
     const groupFiltered = events.filter((event) => !event.groups.every((group) => !visibleGroupIds.includes(group.id)));
 
     return groupFiltered.filter((event) => {
-      return dayjs(event.date).format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
+      return dayjs.utc(event.date).format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
     })!;
   };
 
