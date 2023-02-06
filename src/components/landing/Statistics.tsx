@@ -29,7 +29,7 @@ export function Statistics(props: Props) {
         <GridItem display={['none', 'unset']} />
         <Parallax speed={15} disabled={window.innerWidth < 768}>
           <Box>
-            <Heading fontSize={'8xl'}>214</Heading>
+            <Heading fontSize={'8xl'}>60</Heading>
             <Text fontSize={'3xl'} fontWeight={'light'} opacity={0.8}>
               użytkowników
             </Text>
@@ -37,7 +37,7 @@ export function Statistics(props: Props) {
         </Parallax>
         <Parallax speed={20} disabled={window.innerWidth < 768}>
           <Box>
-            <Heading fontSize={'8xl'}>5</Heading>
+            <Heading fontSize={'8xl'}>30</Heading>
             <Text fontSize={'3xl'} fontWeight={'light'} opacity={0.8}>
               tablic
             </Text>
