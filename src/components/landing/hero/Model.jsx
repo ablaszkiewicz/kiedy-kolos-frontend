@@ -62,7 +62,7 @@ export const CustomCanvas = ({ children, percentageInView }) => {
         <group rotation={[0, Math.PI, 0]}>
           <Model percentageInView={percentageInView}>{children}</Model>
         </group>
-        <Environment preset='city' />
+        <Environment files={'potsdamer_platz_1k.hdr'} />
       </Suspense>
       <ContactShadows
         rotation-x={Math.PI / 2}
